@@ -217,8 +217,11 @@ namespace {
   const int KnightCheck = 790;
 
   // Threshold for lazy and space evaluation
-  const Value LazyThreshold  = Value(1500);
+  // TODO: changed for tuning. Change back when not tuning.
+  Value LazyThreshold  = Value(1500);
   const Value SpaceThreshold = Value(12222);
+
+  TUNE(LazyThreshold);
 
   // eval_init() initializes king and attack bitboards for a given color
   // adding pawn attacks. To be done at the beginning of the evaluation.
