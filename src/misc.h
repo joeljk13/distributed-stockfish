@@ -23,11 +23,20 @@
 
 #include <cassert>
 #include <chrono>
+#include <iostream>
 #include <ostream>
 #include <string>
 #include <vector>
 
 #include "types.h"
+#include "thread_win32.h"
+
+#include <mpi.h>
+
+extern int mpi_rank;
+extern int mpi_size;
+extern MPI_Datatype mpi_tte_t;
+extern MPI_Datatype mpi_cluster_t;
 
 const std::string engine_info(bool to_uci = false);
 void prefetch(void* addr);
@@ -54,12 +63,47 @@ private:
   std::vector<Entry> table = std::vector<Entry>(Size);
 };
 
+class InfoStream { };
+extern InfoStream info_out;
 
-enum SyncCout { IO_LOCK, IO_UNLOCK };
-std::ostream& operator<<(std::ostream&, SyncCout);
+enum class SyncCout { IO_LOCK, IO_UNLOCK, IO_ENDL };
+InfoStream& operator<<(InfoStream&, SyncCout);
 
-#define sync_cout std::cout << IO_LOCK
-#define sync_endl std::endl << IO_UNLOCK
+template <typename T>
+InfoStream& operator<<(InfoStream& is, const T& t)
+{
+  if (mpi_rank == 0) {
+    std::cout << t;
+  }
+  return is;
+}
+
+inline InfoStream& operator<<(InfoStream& is, SyncCout sc) {
+
+  static Mutex m;
+
+  switch (sc) {
+  case SyncCout::IO_LOCK:
+      m.lock();
+      break;
+
+  case SyncCout::IO_UNLOCK:
+      m.unlock();
+      break;
+
+  case SyncCout::IO_ENDL:
+      if (mpi_rank == 0) {
+        std::cout << std::endl;
+      }
+      break;
+  }
+
+  return is;
+}
+
+
+#define sync_info_out info_out << SyncCout::IO_LOCK
+#define sync_info_endl SyncCout::IO_ENDL << SyncCout::IO_UNLOCK
 
 
 /// xorshift64star Pseudo-Random Number Generator

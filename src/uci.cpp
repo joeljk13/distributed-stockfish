@@ -21,6 +21,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
 
 #include "evaluate.h"
 #include "movegen.h"
@@ -101,7 +102,7 @@ namespace {
     if (Options.count(name))
         Options[name] = value;
     else
-        sync_cout << "No such option: " << name << sync_endl;
+        sync_info_out << "No such option: " << name << sync_info_endl;
   }
 
 
@@ -156,8 +157,25 @@ void UCI::loop(int argc, char* argv[]) {
       cmd += std::string(argv[i]) + " ";
 
   do {
-      if (argc == 1 && !getline(cin, cmd)) // Block here waiting for input or EOF
-          cmd = "quit";
+      if (argc == 1) {
+        // Tag 0 used for commands
+        if (mpi_rank == 0) {
+          if (!getline(cin, cmd)) { // Block here waiting for input or EOF
+            cmd = "quit";
+          }
+          for (int i = 1; i < mpi_size; ++i) {
+            MPI_Send(cmd.c_str(), cmd.size(), MPI_CHAR, i, 0, MPI_COMM_WORLD);
+          }
+        } else {
+          MPI_Status status;
+          int count;
+          MPI_Probe(0, 0, MPI_COMM_WORLD, &status);
+          MPI_Get_count(&status, MPI_CHAR, &count);
+          vector<char> v (count);
+          MPI_Recv(v.data(), count, MPI_CHAR, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+          cmd = string(v.begin(), v.end());
+        }
+      }
 
       istringstream is(cmd);
 
@@ -180,9 +198,9 @@ void UCI::loop(int argc, char* argv[]) {
           Search::Limits.ponder = 0; // Switch to normal search
 
       else if (token == "uci")
-          sync_cout << "id name " << engine_info(true)
+          sync_info_out << "id name " << engine_info(true)
                     << "\n"       << Options
-                    << "\nuciok"  << sync_endl;
+                    << "\nuciok"  << sync_info_endl;
 
       else if (token == "ucinewgame")
       {
@@ -190,7 +208,7 @@ void UCI::loop(int argc, char* argv[]) {
           Tablebases::init(Options["SyzygyPath"]);
           Time.availableNodes = 0;
       }
-      else if (token == "isready")    sync_cout << "readyok" << sync_endl;
+      else if (token == "isready")    sync_info_out << "readyok" << sync_info_endl;
       else if (token == "go")         go(pos, is);
       else if (token == "position")   position(pos, is);
       else if (token == "setoption")  setoption(is);
@@ -198,8 +216,8 @@ void UCI::loop(int argc, char* argv[]) {
       // Additional custom non-UCI commands, useful for debugging
       else if (token == "flip")       pos.flip();
       else if (token == "bench")      benchmark(pos, is);
-      else if (token == "d")          sync_cout << pos << sync_endl;
-      else if (token == "eval")       sync_cout << Eval::trace(pos) << sync_endl;
+      else if (token == "d")          sync_info_out << pos << sync_info_endl;
+      else if (token == "eval")       sync_info_out << Eval::trace(pos) << sync_info_endl;
       else if (token == "perft")
       {
           int depth;
@@ -212,7 +230,7 @@ void UCI::loop(int argc, char* argv[]) {
           benchmark(pos, ss);
       }
       else
-          sync_cout << "Unknown command: " << cmd << sync_endl;
+          sync_info_out << "Unknown command: " << cmd << sync_info_endl;
 
   } while (token != "quit" && argc == 1); // Passed args have one-shot behaviour
 

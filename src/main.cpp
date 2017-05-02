@@ -18,6 +18,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <cassert>
+#include <cstddef>
 #include <iostream>
 
 #include "bitboard.h"
@@ -28,13 +30,56 @@
 #include "uci.h"
 #include "syzygy/tbprobe.h"
 
+#include <mpi.h>
+
 namespace PSQT {
   void init();
 }
 
-int main(int argc, char* argv[]) {
+int mpi_rank;
+int mpi_size;
+MPI_Datatype mpi_tte_t;
+MPI_Datatype mpi_cluster_t;
 
-  std::cout << engine_info() << std::endl;
+void init_mpi(int *argc, char ***argv) {
+  // Don't include padding in cluster type, since we can leave it uninitialized
+  int threading,
+      tte_blocklengths[] = {1, 1, 1, 1, 1, 1},
+      cluter_blocklengths[] = {ClusterSize};
+  MPI_Aint tte_displacements[6], cluster_displacements[] = {
+    offsetof(Cluster, entry)
+  };
+  MPI_Datatype tte_types[] = {
+    MPI_UINT16_T,
+    MPI_UINT16_T,
+    MPI_INT16_T,
+    MPI_INT16_T,
+    MPI_UINT8_T,
+    MPI_INT8_T
+  }, cluster_types[1];
+
+  MPI_Init_thread(argc, argv, MPI_THREAD_SERIALIZED, &threading);
+  assert(threading == MPI_THREAD_SERIALIZED);
+
+  MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank);
+  MPI_Comm_size(MPI_COMM_WORLD, &mpi_size);
+
+  TTEntry::fill_displacements(tte_displacements);
+  MPI_Type_create_struct(6, tte_blocklengths, tte_displacements, tte_types,
+    &mpi_tte_t);
+  MPI_Type_commit(&mpi_tte_t);
+  cluster_types[0] = mpi_tte_t;
+  MPI_Type_create_struct(1, cluter_blocklengths, cluster_displacements,
+    cluster_types, &mpi_cluster_t);
+  MPI_Type_commit(&mpi_cluster_t);
+}
+
+int main(int argc, char* argv[]) {
+  init_mpi(&argc, &argv);
+
+  if (mpi_rank == 0) {
+    std::cout << engine_info() << std::endl;
+  }
 
   UCI::init(Options);
   PSQT::init();
@@ -50,5 +95,8 @@ int main(int argc, char* argv[]) {
   UCI::loop(argc, argv);
 
   Threads.exit();
+
+  MPI_Finalize();
+
   return 0;
 }

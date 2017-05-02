@@ -35,7 +35,8 @@ PREFIX = /usr/local
 BINDIR = $(PREFIX)/bin
 
 ### Built-in benchmark for pgo-builds
-PGOBENCH = ./$(EXE) bench
+# tt threads limit fenFile limitType
+PGOBENCH = ./$(EXE) bench 128 4 3000 default time
 
 ### Object files
 OBJS = benchmark.o bitbase.o bitboard.o endgame.o evaluate.o main.o \
@@ -65,7 +66,7 @@ OBJS = benchmark.o bitbase.o bitboard.o endgame.o evaluate.o main.o \
 
 ### 2.1. General and architecture defaults
 optimize = yes
-debug = no
+debug = yes
 sanitize = no
 bits = 32
 prefetch = no
@@ -74,6 +75,10 @@ sse = no
 pext = no
 
 ### 2.2 Architecture specific
+
+ifeq ($(ARCH),)
+	ARCH = x86-64-bmi2
+endif
 
 ifeq ($(ARCH),general-32)
 	arch = any
@@ -139,8 +144,8 @@ endif
 
 ### 3.1 Selecting compiler (default = gcc)
 
-CXXFLAGS += -Wall -Wcast-qual -fno-exceptions -fno-rtti -std=c++11 $(EXTRACXXFLAGS)
-DEPENDFLAGS += -std=c++11
+CXXFLAGS += -Wall -fno-exceptions -fno-rtti -std=c++14 $(EXTRACXXFLAGS)
+DEPENDFLAGS += -std=c++14
 LDFLAGS += $(EXTRALDFLAGS)
 
 ifeq ($(COMP),)
@@ -149,7 +154,7 @@ endif
 
 ifeq ($(COMP),gcc)
 	comp=gcc
-	CXX=g++
+	CXX=mpic++
 	CXXFLAGS += -pedantic -Wextra -Wshadow
 
 	ifeq ($(ARCH),armv7)
@@ -255,9 +260,9 @@ endif
 
 ### 3.2.1 Debugging
 ifeq ($(debug),no)
-	CXXFLAGS += -DNDEBUG
+	CXXFLAGS += -DNDEBUG -fomit-frame-pointer
 else
-	CXXFLAGS += -g
+	CXXFLAGS += -g3
 endif
 
 ### 3.2.2 Debugging with undefined behavior sanitizers
@@ -269,7 +274,7 @@ endif
 ### 3.3 Optimization
 ifeq ($(optimize),yes)
 
-	CXXFLAGS += -O3
+	CXXFLAGS += -O3 -march=native
 
 	ifeq ($(comp),gcc)
 
@@ -505,7 +510,7 @@ config-sanity:
 	@test "$(popcnt)" = "yes" || test "$(popcnt)" = "no"
 	@test "$(sse)" = "yes" || test "$(sse)" = "no"
 	@test "$(pext)" = "yes" || test "$(pext)" = "no"
-	@test "$(comp)" = "gcc" || test "$(comp)" = "icc" || test "$(comp)" = "mingw" || test "$(comp)" = "clang"
+	@test "$(comp)" = "mpic++" || test "$(comp)" = "gcc" || test "$(comp)" = "icc" || test "$(comp)" = "mingw" || test "$(comp)" = "clang"
 
 $(EXE): $(OBJS)
 	$(CXX) -o $@ $(OBJS) $(LDFLAGS)
@@ -531,7 +536,7 @@ gcc-profile-make:
 
 gcc-profile-use:
 	$(MAKE) ARCH=$(ARCH) COMP=$(COMP) \
-	EXTRACXXFLAGS='-fprofile-use -fno-peel-loops -fno-tracer' \
+	EXTRACXXFLAGS='-fprofile-use -fprofile-correction -fno-peel-loops -fno-tracer' \
 	EXTRALDFLAGS='-lgcov' \
 	all
 
