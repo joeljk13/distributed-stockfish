@@ -227,7 +227,7 @@ uint64_t Search::perft(Position& pos, Depth depth) {
           pos.undo_move(m);
       }
       if (Root)
-          sync_cout << UCI::move(m, pos.is_chess960()) << ": " << cnt << sync_endl;
+          sync_info_out << UCI::move(m, pos.is_chess960()) << ": " << cnt << sync_info_endl;
   }
   return nodes;
 }
@@ -250,9 +250,9 @@ void MainThread::search() {
   if (rootMoves.empty())
   {
       rootMoves.push_back(RootMove(MOVE_NONE));
-      sync_cout << "info depth 0 score "
+      sync_info_out << "info depth 0 score "
                 << UCI::value(rootPos.checkers() ? -VALUE_MATE : VALUE_DRAW)
-                << sync_endl;
+                << sync_info_endl;
   }
   else
   {
@@ -309,14 +309,14 @@ void MainThread::search() {
 
   // Send new PV when needed
   if (bestThread != this)
-      sync_cout << UCI::pv(bestThread->rootPos, bestThread->completedDepth, -VALUE_INFINITE, VALUE_INFINITE) << sync_endl;
+      sync_info_out << UCI::pv(bestThread->rootPos, bestThread->completedDepth, -VALUE_INFINITE, VALUE_INFINITE) << sync_info_endl;
 
-  sync_cout << "bestmove " << UCI::move(bestThread->rootMoves[0].pv[0], rootPos.is_chess960());
+  sync_info_out << "bestmove " << UCI::move(bestThread->rootMoves[0].pv[0], rootPos.is_chess960());
 
   if (bestThread->rootMoves[0].pv.size() > 1 || bestThread->rootMoves[0].extract_ponder_from_tt(rootPos))
-      std::cout << " ponder " << UCI::move(bestThread->rootMoves[0].pv[1], rootPos.is_chess960());
+      info_out << " ponder " << UCI::move(bestThread->rootMoves[0].pv[1], rootPos.is_chess960());
 
-  std::cout << sync_endl;
+  info_out << sync_info_endl;
 }
 
 
@@ -418,7 +418,7 @@ void Thread::search() {
                   && multiPV == 1
                   && (bestValue <= alpha || bestValue >= beta)
                   && Time.elapsed() > 3000)
-                  sync_cout << UCI::pv(rootPos, rootDepth, alpha, beta) << sync_endl;
+                  sync_info_out << UCI::pv(rootPos, rootDepth, alpha, beta) << sync_info_endl;
 
               // In case of failing low/high increase aspiration window and
               // re-search, otherwise exit the loop.
@@ -453,7 +453,7 @@ void Thread::search() {
               continue;
 
           if (Signals.stop || PVIdx + 1 == multiPV || Time.elapsed() > 3000)
-              sync_cout << UCI::pv(rootPos, rootDepth, alpha, beta) << sync_endl;
+              sync_info_out << UCI::pv(rootPos, rootDepth, alpha, beta) << sync_info_endl;
       }
 
       if (!Signals.stop)
@@ -855,9 +855,9 @@ moves_loop: // When in check search starts from here
       ss->moveCount = ++moveCount;
 
       if (rootNode && thisThread == Threads.main() && Time.elapsed() > 3000)
-          sync_cout << "info depth " << depth / ONE_PLY
+          sync_info_out << "info depth " << depth / ONE_PLY
                     << " currmove " << UCI::move(move, pos.is_chess960())
-                    << " currmovenumber " << moveCount + thisThread->PVIdx << sync_endl;
+                    << " currmovenumber " << moveCount + thisThread->PVIdx << sync_info_endl;
 
       if (PvNode)
           (ss+1)->pv = nullptr;

@@ -47,6 +47,8 @@ typedef bool(*fun3_t)(HANDLE, CONST GROUP_AFFINITY*, PGROUP_AFFINITY);
 
 using namespace std;
 
+InfoStream info_out;
+
 namespace {
 
 /// Version number. If Version is left empty, then compile date in the format
@@ -156,24 +158,6 @@ void dbg_print() {
       cerr << "Total " << means[0] << " Mean "
            << (double)means[1] / means[0] << endl;
 }
-
-
-/// Used to serialize access to std::cout to avoid multiple threads writing at
-/// the same time.
-
-std::ostream& operator<<(std::ostream& os, SyncCout sc) {
-
-  static Mutex m;
-
-  if (sc == IO_LOCK)
-      m.lock();
-
-  if (sc == IO_UNLOCK)
-      m.unlock();
-
-  return os;
-}
-
 
 /// Trampoline helper to avoid moving Logger to misc.h
 void start_logger(const std::string& fname) { Logger::start(fname); }
