@@ -29,6 +29,13 @@
 
 #include "types.h"
 
+#include <mpi.h>
+
+extern int mpi_rank;
+extern int mpi_size;
+extern MPI_Datatype mpi_tte_t;
+extern MPI_Datatype mpi_cluster_t;
+
 const std::string engine_info(bool to_uci = false);
 void prefetch(void* addr);
 void prefetch2(void* addr);

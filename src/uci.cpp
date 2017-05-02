@@ -21,6 +21,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
 
 #include "evaluate.h"
 #include "movegen.h"
@@ -156,8 +157,25 @@ void UCI::loop(int argc, char* argv[]) {
       cmd += std::string(argv[i]) + " ";
 
   do {
-      if (argc == 1 && !getline(cin, cmd)) // Block here waiting for input or EOF
-          cmd = "quit";
+      if (argc == 1) {
+        // Tag 0 used for commands
+        if (mpi_rank == 0) {
+          if (!getline(cin, cmd)) { // Block here waiting for input or EOF
+            cmd = "quit";
+          }
+          for (int i = 1; i < mpi_size; ++i) {
+            MPI_Send(cmd.c_str(), cmd.size(), MPI_CHAR, i, 0, MPI_COMM_WORLD);
+          }
+        } else {
+          MPI_Status status;
+          int count;
+          MPI_Probe(0, 0, MPI_COMM_WORLD, &status);
+          MPI_Get_count(&status, MPI_CHAR, &count);
+          vector<char> v (count);
+          MPI_Recv(v.data(), count, MPI_CHAR, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+          cmd = string(v.begin(), v.end());
+        }
+      }
 
       istringstream is(cmd);
 

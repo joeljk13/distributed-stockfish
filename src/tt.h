@@ -21,8 +21,12 @@
 #ifndef TT_H_INCLUDED
 #define TT_H_INCLUDED
 
+#include <cstddef>
+
 #include "misc.h"
 #include "types.h"
+
+#include <mpi.h>
 
 /// TTEntry struct is the 10 bytes transposition table entry, defined as below:
 ///
@@ -64,9 +68,19 @@ struct TTEntry {
     }
   }
 
+  static void fill_displacements(MPI_Aint tte_displacements[]) {
+    tte_displacements[0] = offsetof(TTEntry, key16);
+    tte_displacements[1] = offsetof(TTEntry, move16);
+    tte_displacements[2] = offsetof(TTEntry, value16);
+    tte_displacements[3] = offsetof(TTEntry, eval16);
+    tte_displacements[4] = offsetof(TTEntry, genBound8);
+    tte_displacements[5] = offsetof(TTEntry, depth8);
+  }
+
 private:
   friend class TranspositionTable;
 
+  // If you modify this, modify the init_mpi function to change the data type!
   uint16_t key16;
   uint16_t move16;
   int16_t  value16;
@@ -75,6 +89,14 @@ private:
   int8_t   depth8;
 };
 
+static const int CacheLineSize = 64;
+static const int ClusterSize = 3;
+static const int ClusterPadding = 2;
+
+struct Cluster {
+  TTEntry entry[ClusterSize];
+  char padding[ClusterPadding]; // Align to a divisor of the cache line size
+};
 
 /// A TranspositionTable consists of a power of 2 number of clusters and each
 /// cluster consists of ClusterSize number of TTEntry. Each non-empty entry
@@ -87,11 +109,6 @@ class TranspositionTable {
 
   static const int CacheLineSize = 64;
   static const int ClusterSize = 3;
-
-  struct Cluster {
-    TTEntry entry[ClusterSize];
-    char padding[2]; // Align to a divisor of the cache line size
-  };
 
   static_assert(CacheLineSize % sizeof(Cluster) == 0, "Cluster size incorrect");
 
