@@ -19,7 +19,9 @@
 */
 
 #include <algorithm> // For std::count
+#include <atomic>
 #include <cassert>
+#include <cstdlib>
 
 #include "movegen.h"
 #include "search.h"
@@ -28,6 +30,9 @@
 #include "syzygy/tbprobe.h"
 
 ThreadPool Threads; // Global object
+
+thread_local int t_id;
+std::atomic<int> ids (0);
 
 /// Thread constructor launches the thread and then waits until it goes to sleep
 /// in idle_loop().
@@ -95,6 +100,10 @@ void Thread::start_searching(bool resume) {
 void Thread::idle_loop() {
 
   WinProcGroup::bindThisThread(idx);
+  t_id = ids++;
+  if (t_id >= THREADS) {
+    std::exit(1);
+  }
 
   while (!exit)
   {

@@ -21,8 +21,30 @@
 #ifndef TT_H_INCLUDED
 #define TT_H_INCLUDED
 
+#include <atomic>
+
 #include "misc.h"
 #include "types.h"
+
+#ifndef THREADS
+#error "THREADS?"
+#endif
+
+#if THREADS <= 8
+#define PADDING 4
+typedef uint8_t thread_flags_t;
+constexpr int CLUSTER_SIZE = 5;
+#elif THREADS <= 16
+#define PADDING 8
+typedef uint16_t thread_flags_t;
+constexpr int CLUSTER_SIZE = 4;
+#elif THREADS <= 32
+#define PADDING 4
+typedef uint32_t thread_flags_t;
+constexpr int CLUSTER_SIZE = 3;
+#else
+#error "invalid THREADS"
+#endif
 
 /// TTEntry struct is the 10 bytes transposition table entry, defined as below:
 ///
@@ -34,6 +56,8 @@
 /// bound type  2 bit
 /// depth       8 bit
 
+extern thread_local int t_id;
+
 struct TTEntry {
 
   Move  move()  const { return (Move )move16; }
@@ -43,8 +67,14 @@ struct TTEntry {
   Bound bound() const { return (Bound)(genBound8 & 0x3); }
 
   void save(Key k, Value v, Bound b, Depth d, Move m, Value ev, uint8_t g) {
+    thread_flags_t new_flag;
 
     assert(d / ONE_PLY * ONE_PLY == d);
+
+    new_flag = 0;
+    if (t_id < THREADS) {
+      new_flag = (thread_flags_t)1 << t_id;
+    }
 
     // Preserve any existing move for the same position
     if (m || (k >> 48) != key16)
@@ -61,12 +91,15 @@ struct TTEntry {
         eval16    = (int16_t)ev;
         genBound8 = (uint8_t)(g | b);
         depth8    = (int8_t)(d / ONE_PLY);
+        write_flags |= new_flag;
     }
   }
 
 private:
   friend class TranspositionTable;
 
+  std::atomic<thread_flags_t> read_flags;
+  std::atomic<thread_flags_t> write_flags;
   uint16_t key16;
   uint16_t move16;
   int16_t  value16;
@@ -86,13 +119,17 @@ private:
 class TranspositionTable {
 
   static const int CacheLineSize = 64;
-  static const int ClusterSize = 3;
+  static const int ClusterSize = CLUSTER_SIZE;
 
   struct Cluster {
     TTEntry entry[ClusterSize];
-    char padding[2]; // Align to a divisor of the cache line size
+#if PADDING > 0
+    char padding[PADDING]; // Align to a divisor of the cache line size
+#endif
   };
 
+  static_assert(sizeof(TTEntry) * CLUSTER_SIZE <= CacheLineSize,
+    "Cluster size too big");
   static_assert(CacheLineSize % sizeof(Cluster) == 0, "Cluster size incorrect");
 
 public:
@@ -103,6 +140,7 @@ public:
   int hashfull() const;
   void resize(size_t mbSize);
   void clear();
+  void print_flags() const;
 
   // The lowest order bits of the key are used to get the index of the cluster
   TTEntry* first_entry(const Key key) const {

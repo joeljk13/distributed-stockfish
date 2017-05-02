@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+for threads in 32; do
+    make clean MYFLAGS="-DTHREADS=$threads" && make build ARCH=x86-64-modern \
+        MYFLAGS="-DTHREADS=$threads"
+
+    for mins in 1 2 3 5 10 15 30; do
+        (
+            echo uci
+            echo setoption name Hash value 16384
+            echo ucinewgame
+            echo position startpos
+            echo isready
+            sleep 15
+            echo go movetime $(($mins * 60000))
+            sleep $(($mins * 60 + 15))
+            echo TT
+        ) | ./stockfish | xz -T $((72 - $threads)) -9e >/localdisk/jkottas/STOCKFISH-$threads-$mins.xz
+    done
+done

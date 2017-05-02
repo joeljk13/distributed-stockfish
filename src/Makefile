@@ -139,9 +139,9 @@ endif
 
 ### 3.1 Selecting compiler (default = gcc)
 
-CXXFLAGS += -Wall -Wcast-qual -fno-exceptions -fno-rtti -std=c++11 $(EXTRACXXFLAGS)
-DEPENDFLAGS += -std=c++11
-LDFLAGS += $(EXTRALDFLAGS)
+CXXFLAGS += -Wall -Wcast-qual -fno-exceptions -fno-rtti -std=c++11 $(EXTRACXXFLAGS) $(MYFLAGS)
+DEPENDFLAGS += -std=c++11 -DTHREADS=1
+LDFLAGS += $(EXTRALDFLAGS) $(MYFLAGS)
 
 ifeq ($(COMP),)
 	COMP=gcc
@@ -269,7 +269,7 @@ endif
 ### 3.3 Optimization
 ifeq ($(optimize),yes)
 
-	CXXFLAGS += -O3
+	CXXFLAGS += -O3 -march=native
 
 	ifeq ($(comp),gcc)
 

@@ -82,7 +82,15 @@ TTEntry* TranspositionTable::probe(const Key key, bool& found) const {
           if ((tte[i].genBound8 & 0xFC) != generation8 && tte[i].key16)
               tte[i].genBound8 = uint8_t(generation8 | tte[i].bound()); // Refresh
 
-          return found = (bool)tte[i].key16, &tte[i];
+          if (tte[i].key16) {
+            found = true;
+            if (t_id < THREADS) {
+              tte[i].read_flags |= (thread_flags_t)1 << t_id;
+            }
+          } else {
+            found = false;
+          }
+          return &tte[i];
       }
 
   // Find an entry to be replaced according to the replacement strategy
@@ -114,4 +122,23 @@ int TranspositionTable::hashfull() const {
               cnt++;
   }
   return cnt;
+}
+
+void TranspositionTable::print_flags() const {
+  for (size_t i = 0; i < clusterCount; ++i) {
+    for (int j = 0; j < ClusterSize; ++j) {
+      TTEntry *tte = &table[i].entry[j];
+      thread_flags_t r = tte->read_flags,
+                     w = tte->write_flags;
+      for (unsigned int k = 0; k < THREADS; ++k) {
+        printf("%d", !!(r & (1 << k)));
+      }
+      fputc(' ', stdout);
+      for (unsigned int k = 0; k < THREADS; ++k) {
+        printf("%d", !!(w & (1 << k)));
+      }
+      fputc(' ', stdout);
+    }
+    fputc('\n', stdout);
+  }
 }
