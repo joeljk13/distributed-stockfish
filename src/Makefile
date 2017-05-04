@@ -75,6 +75,10 @@ pext = no
 
 ### 2.2 Architecture specific
 
+ifeq ($(ARCH),)
+	ARCH = x86-64-bmi2
+endif
+
 ifeq ($(ARCH),general-32)
 	arch = any
 endif
@@ -269,7 +273,7 @@ endif
 ### 3.3 Optimization
 ifeq ($(optimize),yes)
 
-	CXXFLAGS += -O3
+	CXXFLAGS += -O3 -march=native
 
 	ifeq ($(comp),gcc)
 
