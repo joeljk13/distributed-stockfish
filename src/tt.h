@@ -21,6 +21,7 @@
 #ifndef TT_H_INCLUDED
 #define TT_H_INCLUDED
 
+#include <cassert>
 #include <cstddef>
 
 #include "misc.h"
@@ -100,10 +101,16 @@ struct Cluster {
 };
 
 struct DistTTEntry {
-  TTEntry *tte;
-  int rank;
+  TTEntry* tte;
   uint16_t key;
+  uint16_t rank;
   void save(Cluster&);
+private:
+  static const int MaxBuffer = 1024;
+  static size_t buffer_size;
+  static Cluster cluster_buffer[MaxBuffer];
+  static uint16_t key_buffer[MaxBuffer];
+  static uint16_t rank_buffer[MaxBuffer];
 };
 
 /// A TranspositionTable consists of a power of 2 number of clusters and each
@@ -117,8 +124,15 @@ class TranspositionTable {
 
   static const int CacheLineSize = 64;
   static const int ClusterSize = 3;
+  static const int CacheCount = 1024;
 
   static_assert(CacheLineSize % sizeof(Cluster) == 0, "Cluster size incorrect");
+
+  void check_keys() const {
+    for (size_t i = 0; i < clusterCount; ++i) {
+      assert(table[i].key == i);
+    }
+  }
 
 public:
  ~TranspositionTable() { }
@@ -137,7 +151,9 @@ public:
 private:
   size_t clusterCount;
   Cluster* table;
+  Cluster* cache;
   void* mem;
+  void* mem2;
   uint8_t generation8; // Size must be not bigger than TTEntry::genBound8
 };
 
