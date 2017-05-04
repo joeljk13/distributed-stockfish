@@ -3,3 +3,4 @@ stockfish
 .depend
 tags
 cscope.out
+report/pdf-aux
