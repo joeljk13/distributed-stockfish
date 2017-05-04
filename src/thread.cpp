@@ -29,6 +29,11 @@
 
 ThreadPool Threads; // Global object
 
+thread_local int t_id;
+size_t update_counts[THREADS * 128] = {0},
+       total_counts[THREADS * 128] = {0};
+std::atomic<int> ids (0);
+
 /// Thread constructor launches the thread and then waits until it goes to sleep
 /// in idle_loop().
 
@@ -95,6 +100,7 @@ void Thread::start_searching(bool resume) {
 void Thread::idle_loop() {
 
   WinProcGroup::bindThisThread(idx);
+  t_id = ids++;
 
   while (!exit)
   {

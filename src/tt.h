@@ -34,6 +34,9 @@
 /// bound type  2 bit
 /// depth       8 bit
 
+extern thread_local int t_id;
+extern size_t update_counts[THREADS * 128], total_counts[THREADS * 128];
+
 struct TTEntry {
 
   Move  move()  const { return (Move )move16; }
@@ -87,6 +90,7 @@ class TranspositionTable {
 
   static const int CacheLineSize = 64;
   static const int ClusterSize = 3;
+  static const int CacheSize = 32;
 
   struct Cluster {
     TTEntry entry[ClusterSize];
@@ -99,7 +103,7 @@ public:
  ~TranspositionTable() { free(mem); }
   void new_search() { generation8 += 4; } // Lower 2 bits are used by Bound
   uint8_t generation() const { return generation8; }
-  TTEntry* probe(const Key key, bool& found) const;
+  TTEntry* probe(const Key key, bool& found);
   int hashfull() const;
   void resize(size_t mbSize);
   void clear();
@@ -114,6 +118,8 @@ private:
   Cluster* table;
   void* mem;
   uint8_t generation8; // Size must be not bigger than TTEntry::genBound8
+
+  Key cache[THREADS][CacheSize + 128];
 };
 
 extern TranspositionTable TT;

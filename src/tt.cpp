@@ -33,6 +33,8 @@ TranspositionTable TT; // Our global transposition table
 
 void TranspositionTable::resize(size_t mbSize) {
 
+  memset(cache, 0, sizeof(cache));
+
   size_t newClusterCount = size_t(1) << msb((mbSize * 1024 * 1024) / sizeof(Cluster));
 
   if (newClusterCount == clusterCount)
@@ -60,6 +62,7 @@ void TranspositionTable::resize(size_t mbSize) {
 
 void TranspositionTable::clear() {
 
+  memset(cache, 0, sizeof(cache));
   std::memset(table, 0, clusterCount * sizeof(Cluster));
 }
 
@@ -71,7 +74,21 @@ void TranspositionTable::clear() {
 /// minus 8 times its relative age. TTEntry t1 is considered more valuable than
 /// TTEntry t2 if its replace value is greater than that of t2.
 
-TTEntry* TranspositionTable::probe(const Key key, bool& found) const {
+TTEntry* TranspositionTable::probe(const Key key, bool& found) {
+
+  Key *mycache = &cache[t_id][0];
+  for (size_t i = 0; i < CacheSize; ++i) {
+    if (!mycache[i]) {
+      break;
+    }
+
+    if (mycache[i] == key) {
+      ++update_counts[t_id * 128];
+    }
+    memmove(mycache + 1, mycache, CacheSize * sizeof(mycache[0]));
+  }
+  mycache[0] = key;
+  ++total_counts[t_id * 128];
 
   TTEntry* const tte = first_entry(key);
   const uint16_t key16 = key >> 48;  // Use the high 16 bits as key inside the cluster
