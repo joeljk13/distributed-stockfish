@@ -96,7 +96,7 @@ static const int ClusterPadding = 2;
 
 struct Cluster {
   TTEntry entry[ClusterSize];
-  char padding[ClusterPadding]; // Align to a divisor of the cache line size
+  uint16_t key;
 };
 
 /// A TranspositionTable consists of a power of 2 number of clusters and each
