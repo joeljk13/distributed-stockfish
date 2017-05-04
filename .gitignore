@@ -1,3 +1,4 @@
 *.o
 stockfish
 .depend
+report/pdf-aux
