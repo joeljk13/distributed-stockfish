@@ -96,21 +96,7 @@ static const int ClusterPadding = 2;
 
 struct Cluster {
   TTEntry entry[ClusterSize];
-  uint16_t key;
-  // char padding[ClusterPadding]; // Align to a divisor of the cache line size
-};
-
-struct DistTTEntry {
-  TTEntry* tte;
-  uint16_t key;
-  uint16_t rank;
-  void save(Cluster&);
-private:
-  static const int MaxBuffer = 1024;
-  static size_t buffer_size;
-  static Cluster cluster_buffer[MaxBuffer];
-  static uint16_t key_buffer[MaxBuffer];
-  static uint16_t rank_buffer[MaxBuffer];
+  char padding[ClusterPadding]; // Align to a divisor of the cache line size
 };
 
 /// A TranspositionTable consists of a power of 2 number of clusters and each
@@ -135,10 +121,10 @@ class TranspositionTable {
   }
 
 public:
- ~TranspositionTable() { }
+ ~TranspositionTable() { free(mem); }
   void new_search() { generation8 += 4; } // Lower 2 bits are used by Bound
   uint8_t generation() const { return generation8; }
-  DistTTEntry probe(const Key key, bool& found, Cluster& cluster_buf) const;
+  TTEntry* probe(const Key key, bool& found) const;
   int hashfull() const;
   void resize(size_t mbSize);
   void clear();

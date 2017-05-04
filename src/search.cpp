@@ -543,8 +543,6 @@ namespace {
 
     Move pv[MAX_PLY+1], quietsSearched[64];
     StateInfo st;
-    DistTTEntry dtte;
-    Cluster cluster_buf;
     TTEntry* tte;
     Key posKey;
     Move ttMove, move, excludedMove, bestMove;
@@ -617,8 +615,7 @@ namespace {
     // position key in case of an excluded move.
     excludedMove = ss->excludedMove;
     posKey = pos.key() ^ Key(excludedMove);
-    dtte = TT.probe(posKey, ttHit, cluster_buf);
-    tte = dtte.tte;
+    tte = TT.probe(posKey, ttHit);
     ttValue = ttHit ? value_from_tt(tte->value(), ss->ply) : VALUE_NONE;
     ttMove =  rootNode ? thisThread->rootMoves[thisThread->PVIdx].pv[0]
             : ttHit    ? tte->move() : MOVE_NONE;
@@ -680,7 +677,6 @@ namespace {
                 tte->save(posKey, value_to_tt(value, ss->ply), BOUND_EXACT,
                           std::min(DEPTH_MAX - ONE_PLY, depth + 6 * ONE_PLY),
                           MOVE_NONE, VALUE_NONE, TT.generation());
-                dtte.save(cluster_buf);
 
                 return value;
             }
@@ -713,7 +709,6 @@ namespace {
 
         tte->save(posKey, VALUE_NONE, BOUND_NONE, DEPTH_NONE, MOVE_NONE,
                   ss->staticEval, TT.generation());
-        dtte.save(cluster_buf);
     }
 
     if (skipEarlyPruning)
@@ -816,8 +811,7 @@ namespace {
         Depth d = (3 * depth / (4 * ONE_PLY) - 2) * ONE_PLY;
         search<NT>(pos, ss, alpha, beta, d, cutNode, true);
 
-        dtte = TT.probe(posKey, ttHit, cluster_buf);
-        tte = dtte.tte;
+        tte = TT.probe(posKey, ttHit);
         ttMove = ttHit ? tte->move() : MOVE_NONE;
     }
 
@@ -1137,13 +1131,11 @@ moves_loop: // When in check search starts from here
              && is_ok((ss-1)->currentMove))
         update_cm_stats(ss-1, pos.piece_on(prevSq), prevSq, stat_bonus(depth));
 
-    if (!excludedMove) {
+    if (!excludedMove)
         tte->save(posKey, value_to_tt(bestValue, ss->ply),
                   bestValue >= beta ? BOUND_LOWER :
                   PvNode && bestMove ? BOUND_EXACT : BOUND_UPPER,
                   depth, bestMove, ss->staticEval, TT.generation());
-        dtte.save(cluster_buf);
-    }
 
     assert(bestValue > -VALUE_INFINITE && bestValue < VALUE_INFINITE);
 
@@ -1167,8 +1159,6 @@ moves_loop: // When in check search starts from here
 
     Move pv[MAX_PLY+1];
     StateInfo st;
-    DistTTEntry dtte;
-    Cluster cluster_buf;
     TTEntry* tte;
     Key posKey;
     Move ttMove, move, bestMove;
@@ -1201,8 +1191,7 @@ moves_loop: // When in check search starts from here
 
     // Transposition table lookup
     posKey = pos.key();
-    dtte = TT.probe(posKey, ttHit, cluster_buf);
-    tte = dtte.tte;
+    tte = TT.probe(posKey, ttHit);
     ttMove = ttHit ? tte->move() : MOVE_NONE;
     ttValue = ttHit ? value_from_tt(tte->value(), ss->ply) : VALUE_NONE;
 
@@ -1241,11 +1230,9 @@ moves_loop: // When in check search starts from here
         // Stand pat. Return immediately if static value is at least beta
         if (bestValue >= beta)
         {
-            if (!ttHit) {
+            if (!ttHit)
                 tte->save(pos.key(), value_to_tt(bestValue, ss->ply), BOUND_LOWER,
                           DEPTH_NONE, MOVE_NONE, ss->staticEval, TT.generation());
-                dtte.save(cluster_buf);
-            }
 
             return bestValue;
         }
@@ -1342,7 +1329,6 @@ moves_loop: // When in check search starts from here
               {
                   tte->save(posKey, value_to_tt(value, ss->ply), BOUND_LOWER,
                             ttDepth, move, ss->staticEval, TT.generation());
-                  dtte.save(cluster_buf);
 
                   return value;
               }
@@ -1358,7 +1344,6 @@ moves_loop: // When in check search starts from here
     tte->save(posKey, value_to_tt(bestValue, ss->ply),
               PvNode && bestValue > oldAlpha ? BOUND_EXACT : BOUND_UPPER,
               ttDepth, bestMove, ss->staticEval, TT.generation());
-    dtte.save(cluster_buf);
 
     assert(bestValue > -VALUE_INFINITE && bestValue < VALUE_INFINITE);
 
@@ -1577,9 +1562,7 @@ bool RootMove::extract_ponder_from_tt(Position& pos) {
         return false;
 
     pos.do_move(pv[0], st);
-    Cluster cluster_buf;
-    DistTTEntry dtte = TT.probe(pos.key(), ttHit, cluster_buf);
-    TTEntry* tte = dtte.tte;
+    TTEntry* tte = TT.probe(pos.key(), ttHit);
 
     if (ttHit)
     {
