@@ -1,0 +1,48 @@
+\documentclass{article}
+
+% \usepackage[margin=1 in]{geometry}
+\usepackage{float,mathtools,amssymb,amsthm,ifthen}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+
+\newcommand{\probnum}{}
+\newcommand{\probchildren}{}
+\newenvironment{prob}[2][NOCHILDREN]{%
+    \edef\probnum{\probnum #2}%
+    \renewcommand{\probchildren}{#1}%
+    \ifthenelse{\equal{#1}{NOCHILDREN}}{%
+        \vspace{1em}
+        \noindent%
+        \begin{minipage}{\linewidth}
+            \begin{center}
+                \textbf{\textit{\probnum}}%
+            \end{center}%
+            \setlength\parindent{15pt}%
+        }
+        {}%
+}{%
+    \ifthenelse{\equal{\probchildren}{NOCHILDREN}}
+        {\end{minipage}}
+        {}%
+}
+
+\newcommand{\set}[2][]{
+    \left\lbrace
+    #2
+    \ifthenelse{\equal{#1}{}}
+        {}
+        {\; \middle| \; #1}
+    \right\rbrace
+}
+
+\title{Distributed Stockfish}
+\author{Joel Kottas}
+
+\begin{document}
+
+\maketitle
+
+
+\end{document}
