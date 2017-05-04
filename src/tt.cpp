@@ -18,6 +18,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <cstdlib>
 #include <cstring>   // For std::memset
 #include <iostream>
 
@@ -26,6 +27,7 @@
 
 TranspositionTable TT; // Our global transposition table
 
+MPI_Win tt_win;
 
 /// TranspositionTable::resize() sets the size of the transposition table,
 /// measured in megabytes. Transposition table consists of a power of 2 number
@@ -40,8 +42,7 @@ void TranspositionTable::resize(size_t mbSize) {
 
   clusterCount = newClusterCount;
 
-  free(mem);
-  mem = calloc(clusterCount * sizeof(Cluster) + CacheLineSize - 1, 1);
+  MPI_Alloc_mem(clusterCount * sizeof(Cluster) + CacheLineSize - 1, MPI_INFO_NULL, &mem);
 
   if (!mem)
   {
@@ -51,6 +52,13 @@ void TranspositionTable::resize(size_t mbSize) {
   }
 
   table = (Cluster*)((uintptr_t(mem) + CacheLineSize - 1) & ~(CacheLineSize - 1));
+
+  MPI_Win_create(table, clusterCount, sizeof(Cluster), MPI_INFO_NULL,
+    MPI_COMM_WORLD, &tt_win);
+
+  for (size_t i = 0; i < clusterCount; ++i) {
+    table[i].key = i;
+  }
 }
 
 
@@ -60,6 +68,7 @@ void TranspositionTable::resize(size_t mbSize) {
 
 void TranspositionTable::clear() {
 
+  abort();
   std::memset(table, 0, clusterCount * sizeof(Cluster));
 }
 
@@ -71,10 +80,39 @@ void TranspositionTable::clear() {
 /// minus 8 times its relative age. TTEntry t1 is considered more valuable than
 /// TTEntry t2 if its replace value is greater than that of t2.
 
-TTEntry* TranspositionTable::probe(const Key key, bool& found) const {
+void DistTTEntry::save(Cluster &cluster_buf) {
+  assert(cluster_buf.key == key);
+  if (rank == mpi_rank) {
+    return;
+  }
+  MPI_Win_lock(MPI_LOCK_SHARED, rank, 0, tt_win);
+  MPI_Put(&cluster_buf, 1, mpi_cluster_t, rank, key, 1, mpi_cluster_t,
+    tt_win);
+  MPI_Win_unlock(rank, tt_win);
+}
 
-  TTEntry* const tte = first_entry(key);
+DistTTEntry TranspositionTable::probe(const Key key, bool& found, Cluster& cluster_buf) const {
+  DistTTEntry dtte;
   const uint16_t key16 = key >> 48;  // Use the high 16 bits as key inside the cluster
+  const int owner_rank = ((key >> 45) & 7) % mpi_size;
+  TTEntry* tte;
+  const size_t cluster_key = (size_t)key & (clusterCount - 1);
+
+  cluster_buf.key = cluster_key;
+  dtte.key = cluster_key;
+  dtte.rank = owner_rank;
+
+  if (owner_rank == mpi_rank) {
+    tte = first_entry(key);
+    assert(table[cluster_key].key == dtte.key);
+  } else {
+    MPI_Win_lock(MPI_LOCK_SHARED, owner_rank, 0, tt_win);
+    MPI_Get(&cluster_buf, 1, mpi_cluster_t, owner_rank, cluster_key, 1,
+      mpi_cluster_t, tt_win);
+    MPI_Win_unlock(owner_rank, tt_win);
+    assert(cluster_buf.key == dtte.key);
+    tte = &cluster_buf.entry[0];
+  }
 
   for (int i = 0; i < ClusterSize; ++i)
       if (!tte[i].key16 || tte[i].key16 == key16)
@@ -82,7 +120,8 @@ TTEntry* TranspositionTable::probe(const Key key, bool& found) const {
           if ((tte[i].genBound8 & 0xFC) != generation8 && tte[i].key16)
               tte[i].genBound8 = uint8_t(generation8 | tte[i].bound()); // Refresh
 
-          return found = (bool)tte[i].key16, &tte[i];
+          dtte.tte = &tte[i];
+          return found = (bool)tte[i].key16, dtte;
       }
 
   // Find an entry to be replaced according to the replacement strategy
@@ -96,7 +135,8 @@ TTEntry* TranspositionTable::probe(const Key key, bool& found) const {
           >   tte[i].depth8 - ((259 + generation8 -   tte[i].genBound8) & 0xFC) * 2)
           replace = &tte[i];
 
-  return found = false, replace;
+  dtte.tte = replace;
+  return found = false, dtte;
 }
 
 
