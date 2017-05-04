@@ -2,6 +2,8 @@ SHELL = /bin/bash
 
 report.pdf: report.tex
 	pdflatex --output-directory=pdf-aux -interaction nonstopmode report.tex
+	bibtex pdf-aux/report.aux
+	pdflatex --output-directory=pdf-aux -interaction nonstopmode report.tex
 	pdflatex --output-directory=pdf-aux -interaction nonstopmode report.tex
 	ln -sf pdf-aux/report.pdf report.pdf
 	killall -HUP mupdf || true

@@ -1,7 +1,7 @@
 \documentclass{article}
 
 % \usepackage[margin=1 in]{geometry}
-\usepackage{float,mathtools,amssymb,amsthm,ifthen}
+\usepackage{float,mathtools,amssymb,amsthm,ifthen,url}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
@@ -38,11 +38,121 @@
 }
 
 \title{Distributed Stockfish}
-\author{Joel Kottas}
+\author{Joel Kottas and Hassler Thurston}
+\date{}
 
 \begin{document}
 
 \maketitle
 
+\begin{abstract}
+	Since 1997, when Deep Blue first beat Garry Kasparov in a chess match, there has been much
+	interest in improving existing chess engines. However, there are not
+	many distributed implementations of chess engines, partly
+	because there are many challenges to creating independent work to be
+	done among multiple nodes. In the face of this, we take the world's
+	best known open-source chess engine, Stockfish, and create a distributed
+	implementation of it which can run on a high-performance cluster. We
+	discuss the challenges of implementing such a distributed system, our
+	approaches to counteract these challenges, and present our findings.
+\end{abstract}
+
+\section{Introduction}
+As of April 15, 2017, Stockfish\cite{Stockfish} is currently the top performing
+chess engine in existence, and the only chess engine in the top three whose
+source code is freely available\cite{ChessStandings}. The current best
+performing version of Stockfish is massively parallelized but not distributed,
+and we seek to explore whether a distributed implementation of Stockfish can
+outperform the current state-of-the-art implementation. Under the hood,
+Stockfish recursively searches chess positions using a variant of an alpha-beta
+pruning algorithm, using a shared lookup table (transposition table) to
+store a map between previously searched board positions and their heuristic
+evaluations. We describe the relevant parts of the Stockfish implementation in
+Section~\ref{Overview}.
+
+Many challenges arise when attempting to modify the
+existing Stockfish algorithm to perform well on a cluster of machines.
+Deciding how to split up the work among nodes when performing an alpha-beta game
+tree search is non-trivial, as the latency of the round-trip time between nodes
+may become significant. We discuss these challenges more in
+Section~\ref{Overview}.
+
+We then present and compare a number of distributed modifications of Stockfish
+using OpenMPI\cite{OpenMPI}, an interface which allows processes in a distributed system to
+send and receive messages from one another, and allows remote memory accesses
+between computers. The overhead of initializing a MapReduce job and the
+inherent difficulty in assigning non-overlapping board states to MapReduce tasks
+makes a MapReduce implementation for this problem infeasible. In addition,
+message-passing gives us greater flexibility when designing, implementing, and
+comparing different distributed prototypes. These prototypes will be discussed in
+Section~\ref{Algorithms}, and comparisons discussed in Section~\ref{Results}.
+
+TODO: write last paragraph of introduction.
+
+\section{Overview and Related Research} \label{Overview}
+Given a board position in chess, an algorithm would like to return the move in
+that position which maximizes winning chances. Since the total number of chess
+positions is infeasible to compute~\cite{???}, Stockfish uses heuristic
+functions to evaluate a board position which it cannot afford to search, to create
+an ordering of the most promising moves to search in a given position, and to
+decide whether a given board position needs to be searched further. Because
+improving the heuristic functions is beyond the scope of this project, we will
+not consider or modify them. However, it is important to note that with these
+heuristics in place, Stockfish is able to decrease the average branching
+factor\footnote{average number of moves to search, given a board position} from
+about 35 to less than two\cite{???}.
+
+Transpositions in chess are quite common, or identical board positions which can
+be reached by more than one move order. To avoid evaluating the same position
+twice, Stockfish employs a transposition table, or a map from board positions to
+Stockfish's evaluation of that position. The key for each board position is a lossy 64-bit
+Zobrist hash\cite{Zobrist}, which has the property that generated keys are
+indistinguishable from a uniform distribution. Stockfish resizes its hash table
+in sizes which are powers of two, and implements small separately-chained buckets
+(called clusters), which have sizes that correspond to the size of a hardware
+cache line. We have found through empirical
+analysis\ref{fig:writes} that not only does each thread of a multi-threaded Stockfish
+implementation accesses 99\% of the hash table entries per (TODO: time), but
+most of the accesses to the hash table are also writes. As such, Stockfish
+chooses to not synchronize the transposition table, instead incurring
+the small probability of bogus data in its transposition table in favor of
+searching positions to a greater depth in the same amount of time.
+
+\subsection{Parallel Alpha-Beta Search}
+Two primary methods have been proposed to do distributed alpha-beta search. The
+Younger Brothers Wait Concept (YBWC)~\cite{YBWC} involves searching the most
+promising move first (the principal variation) to establish bounds on alpha and
+beta. After establishing these bounds, worker nodes may then start to examine sibling
+nodes of the principal variation line, in order of decreasing depth.
+Figure~\ref{fig:YBWC} for more information. Younger Brothers has been used
+extensively, and was the primary parallel game tree search algorithm used in
+Stockfish until January 2016. We decided not to implement a Younger Brothers
+implementation for this reason.
+
+Lazy SMP\footnote{Shared-Memory Parallelism} involves worker nodes searching the
+same starting position at different depths and with different move
+orders~\cite{LazySMP}.
+With high probability, each worker will seek to evaluate a given position at
+slightly different times, which means that it is highly likely that subsequent
+threads can look up the value of that position in the transposition table. All
+of our distributed implementations of Stockfish employ a variant of Lazy SMP.
+
+\subsection{Distributed Chess Engines}
+- Jonny
+- look in bookmarks
+
+\section{Algorithms} \label{Algorithms}
+
+\section{Results} \label{Results}
+asdf
+
+\section{Conclusion}
+
+
+\pagebreak
+\pagestyle{empty}
+
+\bibliographystyle{plain}
+\bibliography{report}
 
 \end{document}
