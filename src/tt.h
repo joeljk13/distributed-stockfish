@@ -124,7 +124,7 @@ class TranspositionTable {
 
   static const int CacheLineSize = 64;
   static const int ClusterSize = 3;
-  static const int CacheCount = 1024;
+  static const int CacheCount = 16384;
 
   static_assert(CacheLineSize % sizeof(Cluster) == 0, "Cluster size incorrect");
 
