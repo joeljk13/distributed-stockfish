@@ -1,3 +1,5 @@
 *.o
 stockfish
 .depend
+tags
+cscope.out
