@@ -90,6 +90,18 @@ private:
   int8_t   depth8;
 };
 
+// Result of evaluation of a position, that another node wants to send to
+// Master. Called FullTTEntry because it sends the full key.
+struct FullTTEntry {
+    // If you modify this, modify the init_mpi function to change the data type!
+    uint64_t key;
+    uint16_t move16;
+    int16_t value16;
+    int16_t eval16;
+    uint8_t genBound8;
+    int8_t depth8;
+}
+
 static const int CacheLineSize = 64;
 static const int ClusterSize = 3;
 static const int ClusterPadding = 2;

@@ -79,6 +79,7 @@ public:
 
 struct MainThread : public Thread {
   virtual void search();
+  virtual void masterProtocol();
 
   bool easyMovePlayed, failedLow;
   double bestMoveChanges;

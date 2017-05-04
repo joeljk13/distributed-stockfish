@@ -38,6 +38,12 @@ extern int mpi_size;
 extern MPI_Datatype mpi_tte_t;
 extern MPI_Datatype mpi_cluster_t;
 
+enum MPI_TAGS : int {
+    TAG_UCI,
+    TAG_MOVE_REQUEST,
+    TAG_MOVE_RESULT
+}
+
 const std::string engine_info(bool to_uci = false);
 void prefetch(void* addr);
 void prefetch2(void* addr);

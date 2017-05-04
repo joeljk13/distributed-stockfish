@@ -39,15 +39,24 @@ namespace PSQT {
 int mpi_rank;
 int mpi_size;
 MPI_Datatype mpi_tte_t;
+MPI_Datatype mpi_full_tte_t;
 MPI_Datatype mpi_cluster_t;
 
 void init_mpi(int *argc, char ***argv) {
   // Don't include padding in cluster type, since we can leave it uninitialized
   int threading,
       tte_blocklengths[] = {1, 1, 1, 1, 1, 1},
-      cluter_blocklengths[] = {ClusterSize};
-  MPI_Aint tte_displacements[6], cluster_displacements[] = {
-    offsetof(Cluster, entry)
+      cluter_blocklengths[] = {ClusterSize, 1};
+  MPI_Aint tte_displacements[6], full_tte_displacements[6] = {
+    offsetof(FullTTEntry, key),
+    offsetof(FullTTEntry, move16),
+    offsetof(FullTTEntry, value16),
+    offsetof(FullTTEntry, eval16),
+    offsetof(FullTTEntry, genBound8),
+    offsetof(FullTTEntry, depth8)
+  }, cluster_displacements[] = {
+    offsetof(Cluster, entry),
+    offsetof(Cluster, key)
   };
   MPI_Datatype tte_types[] = {
     MPI_UINT16_T,
@@ -56,7 +65,15 @@ void init_mpi(int *argc, char ***argv) {
     MPI_INT16_T,
     MPI_UINT8_T,
     MPI_INT8_T
-  }, cluster_types[1];
+  }, cluster_types[2];
+  MPI_Datatype full_tte_types[] = {
+    MPI_UINT64_T,
+    MPI_UINT16_T,
+    MPI_INT16_T,
+    MPI_INT16_T,
+    MPI_UINT8_T,
+    MPI_INT8_T
+  };
 
   MPI_Init_thread(argc, argv, MPI_THREAD_SERIALIZED, &threading);
   assert(threading == MPI_THREAD_SERIALIZED);
@@ -67,7 +84,10 @@ void init_mpi(int *argc, char ***argv) {
   TTEntry::fill_displacements(tte_displacements);
   MPI_Type_create_struct(6, tte_blocklengths, tte_displacements, tte_types,
     &mpi_tte_t);
+  MPI_Type_create_struct(6, tte_blocklengths, full_tte_displacements, full_tte_types,
+    &mpi_full_tte_t);
   MPI_Type_commit(&mpi_tte_t);
+  MPI_Type_commit(&mpi_full_tte_t);
   cluster_types[0] = mpi_tte_t;
   MPI_Type_create_struct(1, cluter_blocklengths, cluster_displacements,
     cluster_types, &mpi_cluster_t);

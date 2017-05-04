@@ -105,6 +105,11 @@ void init();
 void clear();
 template<bool Root = true> uint64_t perft(Position& pos, Depth depth);
 
+// buffer which stores arrays of moves to be searched by other threads.
+int MOVEBUF_SIZE = 1024;
+int MAX_MOVEBUF_MOVES = 32;
+Move movebuf[MOVEBUF_SIZE][MAX_MOVEBUF_MOVES];
+
 } // namespace Search
 
 #endif // #ifndef SEARCH_H_INCLUDED

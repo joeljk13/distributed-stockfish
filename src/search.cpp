@@ -260,7 +260,8 @@ void MainThread::search() {
           if (th != this)
               th->start_searching();
 
-      Thread::search(); // Let's start searching!
+      // initialize the master's communication mechanism
+      this->masterProtocol();
   }
 
   // When playing in 'nodes as time' mode, subtract the searched nodes from
@@ -317,6 +318,30 @@ void MainThread::search() {
       info_out << " ponder " << UCI::move(bestThread->rootMoves[0].pv[1], rootPos.is_chess960());
 
   info_out << sync_info_endl;
+}
+
+/// MainThread::masterProtocol() is the protocol that master threads will follow
+/// to communicate with one another when searching. In some algorithms, these
+/// master nodes will continuously pass data from the transposition table to other
+/// threads. In others, they will send and receive evaluation requests from the
+/// master node.
+
+void MainThread::masterProtocol() {
+    // if we're on the master node, send out requests to other master nodes
+    if (mpi_rank == 0) {
+	// do an initial search from the root position and send principal
+	// variations to other masters
+	// NOTE: This method will terminate early because we're the master
+	Thread::search();
+	// now just wait for other master nodes to give you data on the best
+	// move
+	while (true) {
+	    FullTTEntry ftte;
+	    MPI_Recv(&ftte, 1, mpi_full_tte_t, MPI_ANY_SOURCE, MPI_TAGS::TAG_MOVE_RESULT, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+	    // put a found TT entry into our transposition table
+	    TT.save(ftte.key, ftte.value, ftte.
+	}
+    }
 }
 
 
