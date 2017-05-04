@@ -40,6 +40,7 @@ int mpi_rank;
 int mpi_size;
 MPI_Datatype mpi_tte_t;
 MPI_Datatype mpi_cluster_t;
+std::mutex mpi_lock;
 
 void init_mpi(int *argc, char ***argv) {
   // Don't include padding in cluster type, since we can leave it uninitialized
@@ -59,8 +60,11 @@ void init_mpi(int *argc, char ***argv) {
     MPI_INT8_T
   }, cluster_types[2];
 
-  MPI_Init_thread(argc, argv, MPI_THREAD_MULTIPLE, &threading);
-  assert(threading == MPI_THREAD_MULTIPLE);
+  // MPI_Init_thread(argc, argv, MPI_THREAD_MULTIPLE, &threading);
+  // assert(threading == MPI_THREAD_MULTIPLE);
+
+  MPI_Init_thread(argc, argv, MPI_THREAD_SERIALIZED, &threading);
+  assert(threading == MPI_THREAD_SERIALIZED);
 
   MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank);
   MPI_Comm_size(MPI_COMM_WORLD, &mpi_size);

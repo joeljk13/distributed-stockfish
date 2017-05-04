@@ -163,16 +163,20 @@ void UCI::loop(int argc, char* argv[]) {
           if (!getline(cin, cmd)) { // Block here waiting for input or EOF
             cmd = "quit";
           }
+          mpi_lock.lock();
           for (int i = 1; i < mpi_size; ++i) {
             MPI_Send(cmd.c_str(), cmd.size(), MPI_CHAR, i, 0, MPI_COMM_WORLD);
           }
+          mpi_lock.unlock();
         } else {
           MPI_Status status;
           int count;
+          mpi_lock.lock();
           MPI_Probe(0, 0, MPI_COMM_WORLD, &status);
           MPI_Get_count(&status, MPI_CHAR, &count);
           vector<char> v (count);
           MPI_Recv(v.data(), count, MPI_CHAR, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+          mpi_lock.unlock();
           cmd = string(v.begin(), v.end());
         }
       }

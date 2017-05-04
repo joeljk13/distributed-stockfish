@@ -23,6 +23,7 @@
 #include <iostream>
 
 #include "bitboard.h"
+#include "misc.h"
 #include "tt.h"
 
 TranspositionTable TT; // Our global transposition table
@@ -42,6 +43,7 @@ void TranspositionTable::resize(size_t mbSize) {
 
   clusterCount = newClusterCount;
 
+  mpi_lock.lock();
   MPI_Alloc_mem(clusterCount * sizeof(Cluster) + CacheLineSize - 1, MPI_INFO_NULL, &mem);
 
   if (!mem)
@@ -56,6 +58,7 @@ void TranspositionTable::resize(size_t mbSize) {
 
   MPI_Win_create(table, clusterCount, sizeof(Cluster), MPI_INFO_NULL,
     MPI_COMM_WORLD, &tt_win);
+  mpi_lock.unlock();
 
   for (size_t i = 0; i < clusterCount; ++i) {
     table[i].key = i;
@@ -105,6 +108,7 @@ void DistTTEntry::save(Cluster &cluster_buf) {
     return;
   }
 
+  mpi_lock.lock();
   buffer_size = 0;
   bool locked[8] = {false};
   for (int i = 0; i < MaxBuffer; ++i) {
@@ -124,6 +128,7 @@ void DistTTEntry::save(Cluster &cluster_buf) {
       MPI_Win_unlock(i, tt_win);
     }
   }
+  mpi_lock.unlock();
 }
 
 DistTTEntry TranspositionTable::probe(const Key key, bool& found, Cluster& cluster_buf) const {
@@ -146,10 +151,12 @@ DistTTEntry TranspositionTable::probe(const Key key, bool& found, Cluster& clust
         return found = true, dtte;
       }
     }
+    mpi_lock.lock();
     MPI_Win_lock(MPI_LOCK_SHARED, owner_rank, 0, tt_win);
     MPI_Get(&cluster_buf, 1, mpi_cluster_t, owner_rank, cluster_key, 1,
       mpi_cluster_t, tt_win);
     MPI_Win_unlock(owner_rank, tt_win);
+    mpi_lock.unlock();
     cluster_buf.key = cluster_key;
     if (cluster_buf.key != dtte.key) {
       check_keys();
