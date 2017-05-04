@@ -259,7 +259,7 @@ endif
 
 ### 3.2.1 Debugging
 ifeq ($(debug),no)
-	CXXFLAGS += -DNDEBUG
+	CXXFLAGS += -DNDEBUG -fomit-frame-pointer
 else
 	CXXFLAGS += -g
 endif
