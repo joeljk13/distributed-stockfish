@@ -41,7 +41,6 @@ namespace PSQT {
 }
 
 namespace Zobrist {
-
   Key psq[PIECE_NB][SQUARE_NB];
   Key enpassant[FILE_NB];
   Key castling[CASTLING_RIGHT_NB];
@@ -373,6 +372,8 @@ void Position::set_state(StateInfo* si) const {
       for (int cnt = 0; cnt < pieceCount[pc]; ++cnt)
           si->materialKey ^= Zobrist::psq[pc][cnt];
   }
+  // replace 3 bits starting at position 17 with irreversible move hashes
+  //si->key = (si->key & keyMask) | (si->pawnKey ^ si->materialKey) & irrMask;
 }
 
 

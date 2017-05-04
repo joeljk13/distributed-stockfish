@@ -79,6 +79,11 @@ public:
   Position& set(const std::string& code, Color c, StateInfo* si);
   const std::string fen() const;
 
+  // Bit masks
+  // Use 3 bits starting at position 17 to put in the irreversible parts 
+  //static const irrMask = 0x0000e00000000000;
+  //static const keyMask = ~irrMask;
+
   // Position representation
   Bitboard pieces() const;
   Bitboard pieces(PieceType pt) const;

@@ -546,7 +546,7 @@ namespace {
     DistTTEntry dtte;
     Cluster cluster_buf;
     TTEntry* tte;
-    Key posKey;
+    Key posKey, pawnKey, materialKey;
     Move ttMove, move, excludedMove, bestMove;
     Depth extension, newDepth;
     Value bestValue, value, ttValue, eval;
@@ -617,7 +617,9 @@ namespace {
     // position key in case of an excluded move.
     excludedMove = ss->excludedMove;
     posKey = pos.key() ^ Key(excludedMove);
-    dtte = TT.probe(posKey, ttHit, cluster_buf);
+    pawnKey = pos.pawn_key();
+    materialKey = pos.material_key();
+    dtte = TT.probe(posKey, pawnKey, materialKey, ttHit, cluster_buf);
     tte = dtte.tte;
     ttValue = ttHit ? value_from_tt(tte->value(), ss->ply) : VALUE_NONE;
     ttMove =  rootNode ? thisThread->rootMoves[thisThread->PVIdx].pv[0]
@@ -816,7 +818,7 @@ namespace {
         Depth d = (3 * depth / (4 * ONE_PLY) - 2) * ONE_PLY;
         search<NT>(pos, ss, alpha, beta, d, cutNode, true);
 
-        dtte = TT.probe(posKey, ttHit, cluster_buf);
+        dtte = TT.probe(posKey, pawnKey, materialKey, ttHit, cluster_buf);
         tte = dtte.tte;
         ttMove = ttHit ? tte->move() : MOVE_NONE;
     }
@@ -1170,7 +1172,7 @@ moves_loop: // When in check search starts from here
     DistTTEntry dtte;
     Cluster cluster_buf;
     TTEntry* tte;
-    Key posKey;
+    Key posKey, pawnKey, materialKey;
     Move ttMove, move, bestMove;
     Value bestValue, value, ttValue, futilityValue, futilityBase, oldAlpha;
     bool ttHit, givesCheck, evasionPrunable;
@@ -1201,7 +1203,9 @@ moves_loop: // When in check search starts from here
 
     // Transposition table lookup
     posKey = pos.key();
-    dtte = TT.probe(posKey, ttHit, cluster_buf);
+    pawnKey = pos.pawn_key();
+    materialKey = pos.material_key();
+    dtte = TT.probe(posKey, pawnKey, materialKey, ttHit, cluster_buf);
     tte = dtte.tte;
     ttMove = ttHit ? tte->move() : MOVE_NONE;
     ttValue = ttHit ? value_from_tt(tte->value(), ss->ply) : VALUE_NONE;
@@ -1578,7 +1582,7 @@ bool RootMove::extract_ponder_from_tt(Position& pos) {
 
     pos.do_move(pv[0], st);
     Cluster cluster_buf;
-    DistTTEntry dtte = TT.probe(pos.key(), ttHit, cluster_buf);
+    DistTTEntry dtte = TT.probe(pos.key(), pos.pawn_key(), pos.material_key(), ttHit, cluster_buf);
     TTEntry* tte = dtte.tte;
 
     if (ttHit)

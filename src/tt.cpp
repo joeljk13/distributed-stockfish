@@ -91,10 +91,12 @@ void DistTTEntry::save(Cluster &cluster_buf) {
   MPI_Win_unlock(rank, tt_win);
 }
 
-DistTTEntry TranspositionTable::probe(const Key key, bool& found, Cluster& cluster_buf) const {
+DistTTEntry TranspositionTable::probe(const Key key, const Key pawnKey, const Key materialKey, bool& found, Cluster& cluster_buf) const {
   DistTTEntry dtte;
-  const uint16_t key16 = key >> 48;  // Use the high 16 bits as key inside the cluster
-  const int owner_rank = ((key >> 45) & 7) % mpi_size;
+  // Use the high 16 bits as key inside the cluster
+  const uint16_t key16 = key >> 48;  
+  // Use the next 3 bits of irreversible keys to determine the owner of the shard
+  const int owner_rank = (((pawnKey ^ materialKey) >> 45) & 7) % mpi_size;
   TTEntry* tte;
   const size_t cluster_key = (size_t)key & (clusterCount - 1);
 

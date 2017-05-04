@@ -124,7 +124,7 @@ public:
  ~TranspositionTable() { }
   void new_search() { generation8 += 4; } // Lower 2 bits are used by Bound
   uint8_t generation() const { return generation8; }
-  DistTTEntry probe(const Key key, bool& found, Cluster& cluster_buf) const;
+  DistTTEntry probe(const Key key, const Key pawnKey, const Key materialKey, bool& found, Cluster& cluster_buf) const;
   int hashfull() const;
   void resize(size_t mbSize);
   void clear();
