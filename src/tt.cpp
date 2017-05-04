@@ -52,6 +52,7 @@ void TranspositionTable::resize(size_t mbSize) {
   }
 
   table = (Cluster*)((uintptr_t(mem) + CacheLineSize - 1) & ~(CacheLineSize - 1));
+  memset(table, 0, clusterCount * sizeof(Cluster));
 
   MPI_Win_create(table, clusterCount, sizeof(Cluster), MPI_INFO_NULL,
     MPI_COMM_WORLD, &tt_win);
