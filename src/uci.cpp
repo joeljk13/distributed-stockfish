@@ -178,7 +178,8 @@ static string mpi_loop_respond()
     assert(r[0] != MPI_REQUEST_NULL);
     assert(r[1] != MPI_REQUEST_NULL);
     assert(r[2] != MPI_REQUEST_NULL);
-    MPI_Testany(3, r, &index, &flag, &status);
+    int ret = MPI_Testany(3, r, &index, &flag, &status);
+    assert(ret == MPI_SUCCESS);
     if (!flag) {
       usleep(1000);
       continue;
@@ -231,12 +232,14 @@ void UCI::loop(int argc, char* argv[]) {
   for (int i = 1; i < argc; ++i)
       cmd += std::string(argv[i]) + " ";
 
+  if (mpi_rank == 0) {
+    std::thread t (mpi_loop_respond);
+    t.detach();
+  }
+
   do {
       if (argc == 1) {
         if (mpi_rank == 0) {
-          std::thread t (mpi_loop_respond);
-          t.detach();
-
           if (!getline(cin, cmd)) { // Block here waiting for input or EOF
             cmd = "quit";
           }
