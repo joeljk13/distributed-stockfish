@@ -23,6 +23,8 @@
 #include <string>
 #include <vector>
 
+#include <unistd.h>
+
 #include "evaluate.h"
 #include "movegen.h"
 #include "position.h"
@@ -165,17 +167,22 @@ void UCI::loop(int argc, char* argv[]) {
           }
           mpi_lock.lock();
           for (int i = 1; i < mpi_size; ++i) {
-            MPI_Send(cmd.c_str(), cmd.size(), MPI_CHAR, i, 0, MPI_COMM_WORLD);
+            MPI_Send(cmd.c_str(), cmd.size(), MPI_CHAR, i, 1, MPI_COMM_WORLD);
           }
           mpi_lock.unlock();
         } else {
           MPI_Status status;
-          int count;
+          int count, flag = 0;
+          while (!flag) {
+            sleep(1);
+            mpi_lock.lock();
+            MPI_Iprobe(0, 1, MPI_COMM_WORLD, &flag, &status);
+            mpi_lock.unlock();
+          }
           mpi_lock.lock();
-          MPI_Probe(0, 0, MPI_COMM_WORLD, &status);
           MPI_Get_count(&status, MPI_CHAR, &count);
           vector<char> v (count);
-          MPI_Recv(v.data(), count, MPI_CHAR, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+          MPI_Recv(v.data(), count, MPI_CHAR, 0, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
           mpi_lock.unlock();
           cmd = string(v.begin(), v.end());
         }
