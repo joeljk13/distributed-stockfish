@@ -235,22 +235,19 @@ we implemented and tested a number
 of different distributed algorithms for chess game tree search. To test each
 algorithm, we measured the number of milliseconds for the algorithm to finish
 searching the game tree at a given depth, starting from the root position.
-Stockfish does have a built-in testing framework Fishtest~\cite{fishtest},
+Stockfish does have a built-in testing framework Fishtest~\cite{fishtest:code},
 which plays different versions of Stockfish against each other and evaluates
-different versions on a win-draw-loss ratio. Unfortunately, Fishtest proved
-difficult to install and set up correctly on the machines for which we had
-access, and back-of-the-envelope calculations revealed that the amount of time
-to evaluate the pairwise performance of each of our models and achieve
-statistically significant results could be very large. As such, we opted for the
-slightly less accurate heuristic, and look forward to using Fishtest to test our
-models in the future if the time permits.
+different versions on a win-draw-loss ratio. While we were able to install Fishtest 
+on the csug.rochester.edu network, we were unable to run fishtest with our MPI
+implementations. As such, we opted instead for the 
+slightly less accurate time-to-depth heuristic.
 
 We tested each of our models on the Infiniband cluster of machines
-node01, node02, $\hdots$, node06, on the csug.rochester.edu network.
+node03, node04, node05, and node06, on the csug.rochester.edu network.
 Each of the machines has eight Intel Core i7 processors, running at 3.4GHz, with
-an 8KB L1 cache. We ran each of our implementations for 120
+an 8KB L1 cache. We ran each of our implementations for 60
 seconds on the root position, recording the time it took for each iterative
-deepening loop to complete. For each algorithm, we took the median of four-five
+deepening loop to complete. For each algorithm, we took the median of four 
 measurements, as we would like to capture the best measure of central tendency.
 
 The following is a description of each of our algorithms.
@@ -265,7 +262,7 @@ received, the process can then determine if it needs to search the given
 position, or if it can use the previous value attained by another node.
 
 \subsection{Irreversible Transposition Table}
-Given our preliminary findings in Figure~\ref{fig:transtable}, we wanted to
+Given our preliminary findings in Figure~\ref{fig:accesses}, we wanted to
 create a way to more effectively map board positions to nodes. As the current
 Zobrist hash function maps positions to keys uniformly, there is a uniform
 probability that any given transposition table lookup will go to a random node.
@@ -286,6 +283,9 @@ transposition table entries, with three-way associativity. Each time a node
 accesses a position from another node, it puts it in this cache, evicting older
 or less important board positions as appropriate.
 
+\subsection{Transposition Table with Locked Cache}
+TODO
+
 \subsection{Global Lazy SMP}
 Given the success of Lazy SMP in the original Stockfish implementation, we
 wanted to test the efficiency of having all worker nodes perform the Lazy SMP
@@ -298,7 +298,9 @@ we isolate a separate Master thread on each process to be in charge of
 communication. The Master threads attempt to synchronize the transposition table
 by performing a linear scan over the elements in the table, doing an
 {MPI\_Allreduce} to synchronize the transposition table entries for a given
-cluster of entries. If a given cluster of three entries is full, {MPI\_Allreduce}
+cluster of entries. Figure \ref{fig:diagram} visualizes this idea.
+
+If a given cluster of three entries is full, {MPI\_Allreduce}
 keeps the three ``most accurate'' entries, and evicts the rest. The accuracy of
 a given entry is judged as a combination of its age\footnote{how long it has
 been in the transposition table} and its depth\footnote{how deep from this
