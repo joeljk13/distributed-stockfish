@@ -33,6 +33,7 @@
 #include "tt.h"
 #include "uci.h"
 #include "syzygy/tbprobe.h"
+#include "evaluate.h"
 
 using std::string;
 
@@ -853,6 +854,45 @@ void Position::do_move(Move m, StateInfo& newSt, bool givesCheck) {
   assert(pos_is_ok());
 }
 
+std::set<subpos> Position::get_top() {
+  std::set<subpos> subposes;
+  subpos root;
+  root.n_moves = 0;
+  root.eval = Eval::evaluate<false>(*this);
+  subposes.insert(root);
+
+  while (subposes.size() < mpi_size) {
+    for (auto i = subposes.begin(); i != subposes.end(); ++i) {
+      if (subposes.size() >= mpi_size) {
+        break;
+      }
+      subpos s = *i;
+      StateInfo si[128];
+      for (int i = 0; i < s.n_moves; ++i) {
+        do_move(s.moves[i], si[i]);
+      }
+      StateInfo last;
+      for (Move m : MoveList<LEGAL>(*this)) {
+        do_move(m, last);
+        Value eval = Eval::evaluate<false>(*this);
+        undo_move(m);
+        subpos p = s;
+        p.moves[p.n_moves++] = m;
+        p.eval = eval;
+        subposes.insert(p);
+        if (subposes.size() >= mpi_size) {
+          break;
+        }
+      }
+
+      for (int i = s.n_moves - 1; i >= 0; --i) {
+        undo_move(s.moves[i]);
+      }
+    }
+  }
+
+  return subposes;
+}
 
 /// Position::undo_move() unmakes a move. When it returns, the position should
 /// be restored to exactly the same state as before the move was made.

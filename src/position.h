@@ -25,9 +25,11 @@
 #include <deque>
 #include <memory> // For std::unique_ptr
 #include <string>
+#include <set>
 
 #include "bitboard.h"
 #include "types.h"
+
 
 
 /// StateInfo struct stores information needed to restore a Position object to
@@ -65,6 +67,20 @@ typedef std::unique_ptr<std::deque<StateInfo>> StateListPtr;
 /// do_move() and undo_move(), used by the search to update node info when
 /// traversing the search tree.
 class Thread;
+
+struct subpos {
+  Value eval;
+  Move moves[128];
+  int n_moves;
+};
+
+inline bool operator ==(const subpos& a, const subpos& b) {
+  return a.eval == b.eval;
+}
+
+inline bool operator <(const subpos& a, const subpos& b) {
+  return a.eval < b.eval;
+}
 
 class Position {
 public:
@@ -156,6 +172,8 @@ public:
   Score psq_score() const;
   Value non_pawn_material(Color c) const;
   Value non_pawn_material() const;
+
+  std::set<subpos> get_top();
 
   // Position consistency check, for debugging
   bool pos_is_ok(int* failedStep = nullptr) const;

@@ -443,7 +443,7 @@ void Thread::search() {
   // variations to send to worker nodes.
   const size_t ID_DEPTH = DEPTH_MAX;
   if (mainThread) {
-	  ID_DEPTH = 3;
+	  // ID_DEPTH = 3;
   }
   while (   (rootDepth += ONE_PLY) < DEPTH_MAX
          && !Signals.stop
