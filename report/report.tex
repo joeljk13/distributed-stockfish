@@ -206,6 +206,15 @@ challenge if we would like to synchronize the transposition table, and gave us
 more experimental reason to support Stockfish's original design choice of not
 synchronizing the transposition table.
 
+\begin{figure}
+	\includegraphics[width=\textwidth]{../plots/TTmetrics}
+	\caption{Accesses to a 16GB shared Transposition Table, original Stockfish
+	implementation. Each thread writes to a majority of slots in the
+	transposition table, and the vast majority of total accesses to this
+	table are writes.}
+	\label{fig:accesses}
+\end{figure}
+
 Since we expect there to be many more accesses to the transposition tables in a
 distributed implementation, including via MPI calls, we chose to leave the
 transposition tables unsynchronized.

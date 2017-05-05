@@ -1,0 +1,1289 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ALL_EVASIONS	movepick.cpp	/^    EVASION, EVASIONS_INIT, ALL_EVASIONS,$/;"	e	enum:__anon17::Stages	file:
+ALL_PIECES	types.h	/^  ALL_PIECES = 0,$/;"	e	enum:PieceType
+ANY_CASTLING	types.h	/^  ANY_CASTLING = WHITE_OO | WHITE_OOO | BLACK_OO | BLACK_OOO,$/;"	e	enum:CastlingRight
+ARCH	Makefile	/^	ARCH = x86-64-bmi2$/;"	m
+AdjacentFilesBB	bitboard.cpp	/^Bitboard AdjacentFilesBB[FILE_NB];$/;"	v
+Atomic	syzygy/tbprobe.cpp	/^    Atomic(const Atomic& e) { ready = e.ready.load(); } \/\/ MSVC 2013 wants assignment within body$/;"	f	struct:__anon9::Atomic
+Atomic	syzygy/tbprobe.cpp	/^struct Atomic {$/;"	s	namespace:__anon9	file:
+BAD_CAPTURES	movepick.cpp	/^    MAIN_SEARCH, CAPTURES_INIT, GOOD_CAPTURES, KILLERS, COUNTERMOVE, QUIET_INIT, QUIET, BAD_CAPTURES,$/;"	e	enum:__anon17::Stages	file:
+BINDIR	Makefile	/^BINDIR = $(PREFIX)\/bin$/;"	m
+BISHOP	types.h	/^  NO_PIECE_TYPE, PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING,$/;"	e	enum:PieceType
+BITBOARD_H_INCLUDED	bitboard.h	22;"	d
+BLACK	types.h	/^  WHITE, BLACK, NO_COLOR, COLOR_NB = 2$/;"	e	enum:Color
+BLACK_OO	types.h	/^  BLACK_OO  = WHITE_OO << 2,$/;"	e	enum:CastlingRight
+BLACK_OOO	types.h	/^  BLACK_OOO = WHITE_OO << 3,$/;"	e	enum:CastlingRight
+BOUND_EXACT	types.h	/^  BOUND_EXACT = BOUND_UPPER | BOUND_LOWER$/;"	e	enum:Bound
+BOUND_LOWER	types.h	/^  BOUND_LOWER,$/;"	e	enum:Bound
+BOUND_NONE	types.h	/^  BOUND_NONE,$/;"	e	enum:Bound
+BOUND_UPPER	types.h	/^  BOUND_UPPER,$/;"	e	enum:Bound
+BSFTable	bitboard.cpp	/^  Square BSFTable[SQUARE_NB];   \/\/ To implement software bitscan$/;"	m	namespace:__anon19	file:
+B_BISHOP	types.h	/^  B_PAWN = 9, B_KNIGHT, B_BISHOP, B_ROOK, B_QUEEN, B_KING,$/;"	e	enum:Piece
+B_KING	types.h	/^  B_PAWN = 9, B_KNIGHT, B_BISHOP, B_ROOK, B_QUEEN, B_KING,$/;"	e	enum:Piece
+B_KNIGHT	types.h	/^  B_PAWN = 9, B_KNIGHT, B_BISHOP, B_ROOK, B_QUEEN, B_KING,$/;"	e	enum:Piece
+B_PAWN	types.h	/^  B_PAWN = 9, B_KNIGHT, B_BISHOP, B_ROOK, B_QUEEN, B_KING,$/;"	e	enum:Piece
+B_QUEEN	types.h	/^  B_PAWN = 9, B_KNIGHT, B_BISHOP, B_ROOK, B_QUEEN, B_KING,$/;"	e	enum:Piece
+B_ROOK	types.h	/^  B_PAWN = 9, B_KNIGHT, B_BISHOP, B_ROOK, B_QUEEN, B_KING,$/;"	e	enum:Piece
+Backward	pawns.cpp	/^  const Score Backward[] = { S(56, 33), S(41, 19) };$/;"	m	namespace:__anon2	file:
+BetweenBB	bitboard.cpp	/^Bitboard BetweenBB[SQUARE_NB][SQUARE_NB];$/;"	v
+BigEndian	syzygy/tbprobe.cpp	/^enum { BigEndian, LittleEndian };$/;"	e	enum:__anon9::__anon12	file:
+Binomial	syzygy/tbprobe.cpp	/^int Binomial[6][SQUARE_NB];    \/\/ [k][n] k elements from a set of n elements$/;"	m	namespace:__anon9	file:
+BishopAttacks	bitboard.cpp	/^Bitboard* BishopAttacks[SQUARE_NB];$/;"	v
+BishopCheck	evaluate.cpp	/^  const int BishopCheck = 400;$/;"	m	namespace:__anon4	file:
+BishopMagics	bitboard.cpp	/^Bitboard  BishopMagics [SQUARE_NB];$/;"	v
+BishopMasks	bitboard.cpp	/^Bitboard  BishopMasks  [SQUARE_NB];$/;"	v
+BishopPawns	evaluate.cpp	/^  const Score BishopPawns         = S(  8, 12);$/;"	m	namespace:__anon4	file:
+BishopShifts	bitboard.cpp	/^unsigned  BishopShifts [SQUARE_NB];$/;"	v
+BishopTable	bitboard.cpp	/^  Bitboard BishopTable[0x1480]; \/\/ To store bishop attacks$/;"	m	namespace:__anon19	file:
+Bitbases	bitboard.h	/^namespace Bitbases {$/;"	n
+Bitboard	types.h	/^typedef uint64_t Bitboard;$/;"	t
+Bitboards	bitboard.h	/^namespace Bitboards {$/;"	n
+Bonus	psqt.cpp	/^const Score Bonus[][RANK_NB][int(FILE_NB) \/ 2] = {$/;"	m	namespace:PSQT	file:
+Bound	types.h	/^enum Bound {$/;"	g
+CAPTURES	movegen.h	/^  CAPTURES,$/;"	e	enum:GenType
+CAPTURES_INIT	movepick.cpp	/^    MAIN_SEARCH, CAPTURES_INIT, GOOD_CAPTURES, KILLERS, COUNTERMOVE, QUIET_INIT, QUIET, BAD_CAPTURES,$/;"	e	enum:__anon17::Stages	file:
+CASTLING	types.h	/^  CASTLING  = 3 << 14$/;"	e	enum:MoveType
+CASTLING_RIGHT_NB	types.h	/^  CASTLING_RIGHT_NB = 16$/;"	e	enum:CastlingRight
+CASTLING_SIDE_NB	types.h	/^  KING_SIDE, QUEEN_SIDE, CASTLING_SIDE_NB = 2$/;"	e	enum:CastlingSide
+CHANGE_STM	syzygy/tbprobe.h	/^    CHANGE_STM        = -1, \/\/ DTZ should check the other side$/;"	e	enum:Tablebases::ProbeState
+COLOR_NB	types.h	/^  WHITE, BLACK, NO_COLOR, COLOR_NB = 2$/;"	e	enum:Color
+COMP	Makefile	/^	COMP=gcc$/;"	m
+COMPCXX	Makefile	/^	COMPCXX=$(COMPILER)$/;"	m
+COUNTERMOVE	movepick.cpp	/^    MAIN_SEARCH, CAPTURES_INIT, GOOD_CAPTURES, KILLERS, COUNTERMOVE, QUIET_INIT, QUIET, BAD_CAPTURES,$/;"	e	enum:__anon17::Stages	file:
+CXX	Makefile	/^				CXX=i686-w64-mingw32-c++$/;"	m
+CXX	Makefile	/^				CXX=i686-w64-mingw32-c++-posix$/;"	m
+CXX	Makefile	/^				CXX=x86_64-w64-mingw32-c++$/;"	m
+CXX	Makefile	/^				CXX=x86_64-w64-mingw32-c++-posix$/;"	m
+CXX	Makefile	/^		CXX=g++$/;"	m
+CXX	Makefile	/^	CXX=$(COMPCXX)$/;"	m
+CXX	Makefile	/^	CXX=clang++$/;"	m
+CXX	Makefile	/^	CXX=icpc$/;"	m
+CXX	Makefile	/^	CXX=mpic++$/;"	m
+CacheCount	tt.h	/^  static const int CacheCount = 1024;$/;"	m	class:TranspositionTable
+CacheLineSize	tt.h	/^  static const int CacheLineSize = 64;$/;"	m	class:TranspositionTable
+CacheLineSize	tt.h	/^static const int CacheLineSize = 64;$/;"	v
+Cardinality	search.cpp	/^  int Cardinality;$/;"	m	namespace:Tablebases	file:
+CaseInsensitiveLess	uci.h	/^struct CaseInsensitiveLess {$/;"	s	namespace:UCI
+CastlingRight	types.h	/^enum CastlingRight {$/;"	g
+CastlingSide	types.h	/^enum CastlingSide {$/;"	g
+CenterFiles	evaluate.cpp	/^  const Bitboard CenterFiles = FileCBB | FileDBB | FileEBB | FileFBB;$/;"	m	namespace:__anon4	file:
+CloseEnemies	evaluate.cpp	/^  const Score CloseEnemies        = S(  7,  0);$/;"	m	namespace:__anon4	file:
+Cluster	tt.h	/^struct Cluster {$/;"	s
+ClusterPadding	tt.h	/^static const int ClusterPadding = 2;$/;"	v
+ClusterSize	tt.h	/^  static const int ClusterSize = 3;$/;"	m	class:TranspositionTable
+ClusterSize	tt.h	/^static const int ClusterSize = 3;$/;"	v
+Color	types.h	/^enum Color {$/;"	g
+ConditionVariable	thread_win32.h	/^typedef std::condition_variable ConditionVariable;$/;"	t
+ConditionVariable	thread_win32.h	/^typedef std::condition_variable_any ConditionVariable;$/;"	t
+Connected	pawns.cpp	/^  Score Connected[2][2][2][RANK_NB];$/;"	m	namespace:__anon2	file:
+CounterMoveHistoryStats	movepick.h	/^typedef Stats<CounterMoveStats> CounterMoveHistoryStats;$/;"	t
+CounterMovePruneThreshold	search.cpp	/^  const int CounterMovePruneThreshold = 0;$/;"	m	namespace:__anon13	file:
+CounterMoveStats	movepick.h	/^typedef Stats<int> CounterMoveStats;$/;"	t
+DRAW	bitbase.cpp	/^    DRAW    = 2,$/;"	e	enum:__anon5::Result	file:
+DTZEntry	syzygy/tbprobe.cpp	/^DTZEntry::DTZEntry(const WDLEntry& wdl) {$/;"	f	class:__anon9::DTZEntry
+DTZEntry	syzygy/tbprobe.cpp	/^struct DTZEntry : public TBEntry {$/;"	s	namespace:__anon9	file:
+DTZEntryPawn	syzygy/tbprobe.cpp	/^struct DTZEntryPawn {$/;"	s	namespace:__anon9	file:
+DTZEntryPiece	syzygy/tbprobe.cpp	/^struct DTZEntryPiece {$/;"	s	namespace:__anon9	file:
+DTZPawnTable	syzygy/tbprobe.cpp	/^typedef decltype(DTZEntry::pawnTable ) DTZPawnTable;$/;"	t	namespace:__anon9	file:
+DTZPieceTable	syzygy/tbprobe.cpp	/^typedef decltype(DTZEntry::pieceTable) DTZPieceTable;$/;"	t	namespace:__anon9	file:
+DarkSquares	bitboard.h	/^const Bitboard DarkSquares = 0xAA55AA55AA55AA55ULL;$/;"	v
+DeBruijn32	bitboard.cpp	/^  const uint32_t DeBruijn32 = 0x783A9B23;$/;"	m	namespace:__anon19	file:
+DeBruijn64	bitboard.cpp	/^  const uint64_t DeBruijn64 = 0x3F79D71B4CB0A89ULL;$/;"	m	namespace:__anon19	file:
+Defaults	benchmark.cpp	/^const vector<string> Defaults = {$/;"	m	namespace:__anon1	file:
+DistanceRingBB	bitboard.cpp	/^Bitboard DistanceRingBB[SQUARE_NB][8];$/;"	v
+Doubled	pawns.cpp	/^  const Score Doubled = S(18, 38);$/;"	m	namespace:__anon2	file:
+DrawValue	search.cpp	/^  Value DrawValue[COLOR_NB];$/;"	m	namespace:__anon13	file:
+EAST	types.h	/^  EAST  =  1,$/;"	e	enum:Square
+EG	types.h	/^  MG = 0, EG = 1, PHASE_NB = 2$/;"	e	enum:Phase
+ENABLE_BASE_OPERATORS_ON	types.h	285;"	d
+ENABLE_BASE_OPERATORS_ON	types.h	315;"	d
+ENABLE_FULL_OPERATORS_ON	types.h	292;"	d
+ENABLE_FULL_OPERATORS_ON	types.h	314;"	d
+ENDGAME_H_INCLUDED	endgame.h	22;"	d
+ENPASSANT	types.h	/^  ENPASSANT = 2 << 14,$/;"	e	enum:MoveType
+EVALUATE_H_INCLUDED	evaluate.h	22;"	d
+EVASION	movepick.cpp	/^    EVASION, EVASIONS_INIT, ALL_EVASIONS,$/;"	e	enum:__anon17::Stages	file:
+EVASIONS	movegen.h	/^  EVASIONS,$/;"	e	enum:GenType
+EVASIONS_INIT	movepick.cpp	/^    EVASION, EVASIONS_INIT, ALL_EVASIONS,$/;"	e	enum:__anon17::Stages	file:
+EXE	Makefile	/^EXE = stockfish$/;"	m
+EasyMove	search.cpp	/^  EasyMoveManager EasyMove;$/;"	m	namespace:__anon13	file:
+EasyMoveManager	search.cpp	/^  struct EasyMoveManager {$/;"	s	namespace:__anon13	file:
+Endgame	endgame.h	/^  explicit Endgame(Color c) : strongSide(c), weakSide(~c) {}$/;"	f	struct:Endgame
+Endgame	endgame.h	/^struct Endgame : public EndgameBase<T> {$/;"	s
+EndgameBase	endgame.h	/^struct EndgameBase {$/;"	s
+EndgameType	endgame.h	/^enum EndgameType {$/;"	g
+Endgames	endgame.cpp	/^Endgames::Endgames() {$/;"	f	class:Endgames
+Endgames	endgame.h	/^class Endgames {$/;"	c
+Entry	material.h	/^struct Entry {$/;"	s	namespace:Material
+Entry	pawns.h	/^struct Entry {$/;"	s	namespace:Pawns
+Entry	syzygy/tbprobe.cpp	/^    typedef std::pair<Key, EntryPair> Entry;$/;"	t	class:__anon9::HashTable	file:
+EntryPair	syzygy/tbprobe.cpp	/^    typedef std::pair<WDLEntry*, DTZEntry*> EntryPair;$/;"	t	class:__anon9::HashTable	file:
+EntryTable	syzygy/tbprobe.cpp	/^HashTable EntryTable;$/;"	m	namespace:__anon9	file:
+Eval	evaluate.h	/^namespace Eval {$/;"	n
+EvalInfo	evaluate.cpp	/^  struct EvalInfo {$/;"	s	namespace:__anon4	file:
+EvaluateKXK	material.cpp	/^  Endgame<KXK>    EvaluateKXK[] = { Endgame<KXK>(WHITE),    Endgame<KXK>(BLACK) };$/;"	m	namespace:__anon7	file:
+ExtMove	movegen.h	/^struct ExtMove {$/;"	s
+FAIL	syzygy/tbprobe.h	/^    FAIL              =  0, \/\/ Probe failed (missing file table)$/;"	e	enum:Tablebases::ProbeState
+FileABB	bitboard.h	/^const Bitboard FileABB = 0x0101010101010101ULL;$/;"	v
+FileBB	bitboard.cpp	/^Bitboard FileBB[FILE_NB];$/;"	v
+FileBBB	bitboard.h	/^const Bitboard FileBBB = FileABB << 1;$/;"	v
+FileCBB	bitboard.h	/^const Bitboard FileCBB = FileABB << 2;$/;"	v
+FileDBB	bitboard.h	/^const Bitboard FileDBB = FileABB << 3;$/;"	v
+FileEBB	bitboard.h	/^const Bitboard FileEBB = FileABB << 4;$/;"	v
+FileFBB	bitboard.h	/^const Bitboard FileFBB = FileABB << 5;$/;"	v
+FileGBB	bitboard.h	/^const Bitboard FileGBB = FileABB << 6;$/;"	v
+FileHBB	bitboard.h	/^const Bitboard FileHBB = FileABB << 7;$/;"	v
+Fn	bitboard.cpp	/^  typedef unsigned (Fn)(Square, Bitboard);$/;"	t	namespace:__anon19	file:
+ForwardBB	bitboard.cpp	/^Bitboard ForwardBB[COLOR_NB][SQUARE_NB];$/;"	v
+FullTTEntry	tt.h	/^struct FullTTEntry {$/;"	s
+FutilityMoveCounts	search.cpp	/^  int FutilityMoveCounts[2][16]; \/\/ [improving][depth]$/;"	m	namespace:__anon13	file:
+GOOD_CAPTURES	movepick.cpp	/^    MAIN_SEARCH, CAPTURES_INIT, GOOD_CAPTURES, KILLERS, COUNTERMOVE, QUIET_INIT, QUIET, BAD_CAPTURES,$/;"	e	enum:__anon17::Stages	file:
+GenType	movegen.h	/^enum GenType {$/;"	g
+HSHMAX	syzygy/tbprobe.cpp	/^    static const int HSHMAX     = 5;$/;"	m	class:__anon9::HashTable	file:
+Hanging	evaluate.cpp	/^  const Score Hanging             = S( 48, 27);$/;"	m	namespace:__anon4	file:
+HasPext	types.h	/^const bool HasPext = false;$/;"	v
+HasPext	types.h	/^const bool HasPext = true;$/;"	v
+HasPopCnt	types.h	/^const bool HasPopCnt = false;$/;"	v
+HasPopCnt	types.h	/^const bool HasPopCnt = true;$/;"	v
+HashTable	misc.h	/^struct HashTable {$/;"	s
+HashTable	syzygy/tbprobe.cpp	/^class HashTable {$/;"	c	namespace:__anon9	file:
+HinderPassedPawn	evaluate.cpp	/^  const Score HinderPassedPawn    = S(  7,  0);$/;"	m	namespace:__anon4	file:
+HistoryStats	movepick.h	/^struct HistoryStats {$/;"	s
+IMBALANCE	evaluate.cpp	/^      MATERIAL = 8, IMBALANCE, MOBILITY, THREAT, PASSED, SPACE, TOTAL, TERM_NB$/;"	e	enum:__anon4::Trace::Term	file:
+INVALID	bitbase.cpp	/^    INVALID = 0,$/;"	e	enum:__anon5::Result	file:
+IO_LOCK	misc.h	/^enum class SyncCout { IO_LOCK, IO_UNLOCK, IO_ENDL };$/;"	m	class:SyncCout
+IO_UNLOCK	misc.h	/^enum class SyncCout { IO_LOCK, IO_UNLOCK, IO_ENDL };$/;"	m	class:SyncCout
+IS_64BIT	types.h	64;"	d
+InFrontBB	bitboard.cpp	/^Bitboard InFrontBB[COLOR_NB][RANK_NB];$/;"	v
+InfoStream	misc.h	/^class InfoStream { };$/;"	c
+Is64Bit	types.h	/^const bool Is64Bit = false;$/;"	v
+Is64Bit	types.h	/^const bool Is64Bit = true;$/;"	v
+Isolated	pawns.cpp	/^  const Score Isolated[] = { S(45, 40), S(30, 27) };$/;"	m	namespace:__anon2	file:
+KBNK	endgame.h	/^  KBNK,  \/\/ KBN vs K$/;"	e	enum:EndgameType
+KBPKB	endgame.h	/^  KBPKB,   \/\/ KBP vs KB$/;"	e	enum:EndgameType
+KBPKN	endgame.h	/^  KBPKN,   \/\/ KBP vs KN$/;"	e	enum:EndgameType
+KBPPKB	endgame.h	/^  KBPPKB,  \/\/ KBPP vs KB$/;"	e	enum:EndgameType
+KBPsK	endgame.h	/^  KBPsK,   \/\/ KB and pawns vs K$/;"	e	enum:EndgameType
+KERNEL	Makefile	/^KERNEL = $(shell uname -s)$/;"	m
+KILLERS	movepick.cpp	/^    MAIN_SEARCH, CAPTURES_INIT, GOOD_CAPTURES, KILLERS, COUNTERMOVE, QUIET_INIT, QUIET, BAD_CAPTURES,$/;"	e	enum:__anon17::Stages	file:
+KING	types.h	/^  NO_PIECE_TYPE, PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING,$/;"	e	enum:PieceType
+KING_SIDE	types.h	/^  KING_SIDE, QUEEN_SIDE, CASTLING_SIDE_NB = 2$/;"	e	enum:CastlingSide
+KNIGHT	types.h	/^  NO_PIECE_TYPE, PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING,$/;"	e	enum:PieceType
+KNNK	endgame.h	/^  KNNK,  \/\/ KNN vs K$/;"	e	enum:EndgameType
+KNPK	endgame.h	/^  KNPK,    \/\/ KNP vs K$/;"	e	enum:EndgameType
+KNPKB	endgame.h	/^  KNPKB,   \/\/ KNP vs KB$/;"	e	enum:EndgameType
+KPK	endgame.h	/^  KPK,   \/\/ KP vs K$/;"	e	enum:EndgameType
+KPKBitbase	bitbase.cpp	/^  uint32_t KPKBitbase[MAX_INDEX \/ 32];$/;"	m	namespace:__anon5	file:
+KPKP	endgame.h	/^  KPKP     \/\/ KP vs KP$/;"	e	enum:EndgameType
+KPKPosition	bitbase.cpp	/^  KPKPosition::KPKPosition(unsigned idx) {$/;"	f	class:__anon6::KPKPosition
+KPKPosition	bitbase.cpp	/^  struct KPKPosition {$/;"	s	namespace:__anon5	file:
+KPsK	endgame.h	/^  KPsK,    \/\/ K and pawns vs K$/;"	e	enum:EndgameType
+KQKP	endgame.h	/^  KQKP,  \/\/ KQ vs KP$/;"	e	enum:EndgameType
+KQKR	endgame.h	/^  KQKR,  \/\/ KQ vs KR$/;"	e	enum:EndgameType
+KQKRPs	endgame.h	/^  KQKRPs,  \/\/ KQ vs KR and pawns$/;"	e	enum:EndgameType
+KRKB	endgame.h	/^  KRKB,  \/\/ KR vs KB$/;"	e	enum:EndgameType
+KRKN	endgame.h	/^  KRKN,  \/\/ KR vs KN$/;"	e	enum:EndgameType
+KRKP	endgame.h	/^  KRKP,  \/\/ KR vs KP$/;"	e	enum:EndgameType
+KRPKB	endgame.h	/^  KRPKB,   \/\/ KRP vs KB$/;"	e	enum:EndgameType
+KRPKR	endgame.h	/^  KRPKR,   \/\/ KRP vs KR$/;"	e	enum:EndgameType
+KRPPKRP	endgame.h	/^  KRPPKRP, \/\/ KRPP vs KRP$/;"	e	enum:EndgameType
+KRPPKRPScaleFactors	endgame.cpp	/^  const int KRPPKRPScaleFactors[RANK_NB] = { 0, 9, 10, 14, 21, 44, 0, 0 };$/;"	m	namespace:__anon3	file:
+KXK	endgame.h	/^  KXK,   \/\/ Generic "mate lone king" eval$/;"	e	enum:EndgameType
+Key	types.h	/^typedef uint64_t Key;$/;"	t
+KingAttackWeights	evaluate.cpp	/^  const int KingAttackWeights[PIECE_TYPE_NB] = { 0, 0, 78, 56, 45, 11 };$/;"	m	namespace:__anon4	file:
+KingFlank	evaluate.cpp	/^  const Bitboard KingFlank[FILE_NB] = {$/;"	m	namespace:__anon4	file:
+KingSide	evaluate.cpp	/^  const Bitboard KingSide    = FileEBB | FileFBB | FileGBB | FileHBB;$/;"	m	namespace:__anon4	file:
+KnightCheck	evaluate.cpp	/^  const int KnightCheck = 790;$/;"	m	namespace:__anon4	file:
+LEGAL	movegen.h	/^  LEGAL$/;"	e	enum:GenType
+LR	syzygy/tbprobe.cpp	/^struct LR {$/;"	s	namespace:__anon9	file:
+LazyThreshold	evaluate.cpp	/^  const Value LazyThreshold  = Value(1500);$/;"	m	namespace:__anon4	file:
+LeadPawnIdx	syzygy/tbprobe.cpp	/^int LeadPawnIdx[5][SQUARE_NB]; \/\/ [leadPawnsCnt][SQUARE_NB]$/;"	m	namespace:__anon9	file:
+LeadPawnsSize	syzygy/tbprobe.cpp	/^int LeadPawnsSize[5][4];       \/\/ [leadPawnsCnt][FILE_A..FILE_D]$/;"	m	namespace:__anon9	file:
+Left	syzygy/tbprobe.cpp	/^    enum Side { Left, Right, Value };$/;"	e	enum:__anon9::LR::Side	file:
+Lever	pawns.cpp	/^  const Score Lever[RANK_NB] = {$/;"	m	namespace:__anon2	file:
+Limits	search.cpp	/^  LimitsType Limits;$/;"	m	namespace:Search	file:
+LimitsType	search.h	/^  LimitsType() { \/\/ Init explicitly due to broken value-initialization of non POD in MSVC$/;"	f	struct:Search::LimitsType
+LimitsType	search.h	/^struct LimitsType {$/;"	s	namespace:Search
+LineBB	bitboard.cpp	/^Bitboard LineBB[SQUARE_NB][SQUARE_NB];$/;"	v
+LittleEndian	syzygy/tbprobe.cpp	/^enum { BigEndian, LittleEndian };$/;"	e	enum:__anon9::__anon12	file:
+Logger	misc.cpp	/^  Logger() : in(cin.rdbuf(), file.rdbuf()), out(cout.rdbuf(), file.rdbuf()) {}$/;"	f	class:__anon18::Logger	file:
+Logger	misc.cpp	/^class Logger {$/;"	c	namespace:__anon18	file:
+LossPlies	syzygy/tbprobe.cpp	/^enum TBFlag { STM = 1, Mapped = 2, WinPlies = 4, LossPlies = 8, SingleValue = 128 };$/;"	e	enum:__anon9::TBFlag	file:
+MAIN_SEARCH	movepick.cpp	/^    MAIN_SEARCH, CAPTURES_INIT, GOOD_CAPTURES, KILLERS, COUNTERMOVE, QUIET_INIT, QUIET, BAD_CAPTURES,$/;"	e	enum:__anon17::Stages	file:
+MATERIAL	evaluate.cpp	/^      MATERIAL = 8, IMBALANCE, MOBILITY, THREAT, PASSED, SPACE, TOTAL, TERM_NB$/;"	e	enum:__anon4::Trace::Term	file:
+MATERIAL_H_INCLUDED	material.h	22;"	d
+MAX_INDEX	bitbase.cpp	/^  const unsigned MAX_INDEX = 2*24*64*64; \/\/ stm * psq * wksq * bksq = 196608$/;"	m	namespace:__anon5	file:
+MAX_MOVEBUF_MOVES	search.h	/^const int MAX_MOVEBUF_MOVES = 32;$/;"	m	namespace:Search
+MAX_MOVES	types.h	/^const int MAX_MOVES = 256;$/;"	v
+MAX_PLY	types.h	/^const int MAX_PLY   = 128;$/;"	v
+MG	types.h	/^  MG = 0, EG = 1, PHASE_NB = 2$/;"	e	enum:Phase
+MISC_H_INCLUDED	misc.h	22;"	d
+MOBILITY	evaluate.cpp	/^      MATERIAL = 8, IMBALANCE, MOBILITY, THREAT, PASSED, SPACE, TOTAL, TERM_NB$/;"	e	enum:__anon4::Trace::Term	file:
+MOVEBUF_SIZE	search.h	/^const int MOVEBUF_SIZE = 1024;$/;"	m	namespace:Search
+MOVEGEN_H_INCLUDED	movegen.h	22;"	d
+MOVEPICK_H_INCLUDED	movepick.h	22;"	d
+MSBTable	bitboard.cpp	/^  int MSBTable[256];            \/\/ To implement software msb()$/;"	m	namespace:__anon19	file:
+MainThread	thread.h	/^struct MainThread : public Thread {$/;"	s
+MakeCastling	types.h	/^template<Color C, CastlingSide S> struct MakeCastling {$/;"	s
+MapA1D1D4	syzygy/tbprobe.cpp	/^int MapA1D1D4[SQUARE_NB];$/;"	m	namespace:__anon9	file:
+MapB1H1H7	syzygy/tbprobe.cpp	/^int MapB1H1H7[SQUARE_NB];$/;"	m	namespace:__anon9	file:
+MapKK	syzygy/tbprobe.cpp	/^int MapKK[10][SQUARE_NB]; \/\/ [MapA1D1D4][SQUARE_NB]$/;"	m	namespace:__anon9	file:
+MapPawns	syzygy/tbprobe.cpp	/^int MapPawns[SQUARE_NB];$/;"	m	namespace:__anon9	file:
+Mapped	syzygy/tbprobe.cpp	/^enum TBFlag { STM = 1, Mapped = 2, WinPlies = 4, LossPlies = 8, SingleValue = 128 };$/;"	e	enum:__anon9::TBFlag	file:
+Material	material.cpp	/^namespace Material {$/;"	n	file:
+Material	material.h	/^namespace Material {$/;"	n
+Max	movepick.h	/^  static const int Max = 1 << 28;$/;"	m	struct:HistoryStats
+MaxCardinality	syzygy/tbprobe.cpp	/^int Tablebases::MaxCardinality;$/;"	m	class:Tablebases	file:
+MaxRatio	timeman.cpp	/^  const double MaxRatio   = 7.09; \/\/ When in trouble, we can step over reserved time with this ratio$/;"	m	namespace:__anon16	file:
+MaxSafetyBonus	pawns.cpp	/^  const Value MaxSafetyBonus = V(258);$/;"	m	namespace:__anon2	file:
+MaxTime	timeman.cpp	/^  enum TimeType { OptimumTime, MaxTime };$/;"	e	enum:__anon16::TimeType	file:
+MinorBehindPawn	evaluate.cpp	/^  const Score MinorBehindPawn     = S( 16,  0);$/;"	m	namespace:__anon4	file:
+MobilityBonus	evaluate.cpp	/^  const Score MobilityBonus[][32] = {$/;"	m	namespace:__anon4	file:
+MoveHorizon	timeman.cpp	/^  const int MoveHorizon   = 50;   \/\/ Plan time management at most this many moves ahead$/;"	m	namespace:__anon16	file:
+MoveList	movegen.h	/^  explicit MoveList(const Position& pos) : last(generate<T>(pos, moveList)) {}$/;"	f	struct:MoveList
+MoveList	movegen.h	/^struct MoveList {$/;"	s
+MovePicker	movepick.cpp	/^MovePicker::MovePicker(const Position& p, Move ttm, Depth d, Search::Stack* s)$/;"	f	class:MovePicker
+MovePicker	movepick.cpp	/^MovePicker::MovePicker(const Position& p, Move ttm, Depth d, Square s)$/;"	f	class:MovePicker
+MovePicker	movepick.cpp	/^MovePicker::MovePicker(const Position& p, Move ttm, Value th)$/;"	f	class:MovePicker
+MovePicker	movepick.h	/^class MovePicker {$/;"	c
+MoveStats	movepick.h	/^typedef Stats<Move> MoveStats;$/;"	t
+MoveType	types.h	/^enum MoveType {$/;"	g
+Mutex	thread_win32.h	/^  Mutex() { InitializeCriticalSection(&cs); }$/;"	f	struct:Mutex
+Mutex	thread_win32.h	/^struct Mutex {$/;"	s
+Mutex	thread_win32.h	/^typedef std::mutex Mutex;$/;"	t
+NOMINMAX	syzygy/tbprobe.cpp	47;"	d	file:
+NOMINMAX	thread_win32.h	40;"	d
+NOMINMAX	thread_win32.h	46;"	d
+NON_EVASIONS	movegen.h	/^  NON_EVASIONS,$/;"	e	enum:GenType
+NORMAL	types.h	/^  NORMAL,$/;"	e	enum:MoveType
+NORTH	types.h	/^  NORTH =  8,$/;"	e	enum:Square
+NORTH_EAST	types.h	/^  NORTH_EAST = NORTH + EAST,$/;"	e	enum:Square
+NORTH_WEST	types.h	/^  NORTH_WEST = NORTH + WEST$/;"	e	enum:Square
+NO_BSF	bitboard.h	317;"	d
+NO_CASTLING	types.h	/^  NO_CASTLING,$/;"	e	enum:CastlingRight
+NO_COLOR	types.h	/^  WHITE, BLACK, NO_COLOR, COLOR_NB = 2$/;"	e	enum:Color
+NO_PIECE	types.h	/^  NO_PIECE,$/;"	e	enum:Piece
+NO_PIECE_TYPE	types.h	/^  NO_PIECE_TYPE, PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING,$/;"	e	enum:PieceType
+NodeType	search.cpp	/^  enum NodeType { NonPV, PV };$/;"	g	namespace:__anon13	file:
+NonPV	search.cpp	/^  enum NodeType { NonPV, PV };$/;"	e	enum:__anon13::NodeType	file:
+OBJS	Makefile	/^OBJS = benchmark.o bitbase.o bitboard.o endgame.o evaluate.o main.o \\$/;"	m
+OK	syzygy/tbprobe.h	/^    OK                =  1, \/\/ Probe succesful$/;"	e	enum:Tablebases::ProbeState
+OS	Makefile	/^	OS = $(shell uname -o)$/;"	m
+OnChange	uci.h	/^  typedef void (*OnChange)(const Option&);$/;"	t	class:UCI::Option
+OptimumTime	timeman.cpp	/^  enum TimeType { OptimumTime, MaxTime };$/;"	e	enum:__anon16::TimeType	file:
+Option	uci.h	/^class Option {$/;"	c	namespace:UCI
+Option	ucioption.cpp	/^Option::Option(OnChange f) : type("button"), min(0), max(0), on_change(f)$/;"	f	class:UCI::Option
+Option	ucioption.cpp	/^Option::Option(bool v, OnChange f) : type("check"), min(0), max(0), on_change(f)$/;"	f	class:UCI::Option
+Option	ucioption.cpp	/^Option::Option(const char* v, OnChange f) : type("string"), min(0), max(0), on_change(f)$/;"	f	class:UCI::Option
+Option	ucioption.cpp	/^Option::Option(int v, int minv, int maxv, OnChange f) : type("spin"), min(minv), max(maxv), on_change(f)$/;"	f	class:UCI::Option
+OptionsMap	uci.h	/^typedef std::map<std::string, Option, CaseInsensitiveLess> OptionsMap;$/;"	t	namespace:UCI
+OtherCheck	evaluate.cpp	/^  const Score OtherCheck          = S( 10, 10);$/;"	m	namespace:__anon4	file:
+Outpost	evaluate.cpp	/^  const Score Outpost[][2] = {$/;"	m	namespace:__anon4	file:
+PASSED	evaluate.cpp	/^      MATERIAL = 8, IMBALANCE, MOBILITY, THREAT, PASSED, SPACE, TOTAL, TERM_NB$/;"	e	enum:__anon4::Trace::Term	file:
+PAWN	types.h	/^  NO_PIECE_TYPE, PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING,$/;"	e	enum:PieceType
+PAWNS_H_INCLUDED	pawns.h	22;"	d
+PGOBENCH	Makefile	/^PGOBENCH = .\/$(EXE) bench 128 4 3000 default time$/;"	m
+PHASE_ENDGAME	types.h	/^  PHASE_ENDGAME,$/;"	e	enum:Phase
+PHASE_MIDGAME	types.h	/^  PHASE_MIDGAME = 128,$/;"	e	enum:Phase
+PHASE_NB	types.h	/^  MG = 0, EG = 1, PHASE_NB = 2$/;"	e	enum:Phase
+PIECE_NB	types.h	/^  PIECE_NB = 16$/;"	e	enum:Piece
+PIECE_TYPE_NB	types.h	/^  PIECE_TYPE_NB = 8$/;"	e	enum:PieceType
+POSITION_H_INCLUDED	position.h	22;"	d
+PREFIX	Makefile	/^PREFIX = \/usr\/local$/;"	m
+PRNG	misc.h	/^  PRNG(uint64_t seed) : s(seed) { assert(seed); }$/;"	f	class:PRNG
+PRNG	misc.h	/^class PRNG {$/;"	c
+PROBCUT	movepick.cpp	/^    PROBCUT, PROBCUT_INIT, PROBCUT_CAPTURES,$/;"	e	enum:__anon17::Stages	file:
+PROBCUT_CAPTURES	movepick.cpp	/^    PROBCUT, PROBCUT_INIT, PROBCUT_CAPTURES,$/;"	e	enum:__anon17::Stages	file:
+PROBCUT_INIT	movepick.cpp	/^    PROBCUT, PROBCUT_INIT, PROBCUT_CAPTURES,$/;"	e	enum:__anon17::Stages	file:
+PROMOTION	types.h	/^  PROMOTION = 1 << 14,$/;"	e	enum:MoveType
+PSQT	main.cpp	/^namespace PSQT {$/;"	n	file:
+PSQT	position.cpp	/^namespace PSQT {$/;"	n	file:
+PSQT	psqt.cpp	/^namespace PSQT {$/;"	n	file:
+PV	search.cpp	/^  enum NodeType { NonPV, PV };$/;"	e	enum:__anon13::NodeType	file:
+PVIdx	thread.h	/^  size_t idx, PVIdx;$/;"	m	class:Thread
+PairsData	syzygy/tbprobe.cpp	/^struct PairsData {$/;"	s	namespace:__anon9	file:
+Passed	evaluate.cpp	/^  const Value Passed[][RANK_NB] = {$/;"	m	namespace:__anon4	file:
+PassedFile	evaluate.cpp	/^  const Score PassedFile[FILE_NB] = {$/;"	m	namespace:__anon4	file:
+PassedPawnMask	bitboard.cpp	/^Bitboard PassedPawnMask[COLOR_NB][SQUARE_NB];$/;"	v
+Paths	syzygy/tbprobe.cpp	/^    static std::string Paths;$/;"	m	class:__anon9::TBFile	file:
+Paths	syzygy/tbprobe.cpp	/^std::string TBFile::Paths;$/;"	m	class:__anon9::TBFile	file:
+PawnAttackSpan	bitboard.cpp	/^Bitboard PawnAttackSpan[COLOR_NB][SQUARE_NB];$/;"	v
+PawnAttacks	bitboard.cpp	/^Bitboard PawnAttacks[COLOR_NB][SQUARE_NB];$/;"	v
+PawnSet	material.cpp	/^  const int PawnSet[] = {$/;"	m	namespace:__anon7	file:
+PawnlessFlank	evaluate.cpp	/^  const Score PawnlessFlank       = S( 20, 80);$/;"	m	namespace:__anon4	file:
+Pawns	pawns.cpp	/^namespace Pawns {$/;"	n	file:
+Pawns	pawns.h	/^namespace Pawns {$/;"	n
+Phase	types.h	/^enum Phase {$/;"	g
+Piece	types.h	/^enum Piece {$/;"	g
+PieceToChar	syzygy/tbprobe.cpp	/^const std::string PieceToChar = " PNBRQK  pnbrqk";$/;"	m	namespace:__anon9	file:
+PieceType	types.h	/^enum PieceType {$/;"	g
+PieceValue	psqt.cpp	/^Value PieceValue[PHASE_NB][PIECE_NB] = {$/;"	v
+Pieces	types.h	/^const Piece Pieces[] = { W_PAWN, W_KNIGHT, W_BISHOP, W_ROOK, W_QUEEN, W_KING,$/;"	v
+PopCnt16	bitboard.cpp	/^uint8_t PopCnt16[1 << 16];$/;"	v
+Position	position.h	/^class Position {$/;"	c
+ProbeDepth	search.cpp	/^  Depth ProbeDepth;$/;"	m	namespace:Tablebases	file:
+ProbeState	syzygy/tbprobe.h	/^enum ProbeState {$/;"	g	namespace:Tablebases
+Protector	evaluate.cpp	/^  const Score Protector[][8] = {$/;"	m	namespace:__anon4	file:
+PseudoAttacks	bitboard.cpp	/^Bitboard PseudoAttacks[PIECE_TYPE_NB][SQUARE_NB];$/;"	v
+PushAway	endgame.cpp	/^  const int PushAway [8] = { 0, 5, 20, 40, 60, 80, 90, 100 };$/;"	m	namespace:__anon3	file:
+PushClose	endgame.cpp	/^  const int PushClose[8] = { 0, 0, 100, 80, 60, 40, 20, 10 };$/;"	m	namespace:__anon3	file:
+PushToCorners	endgame.cpp	/^  const int PushToCorners[SQUARE_NB] = {$/;"	m	namespace:__anon3	file:
+PushToEdges	endgame.cpp	/^  const int PushToEdges[SQUARE_NB] = {$/;"	m	namespace:__anon3	file:
+QCAPTURES_1	movepick.cpp	/^    QSEARCH_WITH_CHECKS, QCAPTURES_1_INIT, QCAPTURES_1, QCHECKS,$/;"	e	enum:__anon17::Stages	file:
+QCAPTURES_1_INIT	movepick.cpp	/^    QSEARCH_WITH_CHECKS, QCAPTURES_1_INIT, QCAPTURES_1, QCHECKS,$/;"	e	enum:__anon17::Stages	file:
+QCAPTURES_2	movepick.cpp	/^    QSEARCH_NO_CHECKS, QCAPTURES_2_INIT, QCAPTURES_2,$/;"	e	enum:__anon17::Stages	file:
+QCAPTURES_2_INIT	movepick.cpp	/^    QSEARCH_NO_CHECKS, QCAPTURES_2_INIT, QCAPTURES_2,$/;"	e	enum:__anon17::Stages	file:
+QCHECKS	movepick.cpp	/^    QSEARCH_WITH_CHECKS, QCAPTURES_1_INIT, QCAPTURES_1, QCHECKS,$/;"	e	enum:__anon17::Stages	file:
+QRECAPTURES	movepick.cpp	/^    QSEARCH_RECAPTURES, QRECAPTURES$/;"	e	enum:__anon17::Stages	file:
+QSEARCH_NO_CHECKS	movepick.cpp	/^    QSEARCH_NO_CHECKS, QCAPTURES_2_INIT, QCAPTURES_2,$/;"	e	enum:__anon17::Stages	file:
+QSEARCH_RECAPTURES	movepick.cpp	/^    QSEARCH_RECAPTURES, QRECAPTURES$/;"	e	enum:__anon17::Stages	file:
+QSEARCH_WITH_CHECKS	movepick.cpp	/^    QSEARCH_WITH_CHECKS, QCAPTURES_1_INIT, QCAPTURES_1, QCHECKS,$/;"	e	enum:__anon17::Stages	file:
+QUEEN	types.h	/^  NO_PIECE_TYPE, PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING,$/;"	e	enum:PieceType
+QUEEN_SIDE	types.h	/^  KING_SIDE, QUEEN_SIDE, CASTLING_SIDE_NB = 2$/;"	e	enum:CastlingSide
+QUIET	movepick.cpp	/^    MAIN_SEARCH, CAPTURES_INIT, GOOD_CAPTURES, KILLERS, COUNTERMOVE, QUIET_INIT, QUIET, BAD_CAPTURES,$/;"	e	enum:__anon17::Stages	file:
+QUIETS	movegen.h	/^  QUIETS,$/;"	e	enum:GenType
+QUIET_CHECKS	movegen.h	/^  QUIET_CHECKS,$/;"	e	enum:GenType
+QUIET_INIT	movepick.cpp	/^    MAIN_SEARCH, CAPTURES_INIT, GOOD_CAPTURES, KILLERS, COUNTERMOVE, QUIET_INIT, QUIET, BAD_CAPTURES,$/;"	e	enum:__anon17::Stages	file:
+QuadraticOurs	material.cpp	/^  const int QuadraticOurs[][PIECE_TYPE_NB] = {$/;"	m	namespace:__anon7	file:
+QuadraticTheirs	material.cpp	/^  const int QuadraticTheirs[][PIECE_TYPE_NB] = {$/;"	m	namespace:__anon7	file:
+QueenCheck	evaluate.cpp	/^  const int QueenCheck  = 810;$/;"	m	namespace:__anon4	file:
+QueenSide	evaluate.cpp	/^  const Bitboard QueenSide   = FileABB | FileBBB | FileCBB | FileDBB;$/;"	m	namespace:__anon4	file:
+ROOK	types.h	/^  NO_PIECE_TYPE, PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING,$/;"	e	enum:PieceType
+Rank1BB	bitboard.h	/^const Bitboard Rank1BB = 0xFF;$/;"	v
+Rank2BB	bitboard.h	/^const Bitboard Rank2BB = Rank1BB << (8 * 1);$/;"	v
+Rank3BB	bitboard.h	/^const Bitboard Rank3BB = Rank1BB << (8 * 2);$/;"	v
+Rank4BB	bitboard.h	/^const Bitboard Rank4BB = Rank1BB << (8 * 3);$/;"	v
+Rank5BB	bitboard.h	/^const Bitboard Rank5BB = Rank1BB << (8 * 4);$/;"	v
+Rank6BB	bitboard.h	/^const Bitboard Rank6BB = Rank1BB << (8 * 5);$/;"	v
+Rank7BB	bitboard.h	/^const Bitboard Rank7BB = Rank1BB << (8 * 6);$/;"	v
+Rank8BB	bitboard.h	/^const Bitboard Rank8BB = Rank1BB << (8 * 7);$/;"	v
+RankBB	bitboard.cpp	/^Bitboard RankBB[RANK_NB];$/;"	v
+Reductions	search.cpp	/^  int Reductions[2][2][64][64];  \/\/ [pv][improving][depth][moveNumber]$/;"	m	namespace:__anon13	file:
+Result	bitbase.cpp	/^  enum Result {$/;"	g	namespace:__anon5	file:
+Ret	syzygy/tbprobe.cpp	/^template<> struct Ret<WDLEntry> { typedef WDLScore type; };$/;"	s	namespace:__anon9	file:
+Ret	syzygy/tbprobe.cpp	/^template<typename E> struct Ret { typedef int type; };$/;"	s	namespace:__anon9	file:
+Right	syzygy/tbprobe.cpp	/^    enum Side { Left, Right, Value };$/;"	e	enum:__anon9::LR::Side	file:
+RookAttacks	bitboard.cpp	/^Bitboard* RookAttacks[SQUARE_NB];$/;"	v
+RookCheck	evaluate.cpp	/^  const int RookCheck   = 888;$/;"	m	namespace:__anon4	file:
+RookMagics	bitboard.cpp	/^Bitboard  RookMagics [SQUARE_NB];$/;"	v
+RookMasks	bitboard.cpp	/^Bitboard  RookMasks  [SQUARE_NB];$/;"	v
+RookOnFile	evaluate.cpp	/^  const Score RookOnFile[] = { S(20, 7), S(45, 20) };$/;"	m	namespace:__anon4	file:
+RookOnPawn	evaluate.cpp	/^  const Score RookOnPawn          = S(  8, 24);$/;"	m	namespace:__anon4	file:
+RookShifts	bitboard.cpp	/^unsigned  RookShifts [SQUARE_NB];$/;"	v
+RookTable	bitboard.cpp	/^  Bitboard RookTable[0x19000];  \/\/ To store rook attacks$/;"	m	namespace:__anon19	file:
+RootInTB	search.cpp	/^  bool RootInTB;$/;"	m	namespace:Tablebases	file:
+RootMove	search.h	/^  explicit RootMove(Move m) : pv(1, m) {}$/;"	f	struct:Search::RootMove
+RootMove	search.h	/^struct RootMove {$/;"	s	namespace:Search
+RootMoves	search.h	/^typedef std::vector<RootMove> RootMoves;$/;"	t	namespace:Search
+S	evaluate.cpp	116;"	d	file:
+S	evaluate.cpp	207;"	d	file:
+S	pawns.cpp	32;"	d	file:
+S	pawns.cpp	90;"	d	file:
+S	psqt.cpp	101;"	d	file:
+S	psqt.cpp	32;"	d	file:
+SCALE_FACTOR_DRAW	types.h	/^  SCALE_FACTOR_DRAW    = 0,$/;"	e	enum:ScaleFactor
+SCALE_FACTOR_MAX	types.h	/^  SCALE_FACTOR_MAX     = 128,$/;"	e	enum:ScaleFactor
+SCALE_FACTOR_NONE	types.h	/^  SCALE_FACTOR_NONE    = 255$/;"	e	enum:ScaleFactor
+SCALE_FACTOR_NORMAL	types.h	/^  SCALE_FACTOR_NORMAL  = 64,$/;"	e	enum:ScaleFactor
+SCALE_FACTOR_ONEPAWN	types.h	/^  SCALE_FACTOR_ONEPAWN = 48,$/;"	e	enum:ScaleFactor
+SCALING_FUNCTIONS	endgame.h	/^  SCALING_FUNCTIONS,$/;"	e	enum:EndgameType
+SEARCH_H_INCLUDED	search.h	22;"	d
+SOUTH	types.h	/^  SOUTH = -8,$/;"	e	enum:Square
+SOUTH_EAST	types.h	/^  SOUTH_EAST = SOUTH + EAST,$/;"	e	enum:Square
+SOUTH_WEST	types.h	/^  SOUTH_WEST = SOUTH + WEST,$/;"	e	enum:Square
+SPACE	evaluate.cpp	/^      MATERIAL = 8, IMBALANCE, MOBILITY, THREAT, PASSED, SPACE, TOTAL, TERM_NB$/;"	e	enum:__anon4::Trace::Term	file:
+SQUARE_NB	types.h	/^  SQUARE_NB = 64,$/;"	e	enum:Square
+SQ_A1	types.h	/^  SQ_A1, SQ_B1, SQ_C1, SQ_D1, SQ_E1, SQ_F1, SQ_G1, SQ_H1,$/;"	e	enum:Square
+SQ_A2	types.h	/^  SQ_A2, SQ_B2, SQ_C2, SQ_D2, SQ_E2, SQ_F2, SQ_G2, SQ_H2,$/;"	e	enum:Square
+SQ_A3	types.h	/^  SQ_A3, SQ_B3, SQ_C3, SQ_D3, SQ_E3, SQ_F3, SQ_G3, SQ_H3,$/;"	e	enum:Square
+SQ_A4	types.h	/^  SQ_A4, SQ_B4, SQ_C4, SQ_D4, SQ_E4, SQ_F4, SQ_G4, SQ_H4,$/;"	e	enum:Square
+SQ_A5	types.h	/^  SQ_A5, SQ_B5, SQ_C5, SQ_D5, SQ_E5, SQ_F5, SQ_G5, SQ_H5,$/;"	e	enum:Square
+SQ_A6	types.h	/^  SQ_A6, SQ_B6, SQ_C6, SQ_D6, SQ_E6, SQ_F6, SQ_G6, SQ_H6,$/;"	e	enum:Square
+SQ_A7	types.h	/^  SQ_A7, SQ_B7, SQ_C7, SQ_D7, SQ_E7, SQ_F7, SQ_G7, SQ_H7,$/;"	e	enum:Square
+SQ_A8	types.h	/^  SQ_A8, SQ_B8, SQ_C8, SQ_D8, SQ_E8, SQ_F8, SQ_G8, SQ_H8,$/;"	e	enum:Square
+SQ_B1	types.h	/^  SQ_A1, SQ_B1, SQ_C1, SQ_D1, SQ_E1, SQ_F1, SQ_G1, SQ_H1,$/;"	e	enum:Square
+SQ_B2	types.h	/^  SQ_A2, SQ_B2, SQ_C2, SQ_D2, SQ_E2, SQ_F2, SQ_G2, SQ_H2,$/;"	e	enum:Square
+SQ_B3	types.h	/^  SQ_A3, SQ_B3, SQ_C3, SQ_D3, SQ_E3, SQ_F3, SQ_G3, SQ_H3,$/;"	e	enum:Square
+SQ_B4	types.h	/^  SQ_A4, SQ_B4, SQ_C4, SQ_D4, SQ_E4, SQ_F4, SQ_G4, SQ_H4,$/;"	e	enum:Square
+SQ_B5	types.h	/^  SQ_A5, SQ_B5, SQ_C5, SQ_D5, SQ_E5, SQ_F5, SQ_G5, SQ_H5,$/;"	e	enum:Square
+SQ_B6	types.h	/^  SQ_A6, SQ_B6, SQ_C6, SQ_D6, SQ_E6, SQ_F6, SQ_G6, SQ_H6,$/;"	e	enum:Square
+SQ_B7	types.h	/^  SQ_A7, SQ_B7, SQ_C7, SQ_D7, SQ_E7, SQ_F7, SQ_G7, SQ_H7,$/;"	e	enum:Square
+SQ_B8	types.h	/^  SQ_A8, SQ_B8, SQ_C8, SQ_D8, SQ_E8, SQ_F8, SQ_G8, SQ_H8,$/;"	e	enum:Square
+SQ_C1	types.h	/^  SQ_A1, SQ_B1, SQ_C1, SQ_D1, SQ_E1, SQ_F1, SQ_G1, SQ_H1,$/;"	e	enum:Square
+SQ_C2	types.h	/^  SQ_A2, SQ_B2, SQ_C2, SQ_D2, SQ_E2, SQ_F2, SQ_G2, SQ_H2,$/;"	e	enum:Square
+SQ_C3	types.h	/^  SQ_A3, SQ_B3, SQ_C3, SQ_D3, SQ_E3, SQ_F3, SQ_G3, SQ_H3,$/;"	e	enum:Square
+SQ_C4	types.h	/^  SQ_A4, SQ_B4, SQ_C4, SQ_D4, SQ_E4, SQ_F4, SQ_G4, SQ_H4,$/;"	e	enum:Square
+SQ_C5	types.h	/^  SQ_A5, SQ_B5, SQ_C5, SQ_D5, SQ_E5, SQ_F5, SQ_G5, SQ_H5,$/;"	e	enum:Square
+SQ_C6	types.h	/^  SQ_A6, SQ_B6, SQ_C6, SQ_D6, SQ_E6, SQ_F6, SQ_G6, SQ_H6,$/;"	e	enum:Square
+SQ_C7	types.h	/^  SQ_A7, SQ_B7, SQ_C7, SQ_D7, SQ_E7, SQ_F7, SQ_G7, SQ_H7,$/;"	e	enum:Square
+SQ_C8	types.h	/^  SQ_A8, SQ_B8, SQ_C8, SQ_D8, SQ_E8, SQ_F8, SQ_G8, SQ_H8,$/;"	e	enum:Square
+SQ_D1	types.h	/^  SQ_A1, SQ_B1, SQ_C1, SQ_D1, SQ_E1, SQ_F1, SQ_G1, SQ_H1,$/;"	e	enum:Square
+SQ_D2	types.h	/^  SQ_A2, SQ_B2, SQ_C2, SQ_D2, SQ_E2, SQ_F2, SQ_G2, SQ_H2,$/;"	e	enum:Square
+SQ_D3	types.h	/^  SQ_A3, SQ_B3, SQ_C3, SQ_D3, SQ_E3, SQ_F3, SQ_G3, SQ_H3,$/;"	e	enum:Square
+SQ_D4	types.h	/^  SQ_A4, SQ_B4, SQ_C4, SQ_D4, SQ_E4, SQ_F4, SQ_G4, SQ_H4,$/;"	e	enum:Square
+SQ_D5	types.h	/^  SQ_A5, SQ_B5, SQ_C5, SQ_D5, SQ_E5, SQ_F5, SQ_G5, SQ_H5,$/;"	e	enum:Square
+SQ_D6	types.h	/^  SQ_A6, SQ_B6, SQ_C6, SQ_D6, SQ_E6, SQ_F6, SQ_G6, SQ_H6,$/;"	e	enum:Square
+SQ_D7	types.h	/^  SQ_A7, SQ_B7, SQ_C7, SQ_D7, SQ_E7, SQ_F7, SQ_G7, SQ_H7,$/;"	e	enum:Square
+SQ_D8	types.h	/^  SQ_A8, SQ_B8, SQ_C8, SQ_D8, SQ_E8, SQ_F8, SQ_G8, SQ_H8,$/;"	e	enum:Square
+SQ_E1	types.h	/^  SQ_A1, SQ_B1, SQ_C1, SQ_D1, SQ_E1, SQ_F1, SQ_G1, SQ_H1,$/;"	e	enum:Square
+SQ_E2	types.h	/^  SQ_A2, SQ_B2, SQ_C2, SQ_D2, SQ_E2, SQ_F2, SQ_G2, SQ_H2,$/;"	e	enum:Square
+SQ_E3	types.h	/^  SQ_A3, SQ_B3, SQ_C3, SQ_D3, SQ_E3, SQ_F3, SQ_G3, SQ_H3,$/;"	e	enum:Square
+SQ_E4	types.h	/^  SQ_A4, SQ_B4, SQ_C4, SQ_D4, SQ_E4, SQ_F4, SQ_G4, SQ_H4,$/;"	e	enum:Square
+SQ_E5	types.h	/^  SQ_A5, SQ_B5, SQ_C5, SQ_D5, SQ_E5, SQ_F5, SQ_G5, SQ_H5,$/;"	e	enum:Square
+SQ_E6	types.h	/^  SQ_A6, SQ_B6, SQ_C6, SQ_D6, SQ_E6, SQ_F6, SQ_G6, SQ_H6,$/;"	e	enum:Square
+SQ_E7	types.h	/^  SQ_A7, SQ_B7, SQ_C7, SQ_D7, SQ_E7, SQ_F7, SQ_G7, SQ_H7,$/;"	e	enum:Square
+SQ_E8	types.h	/^  SQ_A8, SQ_B8, SQ_C8, SQ_D8, SQ_E8, SQ_F8, SQ_G8, SQ_H8,$/;"	e	enum:Square
+SQ_F1	types.h	/^  SQ_A1, SQ_B1, SQ_C1, SQ_D1, SQ_E1, SQ_F1, SQ_G1, SQ_H1,$/;"	e	enum:Square
+SQ_F2	types.h	/^  SQ_A2, SQ_B2, SQ_C2, SQ_D2, SQ_E2, SQ_F2, SQ_G2, SQ_H2,$/;"	e	enum:Square
+SQ_F3	types.h	/^  SQ_A3, SQ_B3, SQ_C3, SQ_D3, SQ_E3, SQ_F3, SQ_G3, SQ_H3,$/;"	e	enum:Square
+SQ_F4	types.h	/^  SQ_A4, SQ_B4, SQ_C4, SQ_D4, SQ_E4, SQ_F4, SQ_G4, SQ_H4,$/;"	e	enum:Square
+SQ_F5	types.h	/^  SQ_A5, SQ_B5, SQ_C5, SQ_D5, SQ_E5, SQ_F5, SQ_G5, SQ_H5,$/;"	e	enum:Square
+SQ_F6	types.h	/^  SQ_A6, SQ_B6, SQ_C6, SQ_D6, SQ_E6, SQ_F6, SQ_G6, SQ_H6,$/;"	e	enum:Square
+SQ_F7	types.h	/^  SQ_A7, SQ_B7, SQ_C7, SQ_D7, SQ_E7, SQ_F7, SQ_G7, SQ_H7,$/;"	e	enum:Square
+SQ_F8	types.h	/^  SQ_A8, SQ_B8, SQ_C8, SQ_D8, SQ_E8, SQ_F8, SQ_G8, SQ_H8,$/;"	e	enum:Square
+SQ_G1	types.h	/^  SQ_A1, SQ_B1, SQ_C1, SQ_D1, SQ_E1, SQ_F1, SQ_G1, SQ_H1,$/;"	e	enum:Square
+SQ_G2	types.h	/^  SQ_A2, SQ_B2, SQ_C2, SQ_D2, SQ_E2, SQ_F2, SQ_G2, SQ_H2,$/;"	e	enum:Square
+SQ_G3	types.h	/^  SQ_A3, SQ_B3, SQ_C3, SQ_D3, SQ_E3, SQ_F3, SQ_G3, SQ_H3,$/;"	e	enum:Square
+SQ_G4	types.h	/^  SQ_A4, SQ_B4, SQ_C4, SQ_D4, SQ_E4, SQ_F4, SQ_G4, SQ_H4,$/;"	e	enum:Square
+SQ_G5	types.h	/^  SQ_A5, SQ_B5, SQ_C5, SQ_D5, SQ_E5, SQ_F5, SQ_G5, SQ_H5,$/;"	e	enum:Square
+SQ_G6	types.h	/^  SQ_A6, SQ_B6, SQ_C6, SQ_D6, SQ_E6, SQ_F6, SQ_G6, SQ_H6,$/;"	e	enum:Square
+SQ_G7	types.h	/^  SQ_A7, SQ_B7, SQ_C7, SQ_D7, SQ_E7, SQ_F7, SQ_G7, SQ_H7,$/;"	e	enum:Square
+SQ_G8	types.h	/^  SQ_A8, SQ_B8, SQ_C8, SQ_D8, SQ_E8, SQ_F8, SQ_G8, SQ_H8,$/;"	e	enum:Square
+SQ_H1	types.h	/^  SQ_A1, SQ_B1, SQ_C1, SQ_D1, SQ_E1, SQ_F1, SQ_G1, SQ_H1,$/;"	e	enum:Square
+SQ_H2	types.h	/^  SQ_A2, SQ_B2, SQ_C2, SQ_D2, SQ_E2, SQ_F2, SQ_G2, SQ_H2,$/;"	e	enum:Square
+SQ_H3	types.h	/^  SQ_A3, SQ_B3, SQ_C3, SQ_D3, SQ_E3, SQ_F3, SQ_G3, SQ_H3,$/;"	e	enum:Square
+SQ_H4	types.h	/^  SQ_A4, SQ_B4, SQ_C4, SQ_D4, SQ_E4, SQ_F4, SQ_G4, SQ_H4,$/;"	e	enum:Square
+SQ_H5	types.h	/^  SQ_A5, SQ_B5, SQ_C5, SQ_D5, SQ_E5, SQ_F5, SQ_G5, SQ_H5,$/;"	e	enum:Square
+SQ_H6	types.h	/^  SQ_A6, SQ_B6, SQ_C6, SQ_D6, SQ_E6, SQ_F6, SQ_G6, SQ_H6,$/;"	e	enum:Square
+SQ_H7	types.h	/^  SQ_A7, SQ_B7, SQ_C7, SQ_D7, SQ_E7, SQ_F7, SQ_G7, SQ_H7,$/;"	e	enum:Square
+SQ_H8	types.h	/^  SQ_A8, SQ_B8, SQ_C8, SQ_D8, SQ_E8, SQ_F8, SQ_G8, SQ_H8,$/;"	e	enum:Square
+SQ_NONE	types.h	/^  SQ_NONE,$/;"	e	enum:Square
+STM	syzygy/tbprobe.cpp	/^enum TBFlag { STM = 1, Mapped = 2, WinPlies = 4, LossPlies = 8, SingleValue = 128 };$/;"	e	enum:__anon9::TBFlag	file:
+ScaleFactor	types.h	/^enum ScaleFactor {$/;"	g
+ScaleKBPsK	material.cpp	/^  Endgame<KBPsK>  ScaleKBPsK[]  = { Endgame<KBPsK>(WHITE),  Endgame<KBPsK>(BLACK) };$/;"	m	namespace:__anon7	file:
+ScaleKPKP	material.cpp	/^  Endgame<KPKP>   ScaleKPKP[]   = { Endgame<KPKP>(WHITE),   Endgame<KPKP>(BLACK) };$/;"	m	namespace:__anon7	file:
+ScaleKPsK	material.cpp	/^  Endgame<KPsK>   ScaleKPsK[]   = { Endgame<KPsK>(WHITE),   Endgame<KPsK>(BLACK) };$/;"	m	namespace:__anon7	file:
+ScaleKQKRPs	material.cpp	/^  Endgame<KQKRPs> ScaleKQKRPs[] = { Endgame<KQKRPs>(WHITE), Endgame<KQKRPs>(BLACK) };$/;"	m	namespace:__anon7	file:
+Score	search.cpp	/^  Value Score;$/;"	m	namespace:Tablebases	file:
+Search	movepick.h	/^namespace Search { struct Stack; }$/;"	n
+Search	search.cpp	/^namespace Search {$/;"	n	file:
+Search	search.h	/^namespace Search {$/;"	n
+ShelterWeakness	pawns.cpp	/^  const Value ShelterWeakness[][RANK_NB] = {$/;"	m	namespace:__anon2	file:
+Side	syzygy/tbprobe.cpp	/^    enum Side { Left, Right, Value };$/;"	g	struct:__anon9::LR	file:
+Signals	search.cpp	/^  SignalsType Signals;$/;"	m	namespace:Search	file:
+SignalsType	search.h	/^struct SignalsType {$/;"	s	namespace:Search
+SingleValue	syzygy/tbprobe.cpp	/^enum TBFlag { STM = 1, Mapped = 2, WinPlies = 4, LossPlies = 8, SingleValue = 128 };$/;"	e	enum:__anon9::TBFlag	file:
+Skill	search.cpp	/^    Skill(int l) : level(l) {}$/;"	f	struct:__anon13::Skill
+Skill	search.cpp	/^  struct Skill {$/;"	s	namespace:__anon13	file:
+SpaceThreshold	evaluate.cpp	/^  const Value SpaceThreshold = Value(12222);$/;"	m	namespace:__anon4	file:
+SparseEntry	syzygy/tbprobe.cpp	/^struct SparseEntry {$/;"	s	namespace:__anon9	file:
+Square	types.h	/^enum Square {$/;"	g
+SquareBB	bitboard.cpp	/^Bitboard SquareBB[SQUARE_NB];$/;"	v
+SquareDistance	bitboard.cpp	/^int SquareDistance[SQUARE_NB][SQUARE_NB];$/;"	v
+Stack	search.h	/^struct Stack {$/;"	s	namespace:Search
+Stages	movepick.cpp	/^  enum Stages {$/;"	g	namespace:__anon17	file:
+StartFEN	uci.cpp	/^  const char* StartFEN = "rnbqkbnr\/pppppppp\/8\/8\/8\/8\/PPPPPPPP\/RNBQKBNR w KQkq - 0 1";$/;"	m	namespace:__anon8	file:
+StateInfo	position.h	/^struct StateInfo {$/;"	s
+StateListPtr	position.h	/^typedef std::unique_ptr<std::deque<StateInfo>> StateListPtr;$/;"	t
+Stats	movepick.h	/^struct Stats {$/;"	s
+StealRatio	timeman.cpp	/^  const double StealRatio = 0.35; \/\/ However we must not steal time from remaining moves over this ratio$/;"	m	namespace:__anon16	file:
+StormDanger	pawns.cpp	/^  const Value StormDanger[][4][RANK_NB] = {$/;"	m	namespace:__anon2	file:
+Sym	syzygy/tbprobe.cpp	/^typedef uint16_t Sym; \/\/ Huffman symbol$/;"	t	namespace:__anon9	file:
+SyncCout	misc.h	/^enum class SyncCout { IO_LOCK, IO_UNLOCK, IO_ENDL };$/;"	c
+TBEntry	syzygy/tbprobe.cpp	/^struct TBEntry : public Atomic {$/;"	s	namespace:__anon9	file:
+TBFile	syzygy/tbprobe.cpp	/^    TBFile(const std::string& f) {$/;"	f	class:__anon9::TBFile
+TBFile	syzygy/tbprobe.cpp	/^class TBFile : public std::ifstream {$/;"	c	namespace:__anon9	file:
+TBFlag	syzygy/tbprobe.cpp	/^enum TBFlag { STM = 1, Mapped = 2, WinPlies = 4, LossPlies = 8, SingleValue = 128 };$/;"	g	namespace:__anon9	file:
+TBHASHBITS	syzygy/tbprobe.cpp	/^    static const int TBHASHBITS = 10;$/;"	m	class:__anon9::HashTable	file:
+TBPIECES	syzygy/tbprobe.cpp	/^const int TBPIECES = 6;$/;"	m	namespace:__anon9	file:
+TBPROBE_H	syzygy/tbprobe.h	21;"	d
+TERM_NB	evaluate.cpp	/^      MATERIAL = 8, IMBALANCE, MOBILITY, THREAT, PASSED, SPACE, TOTAL, TERM_NB$/;"	e	enum:__anon4::Trace::Term	file:
+THREAD_H_INCLUDED	thread.h	22;"	d
+THREAD_WIN32_H_INCLUDED	thread_win32.h	22;"	d
+THREAT	evaluate.cpp	/^      MATERIAL = 8, IMBALANCE, MOBILITY, THREAT, PASSED, SPACE, TOTAL, TERM_NB$/;"	e	enum:__anon4::Trace::Term	file:
+TIMEMAN_H_INCLUDED	timeman.h	22;"	d
+TOTAL	evaluate.cpp	/^      MATERIAL = 8, IMBALANCE, MOBILITY, THREAT, PASSED, SPACE, TOTAL, TERM_NB$/;"	e	enum:__anon4::Trace::Term	file:
+TT	tt.cpp	/^TranspositionTable TT; \/\/ Our global transposition table$/;"	v
+TTEntry	tt.h	/^struct TTEntry {$/;"	s
+TT_H_INCLUDED	tt.h	22;"	d
+TYPES_H_INCLUDED	types.h	22;"	d
+Table	material.h	/^typedef HashTable<Entry, 8192> Table;$/;"	t	namespace:Material
+Table	pawns.h	/^typedef HashTable<Entry, 16384> Table;$/;"	t	namespace:Pawns
+Tablebases	search.cpp	/^namespace Tablebases {$/;"	n	file:
+Tablebases	syzygy/tbprobe.h	/^namespace Tablebases {$/;"	n
+Tempo	evaluate.h	/^const Value Tempo = Value(20); \/\/ Must be visible to search$/;"	m	namespace:Eval
+Term	evaluate.cpp	/^    enum Term { \/\/ The first 8 entries are for PieceType$/;"	g	namespace:__anon4::Trace	file:
+Thread	thread.cpp	/^Thread::Thread() {$/;"	f	class:Thread
+Thread	thread.h	/^class Thread {$/;"	c
+ThreadPool	thread.h	/^struct ThreadPool : public std::vector<Thread*> {$/;"	s
+Threads	thread.cpp	/^ThreadPool Threads; \/\/ Global object$/;"	v
+ThreatByHangingPawn	evaluate.cpp	/^  const Score ThreatByHangingPawn = S( 71, 61);$/;"	m	namespace:__anon4	file:
+ThreatByKing	evaluate.cpp	/^  const Score ThreatByKing[] = { S(3, 62), S(9, 138) };$/;"	m	namespace:__anon4	file:
+ThreatByMinor	evaluate.cpp	/^  const Score ThreatByMinor[PIECE_TYPE_NB] = {$/;"	m	namespace:__anon4	file:
+ThreatByPawnPush	evaluate.cpp	/^  const Score ThreatByPawnPush    = S( 38, 22);$/;"	m	namespace:__anon4	file:
+ThreatByRank	evaluate.cpp	/^  const Score ThreatByRank        = S( 16,  3);$/;"	m	namespace:__anon4	file:
+ThreatByRook	evaluate.cpp	/^  const Score ThreatByRook[PIECE_TYPE_NB] = {$/;"	m	namespace:__anon4	file:
+ThreatBySafePawn	evaluate.cpp	/^  const Score ThreatBySafePawn    = S(182,175);$/;"	m	namespace:__anon4	file:
+Tie	misc.cpp	/^  Tie(streambuf* b, streambuf* l) : buf(b), logBuf(l) {}$/;"	f	struct:__anon18::Tie
+Tie	misc.cpp	/^struct Tie: public streambuf { \/\/ MSVC requires split streambuf for cin and cout$/;"	s	namespace:__anon18	file:
+Time	timeman.cpp	/^TimeManagement Time; \/\/ Our global time management object$/;"	v
+TimeManagement	timeman.h	/^class TimeManagement {$/;"	c
+TimePoint	misc.h	/^typedef std::chrono::milliseconds::rep TimePoint; \/\/ A value in milliseconds$/;"	t
+TimeType	timeman.cpp	/^  enum TimeType { OptimumTime, MaxTime };$/;"	g	namespace:__anon16	file:
+Trace	evaluate.cpp	/^  namespace Trace {$/;"	n	namespace:__anon4	file:
+TranspositionTable	tt.h	/^class TranspositionTable {$/;"	c
+TrappedBishopA1H1	evaluate.cpp	/^  const Score TrappedBishopA1H1 = S(50, 50);$/;"	m	namespace:__anon4	file:
+TrappedRook	evaluate.cpp	/^  const Score TrappedRook         = S( 92,  0);$/;"	m	namespace:__anon4	file:
+UCI	uci.h	/^namespace UCI {$/;"	n
+UCI	ucioption.cpp	/^namespace UCI {$/;"	n	file:
+UCI_H_INCLUDED	uci.h	22;"	d
+UNKNOWN	bitbase.cpp	/^    UNKNOWN = 1,$/;"	e	enum:__anon5::Result	file:
+Unsupported	pawns.cpp	/^  const Score Unsupported = S(17, 8);$/;"	m	namespace:__anon2	file:
+UseRule50	search.cpp	/^  bool UseRule50;$/;"	m	namespace:Tablebases	file:
+V	evaluate.cpp	115;"	d	file:
+V	evaluate.cpp	208;"	d	file:
+V	pawns.cpp	31;"	d	file:
+V	pawns.cpp	91;"	d	file:
+Value	syzygy/tbprobe.cpp	/^    enum Side { Left, Right, Value };$/;"	e	enum:__anon9::LR::Side	file:
+Version	misc.cpp	/^const string Version = "";$/;"	m	namespace:__anon18	file:
+WDLBlessedLoss	syzygy/tbprobe.h	/^    WDLBlessedLoss = -1, \/\/ Loss, but draw under 50-move rule$/;"	e	enum:Tablebases::WDLScore
+WDLCursedWin	syzygy/tbprobe.h	/^    WDLCursedWin   =  1, \/\/ Win, but draw under 50-move rule$/;"	e	enum:Tablebases::WDLScore
+WDLDraw	syzygy/tbprobe.h	/^    WDLDraw        =  0, \/\/ Draw$/;"	e	enum:Tablebases::WDLScore
+WDLEntry	syzygy/tbprobe.cpp	/^WDLEntry::WDLEntry(const std::string& code) {$/;"	f	class:__anon9::WDLEntry
+WDLEntry	syzygy/tbprobe.cpp	/^struct WDLEntry : public TBEntry {$/;"	s	namespace:__anon9	file:
+WDLEntryPawn	syzygy/tbprobe.cpp	/^struct WDLEntryPawn {$/;"	s	namespace:__anon9	file:
+WDLLoss	syzygy/tbprobe.h	/^    WDLLoss        = -2, \/\/ Loss$/;"	e	enum:Tablebases::WDLScore
+WDLPawnTable	syzygy/tbprobe.cpp	/^typedef decltype(WDLEntry::pawnTable ) WDLPawnTable;$/;"	t	namespace:__anon9	file:
+WDLPieceTable	syzygy/tbprobe.cpp	/^typedef decltype(WDLEntry::pieceTable) WDLPieceTable;$/;"	t	namespace:__anon9	file:
+WDLScore	syzygy/tbprobe.h	/^enum WDLScore {$/;"	g	namespace:Tablebases
+WDLScoreNone	syzygy/tbprobe.h	/^    WDLScoreNone  = -1000$/;"	e	enum:Tablebases::WDLScore
+WDLWin	syzygy/tbprobe.h	/^    WDLWin         =  2, \/\/ Win$/;"	e	enum:Tablebases::WDLScore
+WDL_to_value	syzygy/tbprobe.cpp	/^const Value WDL_to_value[] = {$/;"	m	namespace:__anon9	file:
+WEST	types.h	/^  WEST  = -1,$/;"	e	enum:Square
+WHITE	types.h	/^  WHITE, BLACK, NO_COLOR, COLOR_NB = 2$/;"	e	enum:Color
+WHITE_OO	types.h	/^  WHITE_OO,$/;"	e	enum:CastlingRight
+WHITE_OOO	types.h	/^  WHITE_OOO = WHITE_OO << 1,$/;"	e	enum:CastlingRight
+WIN	bitbase.cpp	/^    WIN     = 4$/;"	e	enum:__anon5::Result	file:
+WIN32_LEAN_AND_MEAN	syzygy/tbprobe.cpp	46;"	d	file:
+WIN32_LEAN_AND_MEAN	thread_win32.h	43;"	d
+WIN32_LEAN_AND_MEAN	thread_win32.h	45;"	d
+WLDEntryPiece	syzygy/tbprobe.cpp	/^struct WLDEntryPiece {$/;"	s	namespace:__anon9	file:
+W_BISHOP	types.h	/^  W_PAWN = 1, W_KNIGHT, W_BISHOP, W_ROOK, W_QUEEN, W_KING,$/;"	e	enum:Piece
+W_KING	types.h	/^  W_PAWN = 1, W_KNIGHT, W_BISHOP, W_ROOK, W_QUEEN, W_KING,$/;"	e	enum:Piece
+W_KNIGHT	types.h	/^  W_PAWN = 1, W_KNIGHT, W_BISHOP, W_ROOK, W_QUEEN, W_KING,$/;"	e	enum:Piece
+W_PAWN	types.h	/^  W_PAWN = 1, W_KNIGHT, W_BISHOP, W_ROOK, W_QUEEN, W_KING,$/;"	e	enum:Piece
+W_QUEEN	types.h	/^  W_PAWN = 1, W_KNIGHT, W_BISHOP, W_ROOK, W_QUEEN, W_KING,$/;"	e	enum:Piece
+W_ROOK	types.h	/^  W_PAWN = 1, W_KNIGHT, W_BISHOP, W_ROOK, W_QUEEN, W_KING,$/;"	e	enum:Piece
+WeakQueen	evaluate.cpp	/^  const Score WeakQueen           = S( 50, 10);$/;"	m	namespace:__anon4	file:
+WinPlies	syzygy/tbprobe.cpp	/^enum TBFlag { STM = 1, Mapped = 2, WinPlies = 4, LossPlies = 8, SingleValue = 128 };$/;"	e	enum:__anon9::TBFlag	file:
+WinProcGroup	misc.cpp	/^namespace WinProcGroup {$/;"	n	file:
+WinProcGroup	misc.h	/^namespace WinProcGroup {$/;"	n
+ZEROING_BEST_MOVE	syzygy/tbprobe.h	/^    ZEROING_BEST_MOVE =  2  \/\/ Best move zeroes DTZ (capture or pawn move)$/;"	e	enum:Tablebases::ProbeState
+Zobrist	position.cpp	/^namespace Zobrist {$/;"	n	file:
+_WIN32_WINNT	misc.cpp	23;"	d	file:
+_WIN32_WINNT	misc.cpp	24;"	d	file:
+add	endgame.cpp	/^void Endgames::add(const string& code) {$/;"	f	class:Endgames
+add	evaluate.cpp	/^    void add(int idx, Color c, Score s) {$/;"	f	namespace:__anon4::Trace
+add	evaluate.cpp	/^    void add(int idx, Score w, Score b = SCORE_ZERO) {$/;"	f	namespace:__anon4::Trace
+adjacent_files_bb	bitboard.h	/^inline Bitboard adjacent_files_bb(File f) {$/;"	f
+advanced_pawn_push	position.h	/^inline bool Position::advanced_pawn_push(Move m) const {$/;"	f	class:Position
+aligned	bitboard.h	/^inline bool aligned(Square s1, Square s2, Square s3) {$/;"	f
+arch	Makefile	/^	arch = any$/;"	m
+arch	Makefile	/^	arch = armv7$/;"	m
+arch	Makefile	/^	arch = i386$/;"	m
+arch	Makefile	/^	arch = ppc$/;"	m
+arch	Makefile	/^	arch = ppc64$/;"	m
+arch	Makefile	/^	arch = x86_64$/;"	m
+asymmetry	pawns.h	/^  int asymmetry;$/;"	m	struct:Pawns::Entry
+attackedBy	evaluate.cpp	/^    Bitboard attackedBy[COLOR_NB][PIECE_TYPE_NB];$/;"	m	struct:__anon4::EvalInfo	file:
+attackedBy2	evaluate.cpp	/^    Bitboard attackedBy2[COLOR_NB];$/;"	m	struct:__anon4::EvalInfo	file:
+attackers_to	position.cpp	/^Bitboard Position::attackers_to(Square s, Bitboard occupied) const {$/;"	f	class:Position
+attackers_to	position.h	/^inline Bitboard Position::attackers_to(Square s) const {$/;"	f	class:Position
+attacks_bb	bitboard.h	/^inline Bitboard attacks_bb(PieceType pt, Square s, Bitboard occupied) {$/;"	f
+attacks_bb	bitboard.h	/^inline Bitboard attacks_bb(Square s, Bitboard occupied) {$/;"	f
+attacks_from	position.h	/^inline Bitboard Position::attacks_from(PieceType pt, Square s) const {$/;"	f	class:Position
+attacks_from	position.h	/^inline Bitboard Position::attacks_from(Square s) const {$/;"	f	class:Position
+attacks_from	position.h	/^inline Bitboard Position::attacks_from<PAWN>(Square s, Color c) const {$/;"	f	class:Position
+availableNodes	timeman.h	/^  int64_t availableNodes; \/\/ When in 'nodes as time' mode$/;"	m	class:TimeManagement
+backmost_sq	bitboard.h	/^inline Square  backmost_sq(Color c, Bitboard b) { return c == WHITE ? lsb(b) : msb(b); }$/;"	f
+base64	syzygy/tbprobe.cpp	/^    std::vector<uint64_t> base64;  \/\/ base64[l - min_sym_len] is the 64bit-padded lowest symbol of length l$/;"	m	struct:__anon9::PairsData	file:
+baseAddress	syzygy/tbprobe.cpp	/^    void* baseAddress;$/;"	m	struct:__anon9::TBEntry	file:
+begin	movegen.h	/^  const ExtMove* begin() const { return moveList; }$/;"	f	struct:MoveList
+begin	movepick.h	/^  ExtMove* begin() { return cur; }$/;"	f	class:MovePicker
+benchmark	benchmark.cpp	/^void benchmark(const Position& current, istream& is) {$/;"	f
+best	search.cpp	/^    Move best = MOVE_NONE;$/;"	m	struct:__anon13::Skill	file:
+bestMoveChanges	thread.h	/^  double bestMoveChanges;$/;"	m	struct:MainThread
+best_move	search.cpp	/^    Move best_move(size_t multiPV) { return best ? best : pick_best(multiPV); }$/;"	f	struct:__anon13::Skill
+between_bb	bitboard.h	/^inline Bitboard between_bb(Square s1, Square s2) {$/;"	f
+bindThisThread	misc.cpp	/^void bindThisThread(size_t) {}$/;"	f	namespace:WinProcGroup
+bits	Makefile	/^	bits = 64$/;"	m
+bits	Makefile	/^bits = 32$/;"	m
+block	syzygy/tbprobe.cpp	/^    char block[4];   \/\/ Number of block$/;"	m	struct:__anon9::SparseEntry	file:
+blockLength	syzygy/tbprobe.cpp	/^    uint16_t* blockLength;         \/\/ Number of stored positions (minus one) for each block: 1..65536$/;"	m	struct:__anon9::PairsData	file:
+blockLengthSize	syzygy/tbprobe.cpp	/^    int blockLengthSize;           \/\/ Size of blockLength[] table: padded so it's bigger than blocksNum$/;"	m	struct:__anon9::PairsData	file:
+blockersForKing	position.h	/^  Bitboard   blockersForKing[COLOR_NB];$/;"	m	struct:StateInfo
+blocksNum	syzygy/tbprobe.cpp	/^    int blocksNum;                 \/\/ Number of blocks in the TB file$/;"	m	struct:__anon9::PairsData	file:
+board	position.h	/^  Piece board[SQUARE_NB];$/;"	m	class:Position
+bound	tt.h	/^  Bound bound() const { return (Bound)(genBound8 & 0x3); }$/;"	f	struct:TTEntry
+bsf_index	bitboard.cpp	/^  unsigned bsf_index(Bitboard b) {$/;"	f	namespace:__anon19
+btree	syzygy/tbprobe.cpp	/^    LR* btree;                     \/\/ btree[sym] stores the left and right symbols that expand sym$/;"	m	struct:__anon9::PairsData	file:
+buf	misc.cpp	/^  streambuf *buf, *logBuf;$/;"	m	struct:__anon18::Tie	file:
+byColorBB	position.h	/^  Bitboard byColorBB[COLOR_NB];$/;"	m	class:Position
+byTypeBB	position.h	/^  Bitboard byTypeBB[PIECE_TYPE_NB];$/;"	m	class:Position
+cache	tt.h	/^  Cluster* cache;$/;"	m	class:TranspositionTable
+callsCnt	thread.h	/^  int maxPly, callsCnt;$/;"	m	class:Thread
+can_castle	position.h	/^inline int Position::can_castle(CastlingRight cr) const {$/;"	f	class:Position
+can_castle	position.h	/^inline int Position::can_castle(Color c) const {$/;"	f	class:Position
+capture	position.h	/^inline bool Position::capture(Move m) const {$/;"	f	class:Position
+capture_or_promotion	position.h	/^inline bool Position::capture_or_promotion(Move m) const {$/;"	f	class:Position
+capturedPiece	position.h	/^  Piece      capturedPiece;$/;"	m	struct:StateInfo
+captured_piece	position.h	/^inline Piece Position::captured_piece() const {$/;"	f	class:Position
+castling	position.cpp	/^  Key castling[CASTLING_RIGHT_NB];$/;"	m	namespace:Zobrist	file:
+castlingPath	position.h	/^  Bitboard castlingPath[CASTLING_RIGHT_NB];$/;"	m	class:Position
+castlingRights	pawns.h	/^  int castlingRights[COLOR_NB];$/;"	m	struct:Pawns::Entry
+castlingRights	position.h	/^  int    castlingRights;$/;"	m	struct:StateInfo
+castlingRightsMask	position.h	/^  int castlingRightsMask[SQUARE_NB];$/;"	m	class:Position
+castlingRookSquare	position.h	/^  Square castlingRookSquare[CASTLING_RIGHT_NB];$/;"	m	class:Position
+castling_impeded	position.h	/^inline bool Position::castling_impeded(CastlingRight cr) const {$/;"	f	class:Position
+castling_rook_square	position.h	/^inline Square Position::castling_rook_square(CastlingRight cr) const {$/;"	f	class:Position
+checkSquares	position.h	/^  Bitboard   checkSquares[PIECE_TYPE_NB];$/;"	m	struct:StateInfo
+check_dtz_stm	syzygy/tbprobe.cpp	/^bool check_dtz_stm(DTZEntry* entry, int stm, File f) {$/;"	f	namespace:__anon9
+check_dtz_stm	syzygy/tbprobe.cpp	/^bool check_dtz_stm(WDLEntry*, int, File) { return true; }$/;"	f	namespace:__anon9
+check_keys	tt.h	/^  void check_keys() const {$/;"	f	class:TranspositionTable
+check_squares	position.h	/^inline Bitboard Position::check_squares(PieceType pt) const {$/;"	f	class:Position
+check_time	search.cpp	/^  void check_time() {$/;"	f	namespace:__anon14
+checkers	position.h	/^inline Bitboard Position::checkers() const {$/;"	f	class:Position
+checkersBB	position.h	/^  Bitboard   checkersBB;$/;"	m	struct:StateInfo
+chess960	position.h	/^  bool chess960;$/;"	m	class:Position
+classify	bitbase.cpp	/^    Result classify(const std::vector<KPKPosition>& db)$/;"	f	struct:__anon5::KPKPosition
+classify	bitbase.cpp	/^  Result KPKPosition::classify(const std::vector<KPKPosition>& db) {$/;"	f	class:__anon6::KPKPosition
+clear	movepick.h	/^  void clear() { std::memset(table, 0, sizeof(table)); }$/;"	f	struct:HistoryStats
+clear	movepick.h	/^  void clear() { std::memset(table, 0, sizeof(table)); }$/;"	f	struct:Stats
+clear	search.cpp	/^    void clear() {$/;"	f	struct:__anon13::EasyMoveManager
+clear	search.cpp	/^void Search::clear() {$/;"	f	class:Search
+clear	syzygy/tbprobe.cpp	/^  void clear() {$/;"	f	class:__anon9::HashTable
+clear	tt.cpp	/^void TranspositionTable::clear() {$/;"	f	class:TranspositionTable
+clusterCount	tt.h	/^  size_t clusterCount;$/;"	m	class:TranspositionTable
+color_of	types.h	/^inline Color color_of(Piece pc) {$/;"	f
+comp	Makefile	/^	comp=clang$/;"	m
+comp	Makefile	/^	comp=gcc$/;"	m
+comp	Makefile	/^	comp=icc$/;"	m
+comp	Makefile	/^	comp=mingw$/;"	m
+completedDepth	thread.h	/^  Depth completedDepth;$/;"	m	class:Thread
+contains	movegen.h	/^  bool contains(Move move) const {$/;"	f	struct:MoveList
+count	position.h	/^template<PieceType Pt> inline int Position::count() const {$/;"	f	class:Position
+count	position.h	/^template<PieceType Pt> inline int Position::count(Color c) const {$/;"	f	class:Position
+counterMoveHistory	thread.h	/^  CounterMoveHistoryStats counterMoveHistory;$/;"	m	class:Thread
+counterMoves	search.h	/^  CounterMoveStats* counterMoves;$/;"	m	struct:Search::Stack
+counterMoves	thread.h	/^  MoveStats counterMoves;$/;"	m	class:Thread
+countermove	movepick.h	/^  Move countermove;$/;"	m	class:MovePicker
+cs	thread_win32.h	/^  CRITICAL_SECTION cs;$/;"	m	struct:Mutex
+cur	movepick.h	/^  ExtMove *cur, *endMoves, *endBadCaptures;$/;"	m	class:MovePicker
+currentMove	search.h	/^  Move currentMove;$/;"	m	struct:Search::Stack
+currentValue	uci.h	/^  std::string defaultValue, currentValue, type;$/;"	m	class:UCI::Option
+data	syzygy/tbprobe.cpp	/^    uint8_t* data;                 \/\/ Start of Huffman compressed data$/;"	m	struct:__anon9::PairsData	file:
+dbg_hit_on	misc.cpp	/^void dbg_hit_on(bool b) { ++hits[0]; if (b) ++hits[1]; }$/;"	f
+dbg_hit_on	misc.cpp	/^void dbg_hit_on(bool c, bool b) { if (c) dbg_hit_on(b); }$/;"	f
+dbg_mean_of	misc.cpp	/^void dbg_mean_of(int v) { ++means[0]; means[1] += v; }$/;"	f
+dbg_print	misc.cpp	/^void dbg_print() {$/;"	f
+debug	Makefile	/^debug = yes$/;"	m
+decltype	syzygy/tbprobe.cpp	/^auto item(DTZPawnTable&  e, int    , int f) -> decltype(e.file[f])& { return e.file[f]; }$/;"	f	namespace:__anon9
+decltype	syzygy/tbprobe.cpp	/^auto item(DTZPieceTable& e, int    , int  ) -> decltype(e)& { return e; }$/;"	f	namespace:__anon9
+decltype	syzygy/tbprobe.cpp	/^auto item(WDLPawnTable&  e, int stm, int f) -> decltype(e.file[stm][f])& { return e.file[stm][f]; }$/;"	f	namespace:__anon9
+decltype	syzygy/tbprobe.cpp	/^auto item(WDLPieceTable& e, int stm, int  ) -> decltype(e[stm])& { return e[stm]; }$/;"	f	namespace:__anon9
+decompress_pairs	syzygy/tbprobe.cpp	/^int decompress_pairs(PairsData* d, uint64_t idx) {$/;"	f	namespace:__anon9
+defaultValue	uci.h	/^  std::string defaultValue, currentValue, type;$/;"	m	class:UCI::Option
+depth	movepick.h	/^  Depth depth;$/;"	m	class:MovePicker
+depth	search.h	/^  int time[COLOR_NB], inc[COLOR_NB], npmsec, movestogo, depth, movetime, mate, infinite, ponder;$/;"	m	struct:Search::LimitsType
+depth	tt.h	/^  Depth depth() const { return (Depth)(depth8 * int(ONE_PLY)); }$/;"	f	struct:TTEntry
+depth8	tt.h	/^    int8_t depth8;$/;"	m	struct:FullTTEntry
+depth8	tt.h	/^  int8_t   depth8;$/;"	m	struct:TTEntry
+discovered_check_candidates	position.h	/^inline Bitboard Position::discovered_check_candidates() const {$/;"	f	class:Position
+distance	bitboard.h	/^template<> inline int distance<File>(Square x, Square y) { return distance(file_of(x), file_of(y)); }$/;"	f
+distance	bitboard.h	/^template<> inline int distance<Rank>(Square x, Square y) { return distance(rank_of(x), rank_of(y)); }$/;"	f
+distance	bitboard.h	/^template<> inline int distance<Square>(Square x, Square y) { return SquareDistance[x][y]; }$/;"	f
+distance	bitboard.h	/^template<typename T> inline int distance(T x, T y) { return x < y ? y - x : x - y; }$/;"	f
+do_castling	position.cpp	/^void Position::do_castling(Color us, Square from, Square& to, Square& rfrom, Square& rto) {$/;"	f	class:Position
+do_init	syzygy/tbprobe.cpp	/^void do_init(Entry& e, T& p, uint8_t* data) {$/;"	f	namespace:__anon9
+do_king_safety	pawns.cpp	/^Score Entry::do_king_safety(const Position& pos, Square ksq) {$/;"	f	class:Pawns::Entry
+do_move	position.cpp	/^void Position::do_move(Move m, StateInfo& newSt, bool givesCheck) {$/;"	f	class:Position
+do_move	position.h	/^inline void Position::do_move(Move m, StateInfo& newSt) {$/;"	f	class:Position
+do_null_move	position.cpp	/^void Position::do_null_move(StateInfo& newSt) {$/;"	f	class:Position
+do_probe_table	syzygy/tbprobe.cpp	/^T do_probe_table(const Position& pos,  Entry* entry, WDLScore wdl, ProbeState* result) {$/;"	f	namespace:__anon9
+dtzTable	syzygy/tbprobe.cpp	/^    std::deque<DTZEntry> dtzTable;$/;"	m	class:__anon9::HashTable	file:
+dtz_before_zeroing	syzygy/tbprobe.cpp	/^int dtz_before_zeroing(WDLScore wdl) {$/;"	f	namespace:__anon9
+easyMovePlayed	thread.h	/^  bool easyMovePlayed, failedLow;$/;"	m	struct:MainThread
+eg_value	types.h	/^inline Value eg_value(Score s) {$/;"	f
+elapsed	timeman.h	/^  int elapsed() const { return int(Search::Limits.npmsec ? Threads.nodes_searched() : now() - startTime); }$/;"	f	class:TimeManagement
+empty	position.h	/^inline bool Position::empty(Square s) const {$/;"	f	class:Position
+enabled	search.cpp	/^    bool enabled() const { return level < 20; }$/;"	f	struct:__anon13::Skill
+end	movegen.h	/^  const ExtMove* end() const { return last; }$/;"	f	struct:MoveList
+end	movepick.h	/^  ExtMove* end() { return endMoves; }$/;"	f	class:MovePicker
+endBadCaptures	movepick.h	/^  ExtMove *cur, *endMoves, *endBadCaptures;$/;"	m	class:MovePicker
+endMoves	movepick.h	/^  ExtMove *cur, *endMoves, *endBadCaptures;$/;"	m	class:MovePicker
+endgames	thread.h	/^  Endgames endgames;$/;"	m	class:Thread
+engine_info	misc.cpp	/^const string engine_info(bool to_uci) {$/;"	f
+enpassant	position.cpp	/^  Key enpassant[FILE_NB];$/;"	m	namespace:Zobrist	file:
+entry	tt.h	/^  TTEntry entry[ClusterSize];$/;"	m	struct:Cluster
+epSquare	position.h	/^  Square epSquare;$/;"	m	struct:StateInfo
+ep_square	position.h	/^inline Square Position::ep_square() const {$/;"	f	class:Position
+eval	tt.h	/^  Value eval()  const { return (Value)eval16; }$/;"	f	struct:TTEntry
+eval16	tt.h	/^    int16_t eval16;$/;"	m	struct:FullTTEntry
+eval16	tt.h	/^  int16_t  eval16;$/;"	m	struct:TTEntry
+eval_init	evaluate.cpp	/^  void eval_init(const Position& pos, EvalInfo& ei) {$/;"	f	namespace:__anon4
+evaluate	evaluate.cpp	/^Value Eval::evaluate(const Position& pos) {$/;"	f	class:Eval
+evaluate	material.h	/^  Value evaluate(const Position& pos) const { return (*evaluationFunction)(pos); }$/;"	f	struct:Material::Entry
+evaluate	pawns.cpp	/^  Score evaluate(const Position& pos, Pawns::Entry* e) {$/;"	f	namespace:__anon2
+evaluate_initiative	evaluate.cpp	/^  Score evaluate_initiative(const Position& pos, int asymmetry, Value eg) {$/;"	f	namespace:__anon4
+evaluate_king	evaluate.cpp	/^  Score evaluate_king(const Position& pos, const EvalInfo& ei) {$/;"	f	namespace:__anon4
+evaluate_passer_pawns	evaluate.cpp	/^  Score evaluate_passer_pawns(const Position& pos, const EvalInfo& ei) {$/;"	f	namespace:__anon4
+evaluate_pieces	evaluate.cpp	/^  Score evaluate_pieces(const Position& pos, EvalInfo& ei, Score* mobility) {$/;"	f	namespace:__anon4
+evaluate_pieces	evaluate.cpp	/^  Score evaluate_pieces< true, WHITE, KING>(const Position&, EvalInfo&, Score*) { return SCORE_ZERO; }$/;"	f	namespace:__anon4
+evaluate_pieces	evaluate.cpp	/^  Score evaluate_pieces<false, WHITE, KING>(const Position&, EvalInfo&, Score*) { return SCORE_ZERO; }$/;"	f	namespace:__anon4
+evaluate_position	thread.cpp	/^void Thread::evaluate_position(Position& pos, StateListPtr& states, const Search::LimitsType& limits) {$/;"	f	class:Thread
+evaluate_scale_factor	evaluate.cpp	/^  ScaleFactor evaluate_scale_factor(const Position& pos, const EvalInfo& ei, Value eg) {$/;"	f	namespace:__anon4
+evaluate_space	evaluate.cpp	/^  Score evaluate_space(const Position& pos, const EvalInfo& ei) {$/;"	f	namespace:__anon4
+evaluate_threats	evaluate.cpp	/^  Score evaluate_threats(const Position& pos, const EvalInfo& ei) {$/;"	f	namespace:__anon4
+evaluationFunction	material.h	/^  EndgameBase<Value>* evaluationFunction;$/;"	m	struct:Material::Entry
+excludedMove	search.h	/^  Move excludedMove;$/;"	m	struct:Search::Stack
+exit	thread.cpp	/^void ThreadPool::exit() {$/;"	f	class:ThreadPool
+exit	thread.h	/^  bool exit, searching;$/;"	m	class:Thread
+expectedPosKey	search.cpp	/^    Key expectedPosKey;$/;"	m	struct:__anon13::EasyMoveManager	file:
+extract_ponder_from_tt	search.cpp	/^bool RootMove::extract_ponder_from_tt(Position& pos) {$/;"	f	class:RootMove
+factor	material.h	/^  uint8_t factor[COLOR_NB];$/;"	m	struct:Material::Entry
+failedLow	thread.h	/^  bool easyMovePlayed, failedLow;$/;"	m	struct:MainThread
+fen	position.cpp	/^const string Position::fen() const {$/;"	f	class:Position
+file	misc.cpp	/^  ofstream file;$/;"	m	class:__anon18::Logger	file:
+file	syzygy/tbprobe.cpp	/^    DTZEntryPiece file[4];$/;"	m	struct:__anon9::DTZEntryPawn	file:
+file	syzygy/tbprobe.cpp	/^    WLDEntryPiece file[2][4]; \/\/ [wtm \/ btm][FILE_A..FILE_D]$/;"	m	struct:__anon9::WDLEntryPawn	file:
+file_bb	bitboard.h	/^inline Bitboard file_bb(File f) {$/;"	f
+file_bb	bitboard.h	/^inline Bitboard file_bb(Square s) {$/;"	f
+file_of	types.h	/^inline File file_of(Square s) {$/;"	f
+fill_displacements	tt.h	/^  static void fill_displacements(MPI_Aint tte_displacements[]) {$/;"	f	struct:TTEntry
+filter_root_moves	search.cpp	/^void Tablebases::filter_root_moves(Position& pos, Search::RootMoves& rootMoves) {$/;"	f	class:Tablebases
+first_entry	tt.h	/^  TTEntry* first_entry(const Key key) const {$/;"	f	class:TranspositionTable
+flags	syzygy/tbprobe.cpp	/^    int flags;$/;"	m	struct:__anon9::PairsData	file:
+flip	position.cpp	/^void Position::flip() {$/;"	f	class:Position
+fname	syzygy/tbprobe.cpp	/^    std::string fname;$/;"	m	class:__anon9::TBFile	file:
+forward_bb	bitboard.h	/^inline Bitboard forward_bb(Color c, Square s) {$/;"	f
+from_sq	types.h	/^inline Square from_sq(Move m) {$/;"	f
+frontmost_sq	bitboard.h	/^inline Square frontmost_sq(Color c, Bitboard b) { return c == WHITE ? msb(b) : lsb(b); }$/;"	f
+fun1_t	misc.cpp	/^typedef bool(*fun1_t)(LOGICAL_PROCESSOR_RELATIONSHIP,$/;"	t	file:
+fun2_t	misc.cpp	/^typedef bool(*fun2_t)(USHORT, PGROUP_AFFINITY);$/;"	t	file:
+fun3_t	misc.cpp	/^typedef bool(*fun3_t)(HANDLE, CONST GROUP_AFFINITY*, PGROUP_AFFINITY);$/;"	t	file:
+futility_margin	search.cpp	/^  Value futility_margin(Depth d) { return Value(150 * d \/ ONE_PLY); }$/;"	f	namespace:__anon13
+gamePhase	material.h	/^  Phase gamePhase;$/;"	m	struct:Material::Entry
+gamePly	position.h	/^  int gamePly;$/;"	m	class:Position
+game_phase	material.h	/^  Phase game_phase() const { return gamePhase; }$/;"	f	struct:Material::Entry
+game_phase	position.cpp	/^Phase Position::game_phase() const {$/;"	f	class:Position
+game_ply	position.h	/^inline int Position::game_ply() const {$/;"	f	class:Position
+genBound8	tt.h	/^    uint8_t genBound8;$/;"	m	struct:FullTTEntry
+genBound8	tt.h	/^  uint8_t  genBound8;$/;"	m	struct:TTEntry
+generate	movegen.cpp	/^ExtMove* generate(const Position& pos, ExtMove* moveList) {$/;"	f
+generate	movegen.cpp	/^ExtMove* generate<EVASIONS>(const Position& pos, ExtMove* moveList) {$/;"	f
+generate	movegen.cpp	/^ExtMove* generate<LEGAL>(const Position& pos, ExtMove* moveList) {$/;"	f
+generate	movegen.cpp	/^ExtMove* generate<QUIET_CHECKS>(const Position& pos, ExtMove* moveList) {$/;"	f
+generate_all	movegen.cpp	/^  ExtMove* generate_all(const Position& pos, ExtMove* moveList, Bitboard target) {$/;"	f	namespace:__anon21
+generate_castling	movegen.cpp	/^  ExtMove* generate_castling(const Position& pos, ExtMove* moveList, Color us) {$/;"	f	namespace:__anon21
+generate_moves	movegen.cpp	/^  ExtMove* generate_moves(const Position& pos, ExtMove* moveList, Color us,$/;"	f	namespace:__anon21
+generate_pawn_moves	movegen.cpp	/^  ExtMove* generate_pawn_moves(const Position& pos, ExtMove* moveList, Bitboard target) {$/;"	f	namespace:__anon21
+generation	tt.h	/^  uint8_t generation() const { return generation8; }$/;"	f	class:TranspositionTable
+generation8	tt.h	/^  uint8_t generation8; \/\/ Size must be not bigger than TTEntry::genBound8$/;"	m	class:TranspositionTable
+get	movepick.h	/^  int get(Color c, Move m) const { return table[c][from_sq(m)][to_sq(m)]; }$/;"	f	struct:HistoryStats
+get	search.cpp	/^    Move get(Key key) const {$/;"	f	struct:__anon13::EasyMoveManager
+get	syzygy/tbprobe.cpp	/^    E* get(Key key) {$/;"	f	class:__anon9::HashTable
+get	syzygy/tbprobe.cpp	/^    Sym get() {$/;"	f	struct:__anon9::LR
+gives_check	position.cpp	/^bool Position::gives_check(Move m) const {$/;"	f	class:Position
+go	uci.cpp	/^  void go(Position& pos, istringstream& is) {$/;"	f	namespace:__anon8
+groupIdx	syzygy/tbprobe.cpp	/^    uint64_t groupIdx[TBPIECES+1]; \/\/ Start index used for the encoding of the group's pieces$/;"	m	struct:__anon9::PairsData	file:
+groupLen	syzygy/tbprobe.cpp	/^    int groupLen[TBPIECES+1];      \/\/ Number of pieces in a given group: KRKN -> (3, 1)$/;"	m	struct:__anon9::PairsData	file:
+hasPawns	syzygy/tbprobe.cpp	/^    bool hasPawns;$/;"	m	struct:__anon9::TBEntry	file:
+hasUniquePieces	syzygy/tbprobe.cpp	/^    bool hasUniquePieces;$/;"	m	struct:__anon9::TBEntry	file:
+has_repeated	syzygy/tbprobe.cpp	/^static int has_repeated(StateInfo *st)$/;"	f	file:
+hashTable	syzygy/tbprobe.cpp	/^    Entry hashTable[1 << TBHASHBITS][HSHMAX];$/;"	m	class:__anon9::HashTable	file:
+hashfull	tt.cpp	/^int TranspositionTable::hashfull() const {$/;"	f	class:TranspositionTable
+history	search.h	/^  int history;$/;"	m	struct:Search::Stack
+history	thread.h	/^  HistoryStats history;$/;"	m	class:Thread
+hits	misc.cpp	/^static int64_t hits[2], means[2];$/;"	v	file:
+idle_loop	thread.cpp	/^void Thread::idle_loop() {$/;"	f	class:Thread
+idx	thread.h	/^  size_t idx, PVIdx;$/;"	m	class:Thread
+idx	uci.h	/^  size_t idx;$/;"	m	class:UCI::Option
+imbalance	material.cpp	/^  int imbalance(const int pieceCount[][PIECE_TYPE_NB]) {$/;"	f	namespace:__anon7
+imbalance	material.h	/^  Score imbalance() const { return make_score(value, value); }$/;"	f	struct:Material::Entry
+in	misc.cpp	/^  Tie in, out;$/;"	m	class:__anon18::Logger	file:
+in_front_bb	bitboard.h	/^inline Bitboard in_front_bb(Color c, Rank r) {$/;"	f
+inc	search.h	/^  int time[COLOR_NB], inc[COLOR_NB], npmsec, movestogo, depth, movetime, mate, infinite, ponder;$/;"	m	struct:Search::LimitsType
+index	bitbase.cpp	/^  unsigned index(Color us, Square bksq, Square wksq, Square psq) {$/;"	f	namespace:__anon5
+index	position.h	/^  int index[SQUARE_NB];$/;"	m	class:Position
+infinite	search.h	/^  int time[COLOR_NB], inc[COLOR_NB], npmsec, movestogo, depth, movetime, mate, infinite, ponder;$/;"	m	struct:Search::LimitsType
+init	bitbase.cpp	/^void Bitbases::init() {$/;"	f	class:Bitbases
+init	bitboard.cpp	/^void Bitboards::init() {$/;"	f	class:Bitboards
+init	pawns.cpp	/^void init() {$/;"	f	namespace:Pawns
+init	position.cpp	/^void Position::init() {$/;"	f	class:Position
+init	psqt.cpp	/^void init() {$/;"	f	namespace:PSQT
+init	search.cpp	/^void Search::init() {$/;"	f	class:Search
+init	syzygy/tbprobe.cpp	/^void Tablebases::init(const std::string& paths) {$/;"	f	class:Tablebases
+init	syzygy/tbprobe.cpp	/^void* init(Entry& e, const Position& pos) {$/;"	f	namespace:__anon9
+init	thread.cpp	/^void ThreadPool::init() {$/;"	f	class:ThreadPool
+init	timeman.cpp	/^void TimeManagement::init(Search::LimitsType& limits, Color us, int ply) {$/;"	f	class:TimeManagement
+init	ucioption.cpp	/^void init(OptionsMap& o) {$/;"	f	namespace:UCI
+init_magics	bitboard.cpp	/^  void init_magics(Bitboard table[], Bitboard* attacks[], Bitboard magics[],$/;"	f	namespace:__anon20
+init_mpi	main.cpp	/^void init_mpi(int *argc, char ***argv) {$/;"	f
+insert	syzygy/tbprobe.cpp	/^    void insert(Key key, WDLEntry* wdl, DTZEntry* dtz) {$/;"	f	class:__anon9::HashTable	file:
+insert	syzygy/tbprobe.cpp	/^void HashTable::insert(const std::vector<PieceType>& pieces) {$/;"	f	class:__anon9::HashTable
+isSearching	thread.h	/^  bool isSearching() {return searching;};$/;"	f	class:Thread
+is_KBPsKs	material.cpp	/^  bool is_KBPsKs(const Position& pos, Color us) {$/;"	f	namespace:__anon7
+is_KQKRPs	material.cpp	/^  bool is_KQKRPs(const Position& pos, Color us) {$/;"	f	namespace:__anon7
+is_KXK	material.cpp	/^  bool is_KXK(const Position& pos, Color us) {$/;"	f	namespace:__anon7
+is_chess960	position.h	/^inline bool Position::is_chess960() const {$/;"	f	class:Position
+is_draw	position.cpp	/^bool Position::is_draw(int ply) const {$/;"	f	class:Position
+is_ok	types.h	/^inline bool is_ok(Move m) {$/;"	f
+is_ok	types.h	/^inline bool is_ok(Square s) {$/;"	f
+key	material.h	/^  Key key;$/;"	m	struct:Material::Entry
+key	pawns.h	/^  Key key;$/;"	m	struct:Pawns::Entry
+key	position.h	/^  Key        key;$/;"	m	struct:StateInfo
+key	position.h	/^inline Key Position::key() const {$/;"	f	class:Position
+key	syzygy/tbprobe.cpp	/^    Key key;$/;"	m	struct:__anon9::TBEntry	file:
+key	tt.h	/^    uint64_t key;$/;"	m	struct:FullTTEntry
+key	tt.h	/^  uint16_t key;$/;"	m	struct:Cluster
+key16	tt.h	/^  uint16_t key16;$/;"	m	struct:TTEntry
+key2	syzygy/tbprobe.cpp	/^    Key key2;$/;"	m	struct:__anon9::TBEntry	file:
+key_after	position.cpp	/^Key Position::key_after(Move m) const {$/;"	f	class:Position
+killers	movepick.h	/^  Move killers[2];$/;"	m	class:MovePicker
+killers	search.h	/^  Move killers[2];$/;"	m	struct:Search::Stack
+kingAdjacentZoneAttacksCount	evaluate.cpp	/^    int kingAdjacentZoneAttacksCount[COLOR_NB];$/;"	m	struct:__anon4::EvalInfo	file:
+kingAttackersCount	evaluate.cpp	/^    int kingAttackersCount[COLOR_NB];$/;"	m	struct:__anon4::EvalInfo	file:
+kingAttackersWeight	evaluate.cpp	/^    int kingAttackersWeight[COLOR_NB];$/;"	m	struct:__anon4::EvalInfo	file:
+kingRing	evaluate.cpp	/^    Bitboard kingRing[COLOR_NB];$/;"	m	struct:__anon4::EvalInfo	file:
+kingSafety	pawns.h	/^  Score kingSafety[COLOR_NB];$/;"	m	struct:Pawns::Entry
+kingSquares	pawns.h	/^  Square kingSquares[COLOR_NB];$/;"	m	struct:Pawns::Entry
+king_safety	pawns.h	/^  Score king_safety(const Position& pos, Square ksq) {$/;"	f	struct:Pawns::Entry
+ksq	bitbase.cpp	/^    Square ksq[COLOR_NB], psq;$/;"	m	struct:__anon5::KPKPosition	file:
+last	movegen.h	/^  ExtMove moveList[MAX_MOVES], *last;$/;"	m	struct:MoveList
+legal	position.cpp	/^bool Position::legal(Move m) const {$/;"	f	class:Position
+level	search.cpp	/^    int level;$/;"	m	struct:__anon13::Skill	file:
+lock	thread_win32.h	/^  void lock() { EnterCriticalSection(&cs); }$/;"	f	struct:Mutex
+log	misc.cpp	/^  int log(int c, const char* prefix) {$/;"	f	struct:__anon18::Tie
+logBuf	misc.cpp	/^  streambuf *buf, *logBuf;$/;"	m	struct:__anon18::Tie	file:
+loop	uci.cpp	/^void UCI::loop(int argc, char* argv[]) {$/;"	f	class:UCI
+lowestSym	syzygy/tbprobe.cpp	/^    Sym* lowestSym;                \/\/ lowestSym[l] is the symbol of length l with the lowest value$/;"	m	struct:__anon9::PairsData	file:
+lr	syzygy/tbprobe.cpp	/^    uint8_t lr[3]; \/\/ The first 12 bits is the left-hand symbol, the second 12$/;"	m	struct:__anon9::LR	file:
+lsb	bitboard.cpp	/^Square lsb(Bitboard b) {$/;"	f
+lsb	bitboard.h	/^inline Square lsb(Bitboard b) {$/;"	f
+magic_index	bitboard.h	/^inline unsigned magic_index(Square s, Bitboard occupied) {$/;"	f
+main	main.cpp	/^int main(int argc, char* argv[]) {$/;"	f
+main	thread.h	/^  MainThread* main() { return static_cast<MainThread*>(at(0)); }$/;"	f	struct:ThreadPool
+make	types.h	/^inline Move make(Square from, Square to, PieceType pt = KNIGHT) {$/;"	f
+make_move	types.h	/^inline Move make_move(Square from, Square to) {$/;"	f
+make_piece	types.h	/^inline Piece make_piece(Color c, PieceType pt) {$/;"	f
+make_promotions	movegen.cpp	/^  ExtMove* make_promotions(ExtMove* moveList, Square to, Square ksq) {$/;"	f	namespace:__anon21
+make_score	types.h	/^inline Score make_score(int mg, int eg) {$/;"	f
+make_square	types.h	/^inline Square make_square(File f, Rank r) {$/;"	f
+map	endgame.h	/^  Map<T>& map() {$/;"	f	class:Endgames
+map	syzygy/tbprobe.cpp	/^    uint8_t* map(void** baseAddress, uint64_t* mapping, const uint8_t* TB_MAGIC) {$/;"	f	class:__anon9::TBFile
+map	syzygy/tbprobe.cpp	/^    uint8_t* map;$/;"	m	struct:__anon9::DTZEntryPawn	file:
+map	syzygy/tbprobe.cpp	/^    uint8_t* map;$/;"	m	struct:__anon9::DTZEntryPiece	file:
+map_idx	syzygy/tbprobe.cpp	/^    uint16_t map_idx[4]; \/\/ WDLWin, WDLLoss, WDLCursedWin, WDLBlessedLoss$/;"	m	struct:__anon9::DTZEntryPiece	file:
+map_score	syzygy/tbprobe.cpp	/^WDLScore map_score(WDLEntry*, File, int value, WDLScore) { return WDLScore(value - 2); }$/;"	f	namespace:__anon9
+map_score	syzygy/tbprobe.cpp	/^int map_score(DTZEntry* entry, File f, int value, WDLScore wdl) {$/;"	f	namespace:__anon9
+mapping	syzygy/tbprobe.cpp	/^    uint64_t mapping;$/;"	m	struct:__anon9::TBEntry	file:
+maps	endgame.h	/^  std::pair<Map<Value>, Map<ScaleFactor>> maps;$/;"	m	class:Endgames
+masterProtocol	search.cpp	/^void MainThread::masterProtocol() {$/;"	f	class:MainThread
+mate	search.h	/^  int time[COLOR_NB], inc[COLOR_NB], npmsec, movestogo, depth, movetime, mate, infinite, ponder;$/;"	m	struct:Search::LimitsType
+mate_in	types.h	/^inline Value mate_in(int ply) {$/;"	f
+mated_in	types.h	/^inline Value mated_in(int ply) {$/;"	f
+materialKey	position.h	/^  Key    materialKey;$/;"	m	struct:StateInfo
+materialTable	thread.h	/^  Material::Table materialTable;$/;"	m	class:Thread
+material_key	position.h	/^inline Key Position::material_key() const {$/;"	f	class:Position
+max	uci.h	/^  int min, max;$/;"	m	class:UCI::Option
+maxPly	thread.h	/^  int maxPly, callsCnt;$/;"	m	class:Thread
+maxSymLen	syzygy/tbprobe.cpp	/^    int maxSymLen;                 \/\/ Maximum length in bits of the Huffman symbols$/;"	m	struct:__anon9::PairsData	file:
+maximum	timeman.h	/^  int maximum() const { return maximumTime; }$/;"	f	class:TimeManagement
+maximumTime	timeman.h	/^  int maximumTime;$/;"	m	class:TimeManagement
+me	evaluate.cpp	/^    Material::Entry* me;$/;"	m	struct:__anon4::EvalInfo	file:
+means	misc.cpp	/^static int64_t hits[2], means[2];$/;"	v	file:
+mem	tt.h	/^  void* mem;$/;"	m	class:TranspositionTable
+mem2	tt.h	/^  void* mem2;$/;"	m	class:TranspositionTable
+mg_value	types.h	/^inline Value mg_value(Score s) {$/;"	f
+min	uci.h	/^  int min, max;$/;"	m	class:UCI::Option
+minSymLen	syzygy/tbprobe.cpp	/^    int minSymLen;                 \/\/ Minimum length in bits of the Huffman symbols$/;"	m	struct:__anon9::PairsData	file:
+min_attacker	position.cpp	/^PieceType min_attacker(const Bitboard* bb, Square to, Bitboard stmAttackers,$/;"	f	namespace:__anon15
+min_attacker	position.cpp	/^PieceType min_attacker<KING>(const Bitboard*, Square, Bitboard, Bitboard&, Bitboard&) {$/;"	f	namespace:__anon15
+mobilityArea	evaluate.cpp	/^    Bitboard mobilityArea[COLOR_NB];$/;"	m	struct:__anon4::EvalInfo	file:
+more_than_one	bitboard.h	/^inline bool more_than_one(Bitboard b) {$/;"	f
+move	movegen.h	/^  Move move;$/;"	m	struct:ExtMove
+move	tt.h	/^  Move  move()  const { return (Move )move16; }$/;"	f	struct:TTEntry
+move	uci.cpp	/^string UCI::move(Move m, bool chess960) {$/;"	f	class:UCI
+move16	tt.h	/^    uint16_t move16;$/;"	m	struct:FullTTEntry
+move16	tt.h	/^  uint16_t move16;$/;"	m	struct:TTEntry
+moveCount	search.h	/^  int moveCount;$/;"	m	struct:Search::Stack
+moveList	movegen.h	/^  ExtMove moveList[MAX_MOVES], *last;$/;"	m	struct:MoveList
+move_importance	timeman.cpp	/^  double move_importance(int ply) {$/;"	f	namespace:__anon16
+move_piece	position.h	/^inline void Position::move_piece(Piece pc, Square from, Square to) {$/;"	f	class:Position
+movebuf	search.h	/^uint16_t movebuf[MOVEBUF_SIZE][MAX_MOVEBUF_MOVES];$/;"	m	namespace:Search
+moved_piece	position.h	/^inline Piece Position::moved_piece(Move m) const {$/;"	f	class:Position
+moves	movepick.h	/^  ExtMove moves[MAX_MOVES];$/;"	m	class:MovePicker
+movestogo	search.h	/^  int time[COLOR_NB], inc[COLOR_NB], npmsec, movestogo, depth, movetime, mate, infinite, ponder;$/;"	m	struct:Search::LimitsType
+movetime	search.h	/^  int time[COLOR_NB], inc[COLOR_NB], npmsec, movestogo, depth, movetime, mate, infinite, ponder;$/;"	m	struct:Search::LimitsType
+mpi_cluster_t	main.cpp	/^MPI_Datatype mpi_cluster_t;$/;"	v
+mpi_full_tte_t	main.cpp	/^MPI_Datatype mpi_full_tte_t;$/;"	v
+mpi_rank	main.cpp	/^int mpi_rank;$/;"	v
+mpi_size	main.cpp	/^int mpi_size;$/;"	v
+mpi_tte_t	main.cpp	/^MPI_Datatype mpi_tte_t;$/;"	v
+msb	bitboard.cpp	/^Square msb(Bitboard b) {$/;"	f
+msb	bitboard.h	/^inline Square msb(Bitboard b) {$/;"	f
+mutex	thread.h	/^  Mutex mutex;$/;"	m	class:Thread
+nativeThread	thread.h	/^  std::thread nativeThread;$/;"	m	class:Thread
+new_search	tt.h	/^  void new_search() { generation8 += 4; } \/\/ Lower 2 bits are used by Bound$/;"	f	class:TranspositionTable
+next_move	movepick.cpp	/^Move MovePicker::next_move(bool skipQuiets) {$/;"	f	class:MovePicker
+noPawns	position.cpp	/^  Key side, noPawns;$/;"	m	namespace:Zobrist	file:
+nodes	position.h	/^  uint64_t nodes;$/;"	m	class:Position
+nodes	search.h	/^  int64_t nodes;$/;"	m	struct:Search::LimitsType
+nodes_searched	position.h	/^inline uint64_t Position::nodes_searched() const {$/;"	f	class:Position
+nodes_searched	thread.cpp	/^uint64_t ThreadPool::nodes_searched() const {$/;"	f	class:ThreadPool
+nonPawnMaterial	position.h	/^  Value  nonPawnMaterial[COLOR_NB];$/;"	m	struct:StateInfo
+non_pawn_material	position.h	/^inline Value Position::non_pawn_material() const {$/;"	f	class:Position
+non_pawn_material	position.h	/^inline Value Position::non_pawn_material(Color c) const {$/;"	f	class:Position
+normalize	endgame.cpp	/^  Square normalize(const Position& pos, Color strongSide, Square sq) {$/;"	f	namespace:__anon3
+now	misc.h	/^inline TimePoint now() {$/;"	f
+npmsec	search.h	/^  int time[COLOR_NB], inc[COLOR_NB], npmsec, movestogo, depth, movetime, mate, infinite, ponder;$/;"	m	struct:Search::LimitsType
+number	syzygy/tbprobe.cpp	/^template<typename T, int LE> T number(void* addr)$/;"	f	namespace:__anon9
+off_A1H8	syzygy/tbprobe.cpp	/^int off_A1H8(Square sq) { return int(rank_of(sq)) - file_of(sq); }$/;"	f	namespace:__anon9
+offset	syzygy/tbprobe.cpp	/^    char offset[2];  \/\/ Offset within the block$/;"	m	struct:__anon9::SparseEntry	file:
+on_change	uci.h	/^  OnChange on_change;$/;"	m	class:UCI::Option
+on_clear_hash	ucioption.cpp	/^void on_clear_hash(const Option&) { Search::clear(); }$/;"	f	namespace:UCI
+on_hash_size	ucioption.cpp	/^void on_hash_size(const Option& o) { TT.resize(o); }$/;"	f	namespace:UCI
+on_logger	ucioption.cpp	/^void on_logger(const Option& o) { start_logger(o); }$/;"	f	namespace:UCI
+on_tb_path	ucioption.cpp	/^void on_tb_path(const Option& o) { Tablebases::init(o); }$/;"	f	namespace:UCI
+on_threads	ucioption.cpp	/^void on_threads(const Option&) { Threads.read_uci_options(); }$/;"	f	namespace:UCI
+openFiles	pawns.h	/^  int openFiles;$/;"	m	struct:Pawns::Entry
+open_files	pawns.h	/^  int open_files() const { return openFiles; }$/;"	f	struct:Pawns::Entry
+operator &	bitboard.h	/^inline Bitboard operator&(Bitboard b, Square s) {$/;"	f
+operator ()	endgame.cpp	/^ScaleFactor Endgame<KBPKB>::operator()(const Position& pos) const {$/;"	f	class:Endgame
+operator ()	endgame.cpp	/^ScaleFactor Endgame<KBPKN>::operator()(const Position& pos) const {$/;"	f	class:Endgame
+operator ()	endgame.cpp	/^ScaleFactor Endgame<KBPPKB>::operator()(const Position& pos) const {$/;"	f	class:Endgame
+operator ()	endgame.cpp	/^ScaleFactor Endgame<KBPsK>::operator()(const Position& pos) const {$/;"	f	class:Endgame
+operator ()	endgame.cpp	/^ScaleFactor Endgame<KNPK>::operator()(const Position& pos) const {$/;"	f	class:Endgame
+operator ()	endgame.cpp	/^ScaleFactor Endgame<KNPKB>::operator()(const Position& pos) const {$/;"	f	class:Endgame
+operator ()	endgame.cpp	/^ScaleFactor Endgame<KPKP>::operator()(const Position& pos) const {$/;"	f	class:Endgame
+operator ()	endgame.cpp	/^ScaleFactor Endgame<KPsK>::operator()(const Position& pos) const {$/;"	f	class:Endgame
+operator ()	endgame.cpp	/^ScaleFactor Endgame<KQKRPs>::operator()(const Position& pos) const {$/;"	f	class:Endgame
+operator ()	endgame.cpp	/^ScaleFactor Endgame<KRPKB>::operator()(const Position& pos) const {$/;"	f	class:Endgame
+operator ()	endgame.cpp	/^ScaleFactor Endgame<KRPKR>::operator()(const Position& pos) const {$/;"	f	class:Endgame
+operator ()	endgame.cpp	/^ScaleFactor Endgame<KRPPKRP>::operator()(const Position& pos) const {$/;"	f	class:Endgame
+operator ()	endgame.cpp	/^Value Endgame<KBNK>::operator()(const Position& pos) const {$/;"	f	class:Endgame
+operator ()	endgame.cpp	/^Value Endgame<KPK>::operator()(const Position& pos) const {$/;"	f	class:Endgame
+operator ()	endgame.cpp	/^Value Endgame<KQKP>::operator()(const Position& pos) const {$/;"	f	class:Endgame
+operator ()	endgame.cpp	/^Value Endgame<KQKR>::operator()(const Position& pos) const {$/;"	f	class:Endgame
+operator ()	endgame.cpp	/^Value Endgame<KRKB>::operator()(const Position& pos) const {$/;"	f	class:Endgame
+operator ()	endgame.cpp	/^Value Endgame<KRKN>::operator()(const Position& pos) const {$/;"	f	class:Endgame
+operator ()	endgame.cpp	/^Value Endgame<KRKP>::operator()(const Position& pos) const {$/;"	f	class:Endgame
+operator ()	endgame.cpp	/^Value Endgame<KXK>::operator()(const Position& pos) const {$/;"	f	class:Endgame
+operator ()	endgame.cpp	/^template<> Value Endgame<KNNK>::operator()(const Position&) const { return VALUE_DRAW; }$/;"	f	class:Endgame
+operator ()	ucioption.cpp	/^bool CaseInsensitiveLess::operator() (const string& s1, const string& s2) const {$/;"	f	class:UCI::CaseInsensitiveLess
+operator *	types.h	/^inline Score operator*(Score s, int i) {$/;"	f
+operator +	types.h	/^inline Value operator+(Value v, int i) { return Value(int(v) + i); }$/;"	f
+operator +=	types.h	/^inline Value& operator+=(Value& v, int i) { return v = v + i; }$/;"	f
+operator -	syzygy/tbprobe.cpp	/^inline WDLScore operator-(WDLScore d) { return WDLScore(-int(d)); }$/;"	f	namespace:__anon9
+operator -	types.h	/^inline Value operator-(Value v, int i) { return Value(int(v) - i); }$/;"	f
+operator -=	types.h	/^inline Value& operator-=(Value& v, int i) { return v = v - i; }$/;"	f
+operator /	types.h	/^inline Score operator\/(Score s, int i) {$/;"	f
+operator <	movegen.h	/^inline bool operator<(const ExtMove& f, const ExtMove& s) {$/;"	f
+operator <	search.h	/^  bool operator<(const RootMove& m) const { return m.score < score; } \/\/ Descending sort$/;"	f	struct:Search::RootMove
+operator <<	evaluate.cpp	/^    std::ostream& operator<<(std::ostream& os, Term t) {$/;"	f	namespace:__anon4::Trace
+operator <<	misc.h	/^InfoStream& operator<<(InfoStream& is, const T& t)$/;"	f
+operator <<	misc.h	/^inline InfoStream& operator<<(InfoStream& is, SyncCout sc) {$/;"	f
+operator <<	position.cpp	/^std::ostream& operator<<(std::ostream& os, const Position& pos) {$/;"	f
+operator <<	syzygy/tbprobe.h	/^inline std::ostream& operator<<(std::ostream& os, const ProbeState v) {$/;"	f	namespace:Tablebases
+operator <<	syzygy/tbprobe.h	/^inline std::ostream& operator<<(std::ostream& os, const WDLScore v) {$/;"	f	namespace:Tablebases
+operator <<	ucioption.cpp	/^std::ostream& operator<<(std::ostream& os, const OptionsMap& om) {$/;"	f	namespace:UCI
+operator <<	ucioption.cpp	/^void Option::operator<<(const Option& o) {$/;"	f	class:UCI::Option
+operator =	movegen.h	/^  void operator=(Move m) { move = m; }$/;"	f	struct:ExtMove
+operator =	ucioption.cpp	/^Option& Option::operator=(const string& v) {$/;"	f	class:UCI::Option
+operator ==	search.h	/^  bool operator==(const Move& m) const { return pv[0] == m; }$/;"	f	struct:Search::RootMove
+operator Move	movegen.h	/^  operator Move() const { return move; }$/;"	f	struct:ExtMove
+operator Result	bitbase.cpp	/^    operator Result() const { return result; }$/;"	f	struct:__anon5::KPKPosition
+operator []	misc.h	/^  Entry* operator[](Key key) { return &table[(uint32_t)key & (Size - 1)]; }$/;"	f	struct:HashTable
+operator []	movepick.h	/^  T* operator[](Piece pc) { return table[pc]; }$/;"	f	struct:Stats
+operator []	movepick.h	/^  const T* operator[](Piece pc) const { return table[pc]; }$/;"	f	struct:Stats
+operator ^	bitboard.h	/^inline Bitboard operator^(Bitboard b, Square s) {$/;"	f
+operator ^	syzygy/tbprobe.cpp	/^inline Square operator^(Square s, int i) { return Square(int(s) ^ i); }$/;"	f	namespace:__anon9
+operator ^=	bitboard.h	/^inline Bitboard& operator^=(Bitboard& b, Square s) {$/;"	f
+operator ^=	syzygy/tbprobe.cpp	/^inline Square operator^=(Square& s, int i) { return s = Square(int(s) ^ i); }$/;"	f	namespace:__anon9
+operator int	ucioption.cpp	/^Option::operator int() const {$/;"	f	class:UCI::Option
+operator std::string	ucioption.cpp	/^Option::operator std::string() const {$/;"	f	class:UCI::Option
+operator |	bitboard.h	/^inline Bitboard operator|(Bitboard b, Square s) {$/;"	f
+operator |	types.h	/^inline CastlingRight operator|(Color c, CastlingSide s) {$/;"	f
+operator |=	bitbase.cpp	/^  Result& operator|=(Result& r, Result v) { return r = Result(r | v); }$/;"	f	namespace:__anon5
+operator |=	bitboard.h	/^inline Bitboard& operator|=(Bitboard& b, Square s) {$/;"	f
+operator ~	types.h	/^inline Color operator~(Color c) {$/;"	f
+operator ~	types.h	/^inline Piece operator~(Piece pc) {$/;"	f
+operator ~	types.h	/^inline Square operator~(Square s) {$/;"	f
+opposite_bishops	position.h	/^inline bool Position::opposite_bishops() const {$/;"	f	class:Position
+opposite_colors	types.h	/^inline bool opposite_colors(Square s1, Square s2) {$/;"	f
+optimize	Makefile	/^optimize = yes$/;"	m
+optimum	timeman.h	/^  int optimum() const { return optimumTime; }$/;"	f	class:TimeManagement
+optimumTime	timeman.h	/^  int optimumTime;$/;"	m	class:TimeManagement
+out	misc.cpp	/^  Tie in, out;$/;"	m	class:__anon18::Logger	file:
+overflow	misc.cpp	/^  int overflow(int c) { return log(buf->sputc((char)c), "<< "); }$/;"	f	struct:__anon18::Tie
+partial_insertion_sort	movepick.cpp	/^  void partial_insertion_sort(ExtMove* begin, ExtMove* end, int limit) {$/;"	f	namespace:__anon17
+passedPawns	pawns.h	/^  Bitboard passedPawns[COLOR_NB];$/;"	m	struct:Pawns::Entry
+passed_pawn_mask	bitboard.h	/^inline Bitboard passed_pawn_mask(Color c, Square s) {$/;"	f
+passed_pawns	pawns.h	/^  Bitboard passed_pawns(Color c) const { return passedPawns[c]; }$/;"	f	struct:Pawns::Entry
+pawnAttacks	pawns.h	/^  Bitboard pawnAttacks[COLOR_NB];$/;"	m	struct:Pawns::Entry
+pawnAttacksSpan	pawns.h	/^  Bitboard pawnAttacksSpan[COLOR_NB];$/;"	m	struct:Pawns::Entry
+pawnCount	syzygy/tbprobe.cpp	/^    uint8_t pawnCount[2];     \/\/ [Lead color \/ other color]$/;"	m	struct:__anon9::WDLEntryPawn	file:
+pawnCount	syzygy/tbprobe.cpp	/^    uint8_t pawnCount[2];$/;"	m	struct:__anon9::DTZEntryPawn	file:
+pawnKey	position.h	/^  Key    pawnKey;$/;"	m	struct:StateInfo
+pawnTable	syzygy/tbprobe.cpp	/^        DTZEntryPawn  pawnTable;$/;"	m	union:__anon9::DTZEntry::__anon11	file:
+pawnTable	syzygy/tbprobe.cpp	/^        WDLEntryPawn  pawnTable;$/;"	m	union:__anon9::WDLEntry::__anon10	file:
+pawn_asymmetry	pawns.h	/^  int pawn_asymmetry() const { return asymmetry; }$/;"	f	struct:Pawns::Entry
+pawn_attack_span	bitboard.h	/^inline Bitboard pawn_attack_span(Color c, Square s) {$/;"	f
+pawn_attacks	pawns.h	/^  Bitboard pawn_attacks(Color c) const { return pawnAttacks[c]; }$/;"	f	struct:Pawns::Entry
+pawn_attacks_span	pawns.h	/^  Bitboard pawn_attacks_span(Color c) const { return pawnAttacksSpan[c]; }$/;"	f	struct:Pawns::Entry
+pawn_key	position.h	/^inline Key Position::pawn_key() const {$/;"	f	class:Position
+pawn_passed	position.h	/^inline bool Position::pawn_passed(Color c, Square s) const {$/;"	f	class:Position
+pawn_push	types.h	/^inline Square pawn_push(Color c) {$/;"	f
+pawnsOnSquares	pawns.h	/^  int pawnsOnSquares[COLOR_NB][COLOR_NB]; \/\/ [color][light\/dark squares]$/;"	m	struct:Pawns::Entry
+pawnsTable	thread.h	/^  Pawns::Table pawnsTable;$/;"	m	class:Thread
+pawns_comp	syzygy/tbprobe.cpp	/^bool pawns_comp(Square i, Square j) { return MapPawns[i] < MapPawns[j]; }$/;"	f	namespace:__anon9
+pawns_on_same_color_squares	pawns.h	/^  int pawns_on_same_color_squares(Color c, Square s) const {$/;"	f	struct:Pawns::Entry
+pawns_score	pawns.h	/^  Score pawns_score() const { return score; }$/;"	f	struct:Pawns::Entry
+pe	evaluate.cpp	/^    Pawns::Entry* pe;$/;"	m	struct:__anon4::EvalInfo	file:
+perft	search.cpp	/^uint64_t Search::perft(Position& pos, Depth depth) {$/;"	f	class:Search
+pext	Makefile	/^	pext = yes$/;"	m
+pext	Makefile	/^pext = no$/;"	m
+pext	types.h	77;"	d
+pext	types.h	79;"	d
+pick_best	movepick.cpp	/^  Move pick_best(ExtMove* begin, ExtMove* end) {$/;"	f	namespace:__anon17
+pick_best	search.cpp	/^  Move Skill::pick_best(size_t multiPV) {$/;"	f	class:__anon14::Skill
+pieceCount	position.h	/^  int pieceCount[PIECE_NB];$/;"	m	class:Position
+pieceCount	syzygy/tbprobe.cpp	/^    int pieceCount;$/;"	m	struct:__anon9::TBEntry	file:
+pieceList	position.h	/^  Square pieceList[PIECE_NB][16];$/;"	m	class:Position
+pieceTable	syzygy/tbprobe.cpp	/^        DTZEntryPiece pieceTable;$/;"	m	union:__anon9::DTZEntry::__anon11	file:
+pieceTable	syzygy/tbprobe.cpp	/^        WLDEntryPiece pieceTable[2]; \/\/ [wtm \/ btm]$/;"	m	union:__anon9::WDLEntry::__anon10	file:
+piece_on	position.h	/^inline Piece Position::piece_on(Square s) const {$/;"	f	class:Position
+pieces	position.h	/^inline Bitboard Position::pieces() const {$/;"	f	class:Position
+pieces	position.h	/^inline Bitboard Position::pieces(Color c) const {$/;"	f	class:Position
+pieces	position.h	/^inline Bitboard Position::pieces(Color c, PieceType pt) const {$/;"	f	class:Position
+pieces	position.h	/^inline Bitboard Position::pieces(Color c, PieceType pt1, PieceType pt2) const {$/;"	f	class:Position
+pieces	position.h	/^inline Bitboard Position::pieces(PieceType pt) const {$/;"	f	class:Position
+pieces	position.h	/^inline Bitboard Position::pieces(PieceType pt1, PieceType pt2) const {$/;"	f	class:Position
+pieces	syzygy/tbprobe.cpp	/^    Piece pieces[TBPIECES];        \/\/ Position pieces: the order of pieces defines the groups$/;"	m	struct:__anon9::PairsData	file:
+pinned_pieces	position.h	/^inline Bitboard Position::pinned_pieces(Color c) const {$/;"	f	class:Position
+pinnersForKing	position.h	/^  Bitboard   pinnersForKing[COLOR_NB];$/;"	m	struct:StateInfo
+pliesFromNull	position.h	/^  int    pliesFromNull;$/;"	m	struct:StateInfo
+ply	search.h	/^  int ply;$/;"	m	struct:Search::Stack
+ponder	search.h	/^  int time[COLOR_NB], inc[COLOR_NB], npmsec, movestogo, depth, movetime, mate, infinite, ponder;$/;"	m	struct:Search::LimitsType
+pop_lsb	bitboard.h	/^inline Square pop_lsb(Bitboard* b) {$/;"	f
+popcnt	Makefile	/^	popcnt = yes$/;"	m
+popcnt	Makefile	/^popcnt = no$/;"	m
+popcount	bitboard.h	/^inline int popcount(Bitboard b) {$/;"	f
+popcount16	bitboard.cpp	/^  unsigned popcount16(unsigned u) {$/;"	f	namespace:__anon19
+pos	movepick.h	/^  const Position& pos;$/;"	m	class:MovePicker
+pos_is_ok	position.cpp	/^bool Position::pos_is_ok(int* failedStep) const {$/;"	f	class:Position
+position	uci.cpp	/^  void position(Position& pos, istringstream& is) {$/;"	f	namespace:__anon8
+precomp	syzygy/tbprobe.cpp	/^    PairsData* precomp;$/;"	m	struct:__anon9::DTZEntryPiece	file:
+precomp	syzygy/tbprobe.cpp	/^    PairsData* precomp;$/;"	m	struct:__anon9::WLDEntryPiece	file:
+prefetch	Makefile	/^	prefetch = yes$/;"	m
+prefetch	Makefile	/^prefetch = no$/;"	m
+prefetch	misc.cpp	/^void prefetch(void* addr) {$/;"	f
+prefetch	misc.cpp	/^void prefetch(void*) {}$/;"	f
+prefetch2	misc.cpp	/^void prefetch2(void* addr) {$/;"	f
+pretty	bitboard.cpp	/^const std::string Bitboards::pretty(Bitboard b) {$/;"	f	class:Bitboards
+previous	position.h	/^  StateInfo* previous;$/;"	m	struct:StateInfo
+previousScore	search.h	/^  Value previousScore = -VALUE_INFINITE;$/;"	m	struct:Search::RootMove
+previousScore	thread.h	/^  Value previousScore;$/;"	m	struct:MainThread
+probe	bitbase.cpp	/^bool Bitbases::probe(Square wksq, Square wpsq, Square bksq, Color us) {$/;"	f	class:Bitbases
+probe	endgame.h	/^  EndgameBase<T>* probe(Key key) {$/;"	f	class:Endgames
+probe	material.cpp	/^Entry* probe(const Position& pos) {$/;"	f	namespace:Material
+probe	pawns.cpp	/^Entry* probe(const Position& pos) {$/;"	f	namespace:Pawns
+probe	tt.cpp	/^TTEntry* TranspositionTable::probe(const Key key, bool& found) const {$/;"	f	class:TranspositionTable
+probe_dtz	syzygy/tbprobe.cpp	/^int Tablebases::probe_dtz(Position& pos, ProbeState* result) {$/;"	f	class:Tablebases
+probe_table	syzygy/tbprobe.cpp	/^T probe_table(const Position& pos, ProbeState* result, WDLScore wdl = WDLDraw) {$/;"	f	namespace:__anon9
+probe_wdl	syzygy/tbprobe.cpp	/^WDLScore Tablebases::probe_wdl(Position& pos, ProbeState* result) {$/;"	f	class:Tablebases
+profile_make	Makefile	/^	profile_make = clang-profile-make$/;"	m
+profile_make	Makefile	/^	profile_make = gcc-profile-make$/;"	m
+profile_make	Makefile	/^	profile_make = icc-profile-make$/;"	m
+profile_use	Makefile	/^	profile_use = clang-profile-use$/;"	m
+profile_use	Makefile	/^	profile_use = gcc-profile-use$/;"	m
+profile_use	Makefile	/^	profile_use = icc-profile-use$/;"	m
+promotion_type	types.h	/^inline PieceType promotion_type(Move m) {$/;"	f
+pseudo_legal	position.cpp	/^bool Position::pseudo_legal(const Move m) const {$/;"	f	class:Position
+psq	bitbase.cpp	/^    Square ksq[COLOR_NB], psq;$/;"	m	struct:__anon5::KPKPosition	file:
+psq	position.cpp	/^  Key psq[PIECE_NB][SQUARE_NB];$/;"	m	namespace:Zobrist	file:
+psq	position.h	/^  Score  psq;$/;"	m	struct:StateInfo
+psq	psqt.cpp	/^Score psq[PIECE_NB][SQUARE_NB];$/;"	m	namespace:PSQT	file:
+psq_score	position.h	/^inline Score Position::psq_score() const {$/;"	f	class:Position
+put_piece	position.h	/^inline void Position::put_piece(Piece pc, Square s) {$/;"	f	class:Position
+pv	search.cpp	/^    Move pv[3];$/;"	m	struct:__anon13::EasyMoveManager	file:
+pv	search.cpp	/^string UCI::pv(const Position& pos, Depth depth, Value alpha, Value beta) {$/;"	f	class:UCI
+pv	search.h	/^  Move* pv;$/;"	m	struct:Search::Stack
+pv	search.h	/^  std::vector<Move> pv;$/;"	m	struct:Search::RootMove
+qsearch	search.cpp	/^  Value qsearch(Position& pos, Stack* ss, Value alpha, Value beta, Depth depth) {$/;"	f	namespace:__anon14
+rand	misc.h	/^  template<typename T> T rand() { return T(rand64()); }$/;"	f	class:PRNG
+rand64	misc.h	/^  uint64_t rand64() {$/;"	f	class:PRNG
+rank_bb	bitboard.h	/^inline Bitboard rank_bb(Rank r) {$/;"	f
+rank_bb	bitboard.h	/^inline Bitboard rank_bb(Square s) {$/;"	f
+rank_of	types.h	/^inline Rank rank_of(Square s) {$/;"	f
+razor_margin	search.cpp	/^  const int razor_margin[] = { 0, 570, 603, 554 };$/;"	m	namespace:__anon13	file:
+read_uci_options	thread.cpp	/^void ThreadPool::read_uci_options() {$/;"	f	class:ThreadPool
+ready	syzygy/tbprobe.cpp	/^    std::atomic_bool ready;$/;"	m	struct:__anon9::Atomic	file:
+recaptureSquare	movepick.h	/^  Square recaptureSquare;$/;"	m	class:MovePicker
+reduction	search.cpp	/^  template <bool PvNode> Depth reduction(bool i, Depth d, int mn) {$/;"	f	namespace:__anon13
+relative_rank	types.h	/^inline Rank relative_rank(Color c, Rank r) {$/;"	f
+relative_rank	types.h	/^inline Rank relative_rank(Color c, Square s) {$/;"	f
+relative_square	types.h	/^inline Square relative_square(Color c, Square s) {$/;"	f
+remaining	timeman.cpp	/^  int remaining(int myTime, int movesToGo, int ply, int slowMover) {$/;"	f	namespace:__anon16
+remove_piece	position.h	/^inline void Position::remove_piece(Piece pc, Square s) {$/;"	f	class:Position
+resetCalls	thread.h	/^  std::atomic_bool resetCalls;$/;"	m	class:Thread
+resize	tt.cpp	/^void TranspositionTable::resize(size_t mbSize) {$/;"	f	class:TranspositionTable
+result	bitbase.cpp	/^    Result result;$/;"	m	struct:__anon5::KPKPosition	file:
+right	types.h	/^  right = C == WHITE ? S == QUEEN_SIDE ? WHITE_OOO : WHITE_OO$/;"	m	struct:MakeCastling
+rootDepth	thread.h	/^  Depth rootDepth;$/;"	m	class:Thread
+rootMoves	thread.h	/^  Search::RootMoves rootMoves;$/;"	m	class:Thread
+rootPos	thread.h	/^  Position rootPos;$/;"	m	class:Thread
+root_probe	syzygy/tbprobe.cpp	/^bool Tablebases::root_probe(Position& pos, Search::RootMoves& rootMoves, Value& score)$/;"	f	class:Tablebases
+root_probe_wdl	syzygy/tbprobe.cpp	/^bool Tablebases::root_probe_wdl(Position& pos, Search::RootMoves& rootMoves, Value& score)$/;"	f	class:Tablebases
+rule50	position.h	/^  int    rule50;$/;"	m	struct:StateInfo
+rule50_count	position.h	/^inline int Position::rule50_count() const {$/;"	f	class:Position
+s	misc.h	/^  uint64_t s;$/;"	m	class:PRNG
+sanitize	Makefile	/^sanitize = no$/;"	m
+save	tt.h	/^  void save(Key k, Value v, Bound b, Depth d, Move m, Value ev, uint8_t g) {$/;"	f	struct:TTEntry
+scale_factor	material.h	/^  ScaleFactor scale_factor(const Position& pos, Color c) const {$/;"	f	struct:Material::Entry
+scalingFunction	material.h	/^  EndgameBase<ScaleFactor>* scalingFunction[COLOR_NB]; \/\/ Could be one for each$/;"	m	struct:Material::Entry
+score	movepick.cpp	/^void MovePicker::score<CAPTURES>() {$/;"	f	class:MovePicker
+score	movepick.cpp	/^void MovePicker::score<EVASIONS>() {$/;"	f	class:MovePicker
+score	movepick.cpp	/^void MovePicker::score<QUIETS>() {$/;"	f	class:MovePicker
+score	pawns.h	/^  Score score;$/;"	m	struct:Pawns::Entry
+score	search.h	/^  Value score = -VALUE_INFINITE;$/;"	m	struct:Search::RootMove
+scores	evaluate.cpp	/^    double scores[TERM_NB][COLOR_NB][PHASE_NB];$/;"	m	namespace:__anon4::Trace	file:
+search	search.cpp	/^  Value search(Position& pos, Stack* ss, Value alpha, Value beta, Depth depth, bool cutNode, bool skipEarlyPruning) {$/;"	f	namespace:__anon14
+search	search.cpp	/^void MainThread::search() {$/;"	f	class:MainThread
+search	search.cpp	/^void Thread::search() {$/;"	f	class:Thread
+search	syzygy/tbprobe.cpp	/^WDLScore search(Position& pos, ProbeState* result) {$/;"	f	namespace:__anon9
+searching	thread.h	/^  bool exit, searching;$/;"	m	class:Thread
+searchmoves	search.h	/^  std::vector<Move> searchmoves;$/;"	m	struct:Search::LimitsType
+see_ge	position.cpp	/^bool Position::see_ge(Move m, Value v) const {$/;"	f	class:Position
+semiopenFiles	pawns.h	/^  int semiopenFiles[COLOR_NB];$/;"	m	struct:Pawns::Entry
+semiopen_file	pawns.h	/^  int semiopen_file(Color c, File f) const {$/;"	f	struct:Pawns::Entry
+semiopen_side	pawns.h	/^  int semiopen_side(Color c, File f, bool leftSide) const {$/;"	f	struct:Pawns::Entry
+set	position.cpp	/^Position& Position::set(const string& code, Color c, StateInfo* si) {$/;"	f	class:Position
+set	position.cpp	/^Position& Position::set(const string& fenStr, bool isChess960, StateInfo* si, Thread* th) {$/;"	f	class:Position
+set_castling_right	position.cpp	/^void Position::set_castling_right(Color c, Square rfrom) {$/;"	f	class:Position
+set_check_info	position.cpp	/^void Position::set_check_info(StateInfo* si) const {$/;"	f	class:Position
+set_dtz_map	syzygy/tbprobe.cpp	/^uint8_t* set_dtz_map(DTZEntry&, T& p, uint8_t* data, File maxFile) {$/;"	f	namespace:__anon9
+set_dtz_map	syzygy/tbprobe.cpp	/^uint8_t* set_dtz_map(WDLEntry&, T&, uint8_t*, File) { return nullptr; }$/;"	f	namespace:__anon9
+set_groups	syzygy/tbprobe.cpp	/^void set_groups(T& e, PairsData* d, int order[], File f) {$/;"	f	namespace:__anon9
+set_sizes	syzygy/tbprobe.cpp	/^uint8_t* set_sizes(PairsData* d, uint8_t* data) {$/;"	f	namespace:__anon9
+set_state	position.cpp	/^void Position::set_state(StateInfo* si) const {$/;"	f	class:Position
+set_symlen	syzygy/tbprobe.cpp	/^uint8_t set_symlen(PairsData* d, Sym s, std::vector<bool>& visited) {$/;"	f	namespace:__anon9
+setoption	uci.cpp	/^  void setoption(istringstream& is) {$/;"	f	namespace:__anon8
+setupStates	thread.h	/^  StateListPtr setupStates;$/;"	m	struct:ThreadPool
+shelter_storm	pawns.cpp	/^Value Entry::shelter_storm(const Position& pos, Square ksq) {$/;"	f	class:Pawns::Entry
+shift	bitboard.h	/^inline Bitboard shift(Bitboard b) {$/;"	f
+side	position.cpp	/^  Key side, noPawns;$/;"	m	namespace:Zobrist	file:
+sideToMove	position.h	/^  Color sideToMove;$/;"	m	class:Position
+side_to_move	position.h	/^inline Color Position::side_to_move() const {$/;"	f	class:Position
+sign_of	syzygy/tbprobe.cpp	/^template <typename T> int sign_of(T val) {$/;"	f	namespace:__anon9
+size	movegen.h	/^  size_t size() const { return last - moveList; }$/;"	f	struct:MoveList
+size	syzygy/tbprobe.cpp	/^  size_t size() const { return wdlTable.size(); }$/;"	f	class:__anon9::HashTable
+sizeofBlock	syzygy/tbprobe.cpp	/^    size_t sizeofBlock;            \/\/ Block size in bytes$/;"	m	struct:__anon9::PairsData	file:
+skipPhase	search.cpp	/^  const int skipPhase[] = { 0, 1, 0, 1, 2, 3, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 6, 7 };$/;"	m	namespace:__anon13	file:
+skipSize	search.cpp	/^  const int skipSize[]  = { 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4 };$/;"	m	namespace:__anon13	file:
+sleepCondition	thread.h	/^  ConditionVariable sleepCondition;$/;"	m	class:Thread
+slider_blockers	position.cpp	/^Bitboard Position::slider_blockers(Bitboard sliders, Square s, Bitboard& pinners) const {$/;"	f	class:Position
+sliding_attack	bitboard.cpp	/^  Bitboard sliding_attack(Square deltas[], Square sq, Bitboard occupied) {$/;"	f	namespace:__anon20
+span	syzygy/tbprobe.cpp	/^    size_t span;                   \/\/ About every span values there is a SparseIndex[] entry$/;"	m	struct:__anon9::PairsData	file:
+sparseIndex	syzygy/tbprobe.cpp	/^    SparseEntry* sparseIndex;      \/\/ Partial indices into blockLength[]$/;"	m	struct:__anon9::PairsData	file:
+sparseIndexSize	syzygy/tbprobe.cpp	/^    size_t sparseIndexSize;        \/\/ Size of SparseIndex[] table$/;"	m	struct:__anon9::PairsData	file:
+sparse_rand	misc.h	/^  template<typename T> T sparse_rand()$/;"	f	class:PRNG
+specialized_eval_exists	material.h	/^  bool specialized_eval_exists() const { return evaluationFunction != nullptr; }$/;"	f	struct:Material::Entry
+square	position.h	/^template<PieceType Pt> inline Square Position::square(Color c) const {$/;"	f	class:Position
+square	uci.cpp	/^std::string UCI::square(Square s) {$/;"	f	class:UCI
+squares	position.h	/^template<PieceType Pt> inline const Square* Position::squares(Color c) const {$/;"	f	class:Position
+ss	movepick.h	/^  const Search::Stack* ss;$/;"	m	class:MovePicker
+sse	Makefile	/^	sse = yes$/;"	m
+sse	Makefile	/^sse = no$/;"	m
+st	position.h	/^  StateInfo* st;$/;"	m	class:Position
+stableCnt	search.cpp	/^    int stableCnt;$/;"	m	struct:__anon13::EasyMoveManager	file:
+stage	movepick.h	/^  int stage;$/;"	m	class:MovePicker
+start	misc.cpp	/^  static void start(const std::string& fname) {$/;"	f	class:__anon18::Logger
+startTime	search.h	/^  TimePoint startTime;$/;"	m	struct:Search::LimitsType
+startTime	timeman.h	/^  TimePoint startTime;$/;"	m	class:TimeManagement
+start_logger	misc.cpp	/^void start_logger(const std::string& fname) { Logger::start(fname); }$/;"	f
+start_searching	thread.cpp	/^void Thread::start_searching(bool resume) {$/;"	f	class:Thread
+start_thinking	thread.cpp	/^void ThreadPool::start_thinking(Position& pos, StateListPtr& states,$/;"	f	class:ThreadPool
+stat_bonus	search.cpp	/^  int stat_bonus(Depth depth) {$/;"	f	namespace:__anon13
+staticEval	search.h	/^  Value staticEval;$/;"	m	struct:Search::Stack
+stop	search.h	/^  std::atomic_bool stop, stopOnPonderhit;$/;"	m	struct:Search::SignalsType
+stopOnPonderhit	search.h	/^  std::atomic_bool stop, stopOnPonderhit;$/;"	m	struct:Search::SignalsType
+strongSide	endgame.h	/^  Color strongSide, weakSide;$/;"	m	struct:Endgame
+strong_side	endgame.h	/^  Color strong_side() const { return strongSide; }$/;"	f	struct:Endgame
+swap_byte	syzygy/tbprobe.cpp	/^inline void swap_byte(T& x)$/;"	f	namespace:__anon9
+swap_byte	syzygy/tbprobe.cpp	/^template<> inline void swap_byte<uint8_t, 0, 0>(uint8_t&) {}$/;"	f	namespace:__anon9
+symlen	syzygy/tbprobe.cpp	/^    std::vector<uint8_t> symlen;   \/\/ Number of values (-1) represented by a given Huffman symbol: 1..256$/;"	m	struct:__anon9::PairsData	file:
+sync	misc.cpp	/^  int sync() { return logBuf->pubsync(), buf->pubsync(); }$/;"	f	struct:__anon18::Tie
+sync_info_endl	misc.h	113;"	d
+sync_info_out	misc.h	112;"	d
+table	misc.h	/^  std::vector<Entry> table = std::vector<Entry>(Size);$/;"	m	struct:HashTable
+table	movepick.h	/^  T table[PIECE_NB][SQUARE_NB];$/;"	m	struct:Stats
+table	movepick.h	/^  int table[COLOR_NB][SQUARE_NB][SQUARE_NB];$/;"	m	struct:HistoryStats
+table	tt.h	/^  Cluster* table;$/;"	m	class:TranspositionTable
+tbHits	thread.h	/^  uint64_t tbHits;$/;"	m	class:Thread
+tb_hits	thread.cpp	/^uint64_t ThreadPool::tb_hits() const {$/;"	f	class:ThreadPool
+thisThread	position.h	/^  Thread* thisThread;$/;"	m	class:Position
+this_thread	position.h	/^inline Thread* Position::this_thread() const {$/;"	f	class:Position
+threshold	movepick.h	/^  Value threshold;$/;"	m	class:MovePicker
+time	search.h	/^  int time[COLOR_NB], inc[COLOR_NB], npmsec, movestogo, depth, movetime, mate, infinite, ponder;$/;"	m	struct:Search::LimitsType
+time_to_pick	search.cpp	/^    bool time_to_pick(Depth depth) const { return depth \/ ONE_PLY == 1 + level; }$/;"	f	struct:__anon13::Skill
+to_cp	evaluate.cpp	/^    double to_cp(Value v) { return double(v) \/ PawnValueEg; }$/;"	f	namespace:__anon4::Trace
+to_move	uci.cpp	/^Move UCI::to_move(const Position& pos, string& str) {$/;"	f	class:UCI
+to_sq	types.h	/^inline Square to_sq(Move m) {$/;"	f
+trace	evaluate.cpp	/^std::string Eval::trace(const Position& pos) {$/;"	f	class:Eval
+ttMove	movepick.h	/^  Move ttMove;$/;"	m	class:MovePicker
+type	syzygy/tbprobe.cpp	/^template<> struct Ret<WDLEntry> { typedef WDLScore type; };$/;"	t	struct:__anon9::Ret	file:
+type	syzygy/tbprobe.cpp	/^template<typename E> struct Ret { typedef int type; };$/;"	t	struct:__anon9::Ret	file:
+type	uci.h	/^  std::string defaultValue, currentValue, type;$/;"	m	class:UCI::Option
+type_of	types.h	/^inline MoveType type_of(Move m) {$/;"	f
+type_of	types.h	/^inline PieceType type_of(Piece pc) {$/;"	f
+uflow	misc.cpp	/^  int uflow() { return log(buf->sbumpc(), ">> "); }$/;"	f	struct:__anon18::Tie
+underflow	misc.cpp	/^  int underflow() { return buf->sgetc(); }$/;"	f	struct:__anon18::Tie
+undo_move	position.cpp	/^void Position::undo_move(Move m) {$/;"	f	class:Position
+undo_null_move	position.cpp	/^void Position::undo_null_move() {$/;"	f	class:Position
+unlock	thread_win32.h	/^  void unlock() { LeaveCriticalSection(&cs); }$/;"	f	struct:Mutex
+unmap	syzygy/tbprobe.cpp	/^    static void unmap(void* baseAddress, uint64_t mapping) {$/;"	f	class:__anon9::TBFile
+update	movepick.h	/^  void update(Color c, Move m, int v) {$/;"	f	struct:HistoryStats
+update	movepick.h	/^  void update(Piece pc, Square to, Move m) { table[pc][to] = m; }$/;"	f	struct:Stats
+update	movepick.h	/^  void update(Piece pc, Square to, int v) {$/;"	f	struct:Stats
+update	search.cpp	/^    void update(Position& pos, const std::vector<Move>& newPv) {$/;"	f	struct:__anon13::EasyMoveManager
+update_cm_stats	search.cpp	/^  void update_cm_stats(Stack* ss, Piece pc, Square s, int bonus) {$/;"	f	namespace:__anon14
+update_pv	search.cpp	/^  void update_pv(Move* pv, Move move, Move* childPv) {$/;"	f	namespace:__anon14
+update_stats	search.cpp	/^  void update_stats(const Position& pos, Stack* ss, Move move,$/;"	f	namespace:__anon14
+us	bitbase.cpp	/^    Color us;$/;"	m	struct:__anon5::KPKPosition	file:
+use_time_management	search.h	/^  bool use_time_management() const {$/;"	f	struct:Search::LimitsType
+value	material.h	/^  int16_t value;$/;"	m	struct:Material::Entry
+value	movegen.h	/^  int value;$/;"	m	struct:ExtMove
+value	tt.h	/^  Value value() const { return (Value)value16; }$/;"	f	struct:TTEntry
+value	uci.cpp	/^string UCI::value(Value v) {$/;"	f	class:UCI
+value16	tt.h	/^    int16_t value16;$/;"	m	struct:FullTTEntry
+value16	tt.h	/^  int16_t  value16;$/;"	m	struct:TTEntry
+value_from_tt	search.cpp	/^  Value value_from_tt(Value v, int ply) {$/;"	f	namespace:__anon14
+value_to_tt	search.cpp	/^  Value value_to_tt(Value v, int ply) {$/;"	f	namespace:__anon14
+verify_material	endgame.cpp	/^  bool verify_material(const Position& pos, Color c, Value npm, int pawnsCnt) {$/;"	f	namespace:__anon3
+wait	thread.cpp	/^void Thread::wait(std::atomic_bool& condition) {$/;"	f	class:Thread
+wait_for_search_finished	thread.cpp	/^void Thread::wait_for_search_finished() {$/;"	f	class:Thread
+wdlTable	syzygy/tbprobe.cpp	/^    std::deque<WDLEntry> wdlTable;$/;"	m	class:__anon9::HashTable	file:
+weakSide	endgame.h	/^  Color strongSide, weakSide;$/;"	m	struct:Endgame
+workerLimits	thread.h	/^  Search::LimitsType workerLimits;$/;"	m	class:Thread
+~DTZEntry	syzygy/tbprobe.cpp	/^DTZEntry::~DTZEntry() {$/;"	f	class:__anon9::DTZEntry
+~Logger	misc.cpp	/^ ~Logger() { start(""); }$/;"	f	class:__anon18::Logger	file:
+~Mutex	thread_win32.h	/^ ~Mutex() { DeleteCriticalSection(&cs); }$/;"	f	struct:Mutex
+~Thread	thread.cpp	/^Thread::~Thread() {$/;"	f	class:Thread
+~TranspositionTable	tt.h	/^ ~TranspositionTable() { free(mem); }$/;"	f	class:TranspositionTable
+~WDLEntry	syzygy/tbprobe.cpp	/^WDLEntry::~WDLEntry() {$/;"	f	class:__anon9::WDLEntry
