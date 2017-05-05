@@ -100,7 +100,7 @@ struct FullTTEntry {
     int16_t eval16;
     uint8_t genBound8;
     int8_t depth8;
-}
+};
 
 static const int CacheLineSize = 64;
 static const int ClusterSize = 3;

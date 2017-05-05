@@ -41,6 +41,7 @@ namespace Search {
 
   SignalsType Signals;
   LimitsType Limits;
+  uint16_t movebuf[MOVEBUF_SIZE][MAX_MOVEBUF_MOVES];
 }
 
 namespace Tablebases {
@@ -338,8 +339,52 @@ void MainThread::masterProtocol() {
 	while (true) {
 	    FullTTEntry ftte;
 	    MPI_Recv(&ftte, 1, mpi_full_tte_t, MPI_ANY_SOURCE, MPI_TAGS::TAG_MOVE_RESULT, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-	    // put a found TT entry into our transposition table
-	    TT.save(ftte.key, ftte.value, ftte.
+	    // put a found TT entry into our transposition table, if appropriate
+	    // (save function will check if this entry is better than the one
+	    // given to us by probe()
+	    bool found;
+	    TTEntry *entry = TT.probe(ftte.key, found);
+	    entry->save(ftte.key, (Value) ftte.value16, (Bound) ((ftte.genBound8) & 0x3),
+		  (Depth) (ftte.depth8 * int(ONE_PLY)), (Move) ftte.move16, (Value) ftte.value16,
+		  ftte.genBound8 & ~0x3);
+	}
+    } else {
+	const string fen = this->rootPos.fen();
+
+	// wait for the master node to give you data on what to search. By
+	// default, search the position for the whole time. TODO: tweak this.
+	while (true) {
+	    // probe to see if there's data from the master node
+	    int found;
+	    MPI_Iprobe(0, MPI_TAGS::TAG_MOVE_REQUEST, MPI_COMM_WORLD, &found, MPI_STATUS_IGNORE);
+	    if (found) {
+		// go get the message from master
+		uint16_t moves[MAX_MOVEBUF_MOVES];
+		MPI_Recv(moves, MAX_MOVEBUF_MOVES, MPI_UINT16_T, 0, MPI_TAGS::TAG_MOVE_REQUEST, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+		// compute the position from the list of moves
+		Position pos;
+		StateListPtr States(new std::deque<StateInfo>(1));
+		pos.set(fen, this->rootPos.is_chess960(), &States->back(), this);
+		for (uint16_t m : moves) {
+		    Move move = (Move) m;
+		    States->push_back(StateInfo());
+		    pos.do_move(move, States->back());
+		}
+
+		// send it to a thread that's not doing anything currently
+		for (size_t thread = 1; thread < Threads.size(); ++thread) {
+		    if (!Threads[thread]->isSearching()) {
+			Threads[thread]->evaluate_position(pos, States, Limits);
+			break;
+		    }
+		}
+	    }
+
+	    // probe to see if a thread wants to send an evaluation back to
+	    // Master
+	    // TODO
+
+
 	}
     }
 }

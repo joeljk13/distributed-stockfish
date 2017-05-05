@@ -89,6 +89,33 @@ void Thread::start_searching(bool resume) {
   sleepCondition.notify_one();
 }
 
+/// Thread::evaluate_position() wakes up the given thread sleeping in idle_loop()
+/// and starts a new search, then returns immediately.
+
+void Thread::evaluate_position(Position& pos, StateListPtr& states, const Search::LimitsType& limits) {
+
+  this->wait_for_search_finished();
+
+  Search::Signals.stopOnPonderhit = Search::Signals.stop = false;
+  this->workerLimits = limits;
+  Search::RootMoves searchRootMoves;
+
+  for (const auto& m : MoveList<LEGAL>(pos))
+      if (   limits.searchmoves.empty()
+          || std::count(limits.searchmoves.begin(), limits.searchmoves.end(), m))
+          searchRootMoves.push_back(Search::RootMove(m));
+
+  if (!searchRootMoves.empty())
+      Tablebases::filter_root_moves(pos, searchRootMoves);
+
+  this->maxPly = 0;
+  this->tbHits = 0;
+  this->rootDepth = DEPTH_ZERO;
+  this->rootMoves = searchRootMoves;
+  this->rootPos.set(pos.fen(), pos.is_chess960(), &states->back(), this);
+
+  this->start_searching();
+}
 
 /// Thread::idle_loop() is where the thread is parked when it has no work to do
 

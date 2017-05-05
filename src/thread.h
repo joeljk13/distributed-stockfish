@@ -54,8 +54,10 @@ public:
   virtual void search();
   void idle_loop();
   void start_searching(bool resume = false);
+  void evaluate_position(Position& pos, StateListPtr& states, const Search::LimitsType& limits);
   void wait_for_search_finished();
   void wait(std::atomic_bool& condition);
+  bool isSearching() {return searching;};
 
   Pawns::Table pawnsTable;
   Material::Table materialTable;
@@ -66,6 +68,8 @@ public:
 
   Position rootPos;
   Search::RootMoves rootMoves;
+  // only use if you're a worker thread on another machine
+  Search::LimitsType workerLimits;
   Depth rootDepth;
   Depth completedDepth;
   std::atomic_bool resetCalls;
