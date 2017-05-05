@@ -84,6 +84,7 @@ public:
 struct MainThread : public Thread {
   virtual void search();
   virtual void masterProtocol();
+  virtual void sendTopMoves();
 
   bool easyMovePlayed, failedLow;
   double bestMoveChanges;

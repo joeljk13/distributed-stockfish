@@ -330,6 +330,7 @@ void MainThread::search() {
 void MainThread::masterProtocol() {
     // if we're on the master node, send out requests to other master nodes
     if (mpi_rank == 0) {
+
 	// do an initial search from the root position and send principal
 	// variations to other masters
 	// NOTE: This method will terminate early because we're the master
@@ -389,6 +390,15 @@ void MainThread::masterProtocol() {
     }
 }
 
+/// MainThread::sendTopMoves() is a function which the Master worker on the Master
+/// processe executes to obtain a list of the top n positions up to a certain
+//small depth, for the purpose of sending these positions to other nodes to
+//evaluate more fully.
+
+void MainThread::sendTopMoves() {
+    // TODO: joel
+}
+
 
 /// Thread::search() is the main iterative deepening loop. It calls search()
 /// repeatedly with increasing depth until the allocated thinking time has been
@@ -429,6 +439,12 @@ void Thread::search() {
   multiPV = std::min(multiPV, rootMoves.size());
 
   // Iterative deepening loop until requested to stop or the target depth is reached
+  // For the master thread, stop the search after 3 iterations. Should be enough
+  // variations to send to worker nodes.
+  const size_t ID_DEPTH = DEPTH_MAX;
+  if (mainThread) {
+	  ID_DEPTH = 3;
+  }
   while (   (rootDepth += ONE_PLY) < DEPTH_MAX
          && !Signals.stop
          && (!Limits.depth || Threads.main()->rootDepth / ONE_PLY <= Limits.depth))
