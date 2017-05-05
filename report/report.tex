@@ -59,7 +59,7 @@
 \end{abstract}
 
 \section{Introduction}
-As of April 15, 2017, Stockfish\cite{Stockfish} is currently the top performing
+As of April 15, 2017, Stockfish\cite{Stockfish} is currently one of the top performing
 chess engine in existence, and the only chess engine in the top three whose
 source code is freely available\cite{ChessStandings}. The current best
 performing version of Stockfish is massively parallelized but not distributed,
@@ -68,7 +68,7 @@ outperform the current state-of-the-art implementation. Under the hood,
 Stockfish recursively searches chess positions using a variant of an alpha-beta
 pruning algorithm, using a shared lookup table (transposition table) to
 store a map between previously searched board positions and their heuristic
-evaluations.
+evaluations, as well as other information to enhance the search.
 
 Many challenges arise when attempting to modify the
 existing Stockfish algorithm to perform well on a cluster of machines.
@@ -79,8 +79,8 @@ multiple times within a game tree search, and we would ideally like to not
 duplicate work among nodes searching the same chess position.
 
 We present and compare a number of distributed modifications of Stockfish
-using OpenMPI\cite{OpenMPI}, an interface which allows processes in a distributed system to
-send and receive messages from one another, and allows remote memory accesses
+using MPI\cite{MPI}, an interface which allows processes in a distributed system to
+send and receive messages from one another, and provides an abstraction for remote memory accesses
 between computers. The overhead of initializing a MapReduce job and the
 inherent difficulty in assigning non-overlapping board states to MapReduce tasks
 makes a MapReduce implementation for this problem infeasible. In addition,
@@ -101,10 +101,11 @@ positions is infeasible to compute~\cite{chesscom}, Stockfish uses a number of
 heuristic functions to evaluate board positions, to decide which nodes to
 search next, and to decide when to stop searching.
 Because improving the heuristic functions is beyond the scope of this project, we do
-not consider them or modify them in our implementations.
-However, with the current heuristics in place and with the help of the Late Move
-Reduction technique~\cite{wiki:LMR},
-Stockfish is able to decrease the average branching
+not consider them or modify them in our implementations (with the exception of
+slight modifications to the transposition table replacement policy).
+However, with the current heuristics in place and with the help of policies
+like the Late Move Reduction technique~\cite{wiki:LMR},
+Stockfish is sometimes even able to decrease the average branching
 factor\footnote{average number of moves to search, given a board position} from
 about 35 to less than two~\cite{stockfish:code}.
 
@@ -122,12 +123,12 @@ As can be seen in Figure~\ref{fig:transpositions}, the same game board may be
 repeated in the game tree search after only three moves.
 To avoid evaluating the same position
 twice, Stockfish employs a transposition table, or a map from board positions to
-Stockfish's evaluation of that position. The key for each board position is a lossy 64-bit
+Stockfish's information about the position, such as the evaluation. The key for each board position is a lossy 64-bit
 Zobrist hash\cite{Zobrist}, which has the property that the hash keys of board
 positions are 
 indistinguishable from a uniform distribution. Stockfish resizes its hash table
 in sizes which are powers of two, and implements small separately-chained arrays
-(called clusters), with each cluster size corresponding to the size of a hardware
+(called clusters), with each cluster size designed to correspond to the size of a hardware
 cache line.
 It is interesting to note that Stockfish chooses not to synchronize the
 transposition table, instead incurring
@@ -156,12 +157,13 @@ SMP.
 \end{figure}
 
 Lazy SMP\footnote{Shared-Memory Parallelism} involves worker nodes searching the
-same starting position at different depths and with different move
+same starting position at different depths and/or different move
 orders~\cite{LazySMP}.
 With high probability, each worker will evaluate a given position at
 slightly different times, which means that it is highly likely that
 threads which access the position at slightly later times
-can look up the value of that position in the transposition table. All
+can look up the value of that position in the transposition table. This has
+been found in practice to perform the best in chess engines. All
 of our distributed implementations of Stockfish employ a variant of Lazy SMP.
 
 \subsection{Difficulties for Distributed Chess Engines}
@@ -195,7 +197,7 @@ positions.
 \subsubsection{Transposition Table Accesses}
 As part of our preliminary analysis and design, we analyzed the quantity of
 read and write accesses that Stockfish threads make to the transposition table, as well as
-the proportion of accesses that are reads. Figure~\ref{fig:accesses} summarizes
+the proportion of accesses that are reads (or writes). Figure~\ref{fig:accesses} summarizes
 our results of running each benchmark test on node2x18a, for varying numbers of
 thread counts. We let Stockfish run for varying amounts of time between 1
 minute and 30 minutes, taking the median values for each thread count. As can be
@@ -206,6 +208,14 @@ challenge if we would like to synchronize the transposition table, and gave us
 more experimental reason to support Stockfish's original design choice of not
 synchronizing the transposition table.
 
+Another set of tests we ran was to measure how likely a cache would help, i.e.
+given a successful find of an entry in the transposition table, what would the
+expected number of times that that entry would have been accessed in the last
+$n$ reads? We found that the number is actually very high -- this expected
+value is around 1 for $n = 32$, and as expected, it doubles if you double $n$
+and so on. This was the motivation behind our caching implementation that we
+describe below.
+
 \begin{figure}
 	\includegraphics[width=\textwidth]{../plots/TTmetrics}
 	\caption{Accesses to a 16GB shared Transposition Table, original Stockfish
@@ -215,9 +225,9 @@ synchronizing the transposition table.
 	\label{fig:accesses}
 \end{figure}
 
-Since we expect there to be many more accesses to the transposition tables in a
-distributed implementation, including via MPI calls, we chose to leave the
-transposition tables unsynchronized.
+Since we expect there to be many accesses to the transposition tables in a
+distributed implementation, including via MPI calls, which are already slow, we
+chose to leave the transposition tables unsynchronized.
 
 \subsubsection{Jonny}
 Nonetheless, Jonny~\cite{wiki:Jonny} was a successful distributed chess engine
@@ -243,11 +253,13 @@ implementations. As such, we opted instead for the
 slightly less accurate time-to-depth heuristic.
 
 We tested each of our models on the Infiniband cluster of machines
-node03, node04, node05, and node06, on the csug.rochester.edu network.
-Each of the machines has eight Intel Core i7 processors, running at 3.4GHz, with
-an 8KB L1 cache. We ran each of our implementations for 60
-seconds on the root position, recording the time it took for each iterative
-deepening loop to complete. For each algorithm, we took the median of four 
+node03, node04, node05, and node06, on the csug.rochester.edu network
+(development was happening on other machines that could have interfered with
+out results).
+Each of the machines has an Intel Core i7 with 4 physical cores, 8 hardware contexts, running at 3.4GHz, with
+an 8M L3 cache. We ran each of our implementations for 60
+seconds on the standard chess start position, recording the time it took for each iterative
+deepening loop to complete. For each algorithm, we took the median of four
 measurements, as we would like to capture the best measure of central tendency.
 
 The following is a description of each of our algorithms.
@@ -256,7 +268,7 @@ The following is a description of each of our algorithms.
 The Naive TT (Naive Transposition Table) algorithm works by dividing up the
 transposition table into sections, with each section owned by one node. When a
 given process wants to look up the value for a position, it sends an
-{MPI\_RMA}\footnote{Remote Memory Access, where the receiver does not need to be active}
+{MPI\_RMA}\footnote{Remote Memory Access, where the receiver does not need to be active by calling into MPI}
 request to the node which may contain the transposition table entry. Once
 received, the process can then determine if it needs to search the given
 position, or if it can use the previous value attained by another node.
@@ -270,7 +282,10 @@ To improve this, note that there are some moves in chess (e.g.\ captures and paw
 moves) which are irreversible: if a pawn move takes us from A to B, position A
 is always unreachable. Thus, the sets of reversible chess positions form
 equivalence classes, and are likely to be near each other in an alpha-beta
-search. The irreversible transposition table algorithm modifies the hash
+search -- we believe there aren't very many pawn positions and material
+configurations likely to show up in the search, especially after pruning,
+compared to the number of total positions. The irreversible transposition table
+algorithm modifies the hash
 function so that each set of reversible positions are guaranteed to map to the
 same node.
 
@@ -283,8 +298,17 @@ transposition table entries, with three-way associativity. Each time a node
 accesses a position from another node, it puts it in this cache, evicting older
 or less important board positions as appropriate.
 
-\subsection{Transposition Table with Locked Cache}
-TODO
+\subsection{Transposition Table with Locked MPI}
+MPI implementations can handle multiple threads; however, they need to disable
+some optimizations to do this (e.g. several internal data structures would
+require synchronization to be thread-safe). To try and help MPI out, we tried
+doing our own locking, but later realized that the code isn't written to handle
+global locking, and found out that our code was deadlocking in all secondary
+processes. We include performance because it raises some suspicions that there
+may be bugs in other implementations (namely the naive transposition table,
+local cache, and irreversible transposition table, since those seemed to perform
+similarly), but it also could just be a coincidence -- we weren't able to find
+any issues.
 
 \subsection{Global Lazy SMP}
 Given the success of Lazy SMP in the original Stockfish implementation, we
@@ -298,7 +322,16 @@ we isolate a separate Master thread on each process to be in charge of
 communication. The Master threads attempt to synchronize the transposition table
 by performing a linear scan over the elements in the table, doing an
 {MPI\_Allreduce} to synchronize the transposition table entries for a given
-cluster of entries. Figure \ref{fig:diagram} visualizes this idea.
+cluster of entries. The reduction is done with an function that picks the best
+entries to keep in that cluster from across all nodes. We mainly use
+stockfish's transposition table replacement policy, and we tried some
+variations, but nothing performed significantly better. For example, given the
+large number of reads to writes, we tried weighting entries more from clusters
+that have been read from more often. We also experimented with various blocking
+to reduce several clusters at once.
+
+Figure \ref{fig:diagram}
+visualizes this idea.
 
 \begin{figure}[t]
 	\includegraphics[width=\textwidth]{diagram}
