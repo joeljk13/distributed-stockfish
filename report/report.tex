@@ -300,6 +300,15 @@ by performing a linear scan over the elements in the table, doing an
 {MPI\_Allreduce} to synchronize the transposition table entries for a given
 cluster of entries. Figure \ref{fig:diagram} visualizes this idea.
 
+\begin{figure}[t]
+	\includegraphics[width=\textwidth]{diagram}
+	\caption{Global Lazy SMP algorithm. A separate Master node performs a
+	linear scan of the transposition table and sends information to other
+	master nodes, at the same time that local threads are updating the
+	transposition table using Lazy SMP.}
+	\label{fig:diagram}
+\end{figure}
+
 If a given cluster of three entries is full, {MPI\_Allreduce}
 keeps the three ``most accurate'' entries, and evicts the rest. The accuracy of
 a given entry is judged as a combination of its age\footnote{how long it has
@@ -308,8 +317,41 @@ position is the heuristic evaluation based on}. With Global Lazy SMP, we
 attempt to avoid the overhead of threads waiting on the results of a lookup from
 entries on other nodes.
 
-\section{Results} \label{Results}
-asdf
+\section{Results}\label{Results}
+Figure~\ref{fig:ttd} shows a log-linear plot of the number of milliseconds for
+each implementation to finish searching the root position at a certain depth. 
+
+\begin{figure}
+	\includegraphics[width=\textwidth]{../plots/timetodepth}
+	\caption{Time in milliseconds for each implementation to finish
+	searching a given depth from the root node (starting position). The
+	Global Lazy SMP algorithms performed about as well as the original
+	Stockfish implementation, whereas the implementations that split up the
+	transposition table among nodes performed significantly more poorly.
+	Note that the y-axis is on a log scale.}
+	\label{fig:ttd}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=\textwidth]{../plots/speedup}
+	\caption{``Speedup'' of each distributed implementation against the
+	original Stockfish implementation. For a given depth, we define speedup
+	as the number of milliseconds for Stockfish to reach a certain depth,
+	divided by the number of milliseconds for our algorithms to reach that
+	depth.}
+	\label{fig:speedup}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=0.5\textwidth]{../plots/speedup_bad}
+	\includegraphics[width=0.5\textwidth]{../plots/speedup_good}
+	\caption{TODO}
+	\label{fig:speedup-separate}
+\end{figure}
+
+
+
+
 
 \section{Conclusion}
 
