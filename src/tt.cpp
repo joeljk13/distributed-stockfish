@@ -42,7 +42,7 @@ void TranspositionTable::resize(size_t mbSize) {
 
   clusterCount = newClusterCount;
 
-  MPI_Alloc_mem(clusterCount * sizeof(Cluster) + CacheLineSize - 1, MPI_INFO_NULL, &mem);
+  mem = malloc(clusterCount * sizeof(Cluster) + CacheLineSize - 1);
 
   if (!mem)
   {
@@ -53,9 +53,6 @@ void TranspositionTable::resize(size_t mbSize) {
 
   table = (Cluster*)((uintptr_t(mem) + CacheLineSize - 1) & ~(CacheLineSize - 1));
   memset(table, 0, clusterCount * sizeof(Cluster));
-
-  MPI_Win_create(table, clusterCount, sizeof(Cluster), MPI_INFO_NULL,
-    MPI_COMM_WORLD, &tt_win);
 
   for (size_t i = 0; i < clusterCount; ++i) {
     table[i].key = i;
@@ -86,10 +83,14 @@ void DistTTEntry::save(Cluster &cluster_buf) {
   if (rank == mpi_rank) {
     return;
   }
-  MPI_Win_lock(MPI_LOCK_SHARED, rank, 0, tt_win);
-  MPI_Put(&cluster_buf, 1, mpi_cluster_t, rank, key, 1, mpi_cluster_t,
-    tt_win);
-  MPI_Win_unlock(rank, tt_win);
+
+  put_t put;
+  put.key = key;
+  put.tte = *tte;
+
+  std::cout << mpi_rank << " put1 " << rank << std::endl;
+  MPI_Send(&put, 1, mpi_put_t, rank, 2, MPI_COMM_WORLD);
+  std::cout << mpi_rank << " put2 " << rank << std::endl;
 }
 
 DistTTEntry TranspositionTable::probe(const Key key, bool& found, Cluster& cluster_buf) const {
@@ -107,12 +108,15 @@ DistTTEntry TranspositionTable::probe(const Key key, bool& found, Cluster& clust
     tte = first_entry(key);
     assert(table[cluster_key].key == dtte.key);
   } else {
-    MPI_Win_lock(MPI_LOCK_SHARED, owner_rank, 0, tt_win);
-    MPI_Get(&cluster_buf, 1, mpi_cluster_t, owner_rank, cluster_key, 1,
-      mpi_cluster_t, tt_win);
-    MPI_Win_unlock(owner_rank, tt_win);
-    assert(cluster_buf.key == dtte.key);
+    std::cout << mpi_rank << " get1 " << owner_rank << std::endl;
+    MPI_Send(&key, 1, MPI_UINT64_T, owner_rank, 1, MPI_COMM_WORLD);
+    std::cout << mpi_rank << " get2 " << owner_rank << std::endl;
     tte = &cluster_buf.entry[0];
+    MPI_Recv(tte, 1, mpi_tte_t, owner_rank, 3, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    std::cout << mpi_rank << " get3 " << owner_rank << std::endl;
+    // assert(cluster_buf.key == dtte.key);
+    dtte.tte = tte;
+    return found = (bool)tte->key16, dtte;
   }
 
   for (int i = 0; i < ClusterSize; ++i)

@@ -21,6 +21,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <thread>
 #include <vector>
 
 #include "evaluate.h"
@@ -31,6 +32,11 @@
 #include "timeman.h"
 #include "uci.h"
 #include "syzygy/tbprobe.h"
+#include "tt.h"
+
+#include <mpi.h>
+
+#include <unistd.h>
 
 using namespace std;
 
@@ -146,6 +152,75 @@ namespace {
 /// run 'bench', once the command is executed the function returns immediately.
 /// In addition to the UCI ones, also some additional debug commands are supported.
 
+static string mpi_loop_respond()
+{
+  MPI_Status status;
+  // MPI_Request get_r, put_r, uci_r;
+  MPI_Request r[3];
+  char uci_buf[1024];
+  int count;
+  int index;
+  std::vector<char> v;
+  Key key;
+  put_t put[1024];
+  bool found;
+  TTEntry blank;
+  TTEntry *tte;
+  string result;
+  Cluster cluster;
+  DistTTEntry dtte;
+
+  MPI_Irecv(uci_buf, 1024, MPI_CHAR, 0, 0, MPI_COMM_WORLD, &r[0]);
+  MPI_Irecv(&key, 1, MPI_UINT64_T, MPI_ANY_SOURCE, 1, MPI_COMM_WORLD, &r[1]);
+  MPI_Irecv(put, 1024, mpi_put_t, MPI_ANY_SOURCE, 2, MPI_COMM_WORLD, &r[2]);
+  for (;;) {
+    int flag = 0;
+    assert(r[0] != MPI_REQUEST_NULL);
+    assert(r[1] != MPI_REQUEST_NULL);
+    assert(r[2] != MPI_REQUEST_NULL);
+    MPI_Testany(3, r, &index, &flag, &status);
+    if (!flag) {
+      usleep(1000);
+      continue;
+    }
+
+    std::cout << "msg " << index << " " << mpi_rank << std::endl;
+
+    switch (index) {
+    case 0:
+      assert(mpi_rank != 0);
+      MPI_Get_count(&status, MPI_CHAR, &count);
+      result = string(uci_buf, count);
+      MPI_Irecv(uci_buf, 1024, MPI_CHAR, 0, 0, MPI_COMM_WORLD, &r[0]);
+      return result;
+
+    case 1:
+      dtte = TT.probe(key, found, cluster);
+      tte = dtte.tte;
+      if (!found) {
+        memset(&blank, 0, sizeof(blank));
+        tte = &blank;
+      }
+      MPI_Send(tte, 1, mpi_tte_t, status.MPI_SOURCE, 3, MPI_COMM_WORLD);
+      MPI_Irecv(&key, 1, MPI_UINT64_T, MPI_ANY_SOURCE, 1, MPI_COMM_WORLD,
+        &r[1]);
+      break;
+
+    case 2:
+      MPI_Get_count(&status, MPI_CHAR, &count);
+      for (int i = 0; i < count; ++i) {
+        Key mykey = put[i].key | ((size_t)mpi_rank << 45) | ((size_t)put[i].tte.key() << 48);
+        dtte = TT.probe(mykey, found, cluster);
+        dtte.tte->save(mykey, put[i].tte.value(),
+          put[i].tte.bound(), put[i].tte.depth(),
+          put[i].tte.move(), put[i].tte.eval(), TT.generation());
+      }
+      MPI_Irecv(put, 1024, mpi_put_t, MPI_ANY_SOURCE, 2, MPI_COMM_WORLD, &r[2]);
+      break;
+    }
+  }
+}
+
 void UCI::loop(int argc, char* argv[]) {
 
   Position pos;
@@ -158,8 +233,10 @@ void UCI::loop(int argc, char* argv[]) {
 
   do {
       if (argc == 1) {
-        // Tag 0 used for commands
         if (mpi_rank == 0) {
+          std::thread t (mpi_loop_respond);
+          t.detach();
+
           if (!getline(cin, cmd)) { // Block here waiting for input or EOF
             cmd = "quit";
           }
@@ -167,13 +244,7 @@ void UCI::loop(int argc, char* argv[]) {
             MPI_Send(cmd.c_str(), cmd.size(), MPI_CHAR, i, 0, MPI_COMM_WORLD);
           }
         } else {
-          MPI_Status status;
-          int count;
-          MPI_Probe(0, 0, MPI_COMM_WORLD, &status);
-          MPI_Get_count(&status, MPI_CHAR, &count);
-          vector<char> v (count);
-          MPI_Recv(v.data(), count, MPI_CHAR, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-          cmd = string(v.begin(), v.end());
+          cmd = mpi_loop_respond();
         }
       }
 

@@ -27,6 +27,7 @@
 #include <ostream>
 #include <string>
 #include <vector>
+#include <mutex>
 
 #include "types.h"
 #include "thread_win32.h"
@@ -37,6 +38,8 @@ extern int mpi_rank;
 extern int mpi_size;
 extern MPI_Datatype mpi_tte_t;
 extern MPI_Datatype mpi_cluster_t;
+extern MPI_Datatype mpi_put_t;
+// extern std::mutex mpi_lock;
 
 const std::string engine_info(bool to_uci = false);
 void prefetch(void* addr);

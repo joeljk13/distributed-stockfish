@@ -22,6 +22,7 @@
 #define TT_H_INCLUDED
 
 #include <cstddef>
+#include <string>
 
 #include "misc.h"
 #include "types.h"
@@ -40,6 +41,7 @@
 
 struct TTEntry {
 
+  Key   key()   const { return (Key  )key16; }
   Move  move()  const { return (Move )move16; }
   Value value() const { return (Value)value16; }
   Value eval()  const { return (Value)eval16; }
@@ -87,6 +89,11 @@ private:
   int16_t  eval16;
   uint8_t  genBound8;
   int8_t   depth8;
+};
+
+struct put_t {
+  uint16_t key;
+  TTEntry tte;
 };
 
 static const int CacheLineSize = 64;

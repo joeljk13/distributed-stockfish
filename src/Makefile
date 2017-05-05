@@ -274,7 +274,7 @@ endif
 ### 3.3 Optimization
 ifeq ($(optimize),yes)
 
-	CXXFLAGS += -O3 -march=native
+	CXXFLAGS += -O0 -march=native
 
 	ifeq ($(comp),gcc)
 

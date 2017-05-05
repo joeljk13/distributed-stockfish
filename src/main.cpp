@@ -40,15 +40,21 @@ int mpi_rank;
 int mpi_size;
 MPI_Datatype mpi_tte_t;
 MPI_Datatype mpi_cluster_t;
+MPI_Datatype mpi_put_t;
+// std::mutex mpi_lock;
 
 void init_mpi(int *argc, char ***argv) {
   // Don't include padding in cluster type, since we can leave it uninitialized
   int threading,
       tte_blocklengths[] = {1, 1, 1, 1, 1, 1},
-      cluter_blocklengths[] = {ClusterSize, 1};
+      cluter_blocklengths[] = {ClusterSize, 1},
+      put_blocklengths[] = {1, 1};
   MPI_Aint tte_displacements[6], cluster_displacements[] = {
     offsetof(Cluster, entry),
     offsetof(Cluster, key)
+  }, put_displacements[] = {
+    offsetof(put_t, key),
+    offsetof(put_t, tte)
   };
   MPI_Datatype tte_types[] = {
     MPI_UINT16_T,
@@ -57,7 +63,7 @@ void init_mpi(int *argc, char ***argv) {
     MPI_INT16_T,
     MPI_UINT8_T,
     MPI_INT8_T
-  }, cluster_types[2];
+  }, cluster_types[2], put_types[2];
 
   MPI_Init_thread(argc, argv, MPI_THREAD_MULTIPLE, &threading);
   assert(threading == MPI_THREAD_MULTIPLE);
@@ -74,6 +80,11 @@ void init_mpi(int *argc, char ***argv) {
   MPI_Type_create_struct(2, cluter_blocklengths, cluster_displacements,
     cluster_types, &mpi_cluster_t);
   MPI_Type_commit(&mpi_cluster_t);
+  put_types[0] = MPI_UINT16_T;
+  put_types[1] = mpi_tte_t;
+  MPI_Type_create_struct(2, put_blocklengths, put_displacements,
+    put_types, &mpi_put_t);
+  MPI_Type_commit(&mpi_put_t);
 }
 
 int main(int argc, char* argv[]) {
