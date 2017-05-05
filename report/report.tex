@@ -317,18 +317,19 @@ algorithm, without the added overhead of requesting positions from other nodes.
 In this model, each process keeps its own local transposition table, to be
 shared with all threads on that process.
 
+Stockfish's Lazy SMP implementation varies the depth between threads, so we
+tried expanding this calculation to vary the depth across processes and threads
+(this is the ``optimized'' version). However, if anything it seemed to do
+slightly worse than without the optimization, so it either only helps when
+searching a very long time, or on a large number of nodes, or just doesn't help
+at all.
+
 To communicate results between nodes,
 we isolate a separate Master thread on each process to be in charge of
 communication. The Master threads attempt to synchronize the transposition table
 by performing a linear scan over the elements in the table, doing an
 {MPI\_Allreduce} to synchronize the transposition table entries for a given
-cluster of entries. The reduction is done with an function that picks the best
-entries to keep in that cluster from across all nodes. We mainly use
-stockfish's transposition table replacement policy, and we tried some
-variations, but nothing performed significantly better. For example, given the
-large number of reads to writes, we tried weighting entries more from clusters
-that have been read from more often. We also experimented with various blocking
-to reduce several clusters at once.
+cluster of entries.
 
 Figure \ref{fig:diagram}
 visualizes this idea.
@@ -349,6 +350,15 @@ been in the transposition table} and its depth\footnote{how deep from this
 position is the heuristic evaluation based on}. With Global Lazy SMP, we
 attempt to avoid the overhead of threads waiting on the results of a lookup from
 entries on other nodes.
+
+We mainly use stockfish's transposition table replacement policy as described
+above, but we also tried some variations -- nothing performed significantly
+better, though. For example, given the large number of reads to writes, we
+tried weighting entries more from clusters that have been read from more often.
+We also experimented with various blocking to reduce several clusters at once,
+which didn't hurt but didn't make a noticeable difference either. Doing an
+initial Allreduce to reduce the number of clusters to share slowed things down
+significantly, so we didn't bother keeping that.
 
 \section{Results}\label{Results}
 Figure~\ref{fig:ttd} shows a log-linear plot of the number of milliseconds for
