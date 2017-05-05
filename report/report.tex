@@ -88,10 +88,11 @@ message-passing gives us greater flexibility when designing, implementing, and
 comparing different distributed prototypes. These prototypes will be discussed in
 the Algorithms section, and comparisons discussed in the Results section.
 
-Unfortunately, we have found that our distributed algorithms perform much more
-poorly compared to the default Stockfish implementation. The inherent difficulty
+Unfortunately, only one of our algorithms performs as well as the original
+Stockfish implementation -- the rest perform much more poorly.
+The inherent difficulty
 of splitting work among nodes has proven harder than originally thought, for
-reasons discussed in the Results section.
+reasons discussed in the Algorithms and Results sections.
 
 \section{Overview and Related Research}\label{Overview}
 Given a board position in chess, an algorithm would like to return the move in
@@ -107,8 +108,18 @@ Stockfish is able to decrease the average branching
 factor\footnote{average number of moves to search, given a board position} from
 about 35 to less than two~\cite{stockfish:code}.
 
+\begin{figure}[t]
+	\includegraphics[width=0.5\textwidth]{transposition}
+	\caption{A sample chess position which can be reached in two different
+	ways: 1. e4 c5 2. Nf3, or 1. Nf3 c5 2. e4. (Figure made on
+	Chess.com~\cite{chesscom:fig})}
+	\label{fig:transpositions}
+\end{figure}
+
 In chess, transpositions\footnote{identical board positions which can
 be reached by more than one move order} are quite common.
+As can be seen in Figure~\ref{fig:transpositions}, the same game board may be
+repeated in the game tree search after only three moves.
 To avoid evaluating the same position
 twice, Stockfish employs a transposition table, or a map from board positions to
 Stockfish's evaluation of that position. The key for each board position is a lossy 64-bit
@@ -116,40 +127,41 @@ Zobrist hash\cite{Zobrist}, which has the property that the hash keys of board
 positions are 
 indistinguishable from a uniform distribution. Stockfish resizes its hash table
 in sizes which are powers of two, and implements small separately-chained arrays
-(called clusters), which have sizes that correspond to the size of a hardware
-cache line. We have found through empirical
-analysis\ref{fig:writes} that not only does each thread of a multi-threaded Stockfish
-implementation accesses 99\% of the hash table entries per (TODO: time), but
-most of the accesses to the hash table are also writes. As such, Stockfish
-chooses to not synchronize the transposition table, instead incurring
+(called clusters), with each cluster size corresponding to the size of a hardware
+cache line.
+It is interesting to note that Stockfish chooses not to synchronize the
+transposition table, instead incurring
 the small probability of bogus data in its transposition table in favor of
 searching positions to a greater depth in the same amount of time.
 
-\subsection{Parallel Alpha-Beta Search}
+\subsection{Distributed Alpha-Beta Search}
 Two primary methods have been proposed to do distributed alpha-beta search. The
-Young Brothers Wait Concept (YBWC)~\cite{YBWC:article} proposed by Feldmann et.
-al. involves searching the most
+Young Brothers Wait Concept (YBWC), proposed by Feldmann et.
+al.~\cite{YBWC:article}, involves searching the most
 promising move first (the principal variation) to establish bounds on alpha and
 beta. After establishing these bounds, worker nodes may then start to examine sibling
 nodes of the principal variation line, in order of decreasing depth.
 Please see Figure~\ref{fig:YBWC} for more information. Young Brothers has been used
-extensively, and was the primary parallel game tree search algorithm used in
-Stockfish until January 2016. We decided not to implement a Younger Brothers
-distributed implementation as the primary Stockfish implementation now uses Lazy
+extensively since it was proposed in 1990, and was the primary parallel game tree search algorithm used in
+Stockfish until January 2016. We decided not to implement a Young Brothers
+distributed implementation, for the primary reason that Stockfish now uses Lazy
 SMP.
 
-\begin{figure}[t]\label{fig:YBWC}
+\begin{figure}[t]
 	\includegraphics[width=\textwidth]{PVSplit}
 	\caption{Young Brother's Wait Concept: Explore the principal variation
 	first to establish bounds on alpha and beta, then explore the sibling
 	nodes in parallel. Image from Gao et. al.~\cite{PVSplit:article}.}
+	\label{fig:YBWC}
 \end{figure}
+
 Lazy SMP\footnote{Shared-Memory Parallelism} involves worker nodes searching the
 same starting position at different depths and with different move
 orders~\cite{LazySMP}.
-With high probability, each worker will seek to evaluate a given position at
-slightly different times, which means that it is highly likely that subsequent
-threads can look up the value of that position in the transposition table. All
+With high probability, each worker will evaluate a given position at
+slightly different times, which means that it is highly likely that
+threads which access the position at slightly later times
+can look up the value of that position in the transposition table. All
 of our distributed implementations of Stockfish employ a variant of Lazy SMP.
 
 \subsection{Difficulties for Distributed Chess Engines}
@@ -175,10 +187,28 @@ among nodes, the true number of positions processed per second may end up being
 much less than $p$. We believe the overhead involved in distributing a
 transposition table has led many developers to believe that the gain in
 implementing a distributed chess engine is far lower than the gain in
-optimizing another facet of a chess engine. For example, creating a slightly
+optimizing another facet of the engine. For example, creating a slightly
 more accurate heuristic may reduce the average branching factor in alpha-beta
 search by a small amount, which means the engine may need to search far fewer
 positions.
+
+\subsubsection{Transposition Table Accesses}
+As part of our preliminary analysis and design, we analyzed the quantity of
+read and write accesses that Stockfish threads make to the transposition table, as well as
+the proportion of accesses that are reads. Figure~\ref{fig:accesses} summarizes
+our results of running each benchmark test on node2x18a, for varying numbers of
+thread counts. We let Stockfish run for varying amounts of time between 1
+minute and 30 minutes, taking the median values for each thread count. As can be
+seen, each thread writes to more than 50\% of all transposition table entries during
+this time, while only reading upwards of 25\% of entries. Furthermore, the vast
+majority of accesses to the shared transposition table are writes. This poses a
+challenge if we would like to synchronize the transposition table, and gave us
+more experimental reason to support Stockfish's original design choice of not
+synchronizing the transposition table.
+
+Since we expect there to be many more accesses to the transposition tables in a
+distributed implementation, including via MPI calls, we chose to leave the
+transposition tables unsynchronized.
 
 \subsubsection{Jonny}
 Nonetheless, Jonny~\cite{wiki:Jonny} was a successful distributed chess engine
