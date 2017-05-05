@@ -174,10 +174,6 @@ void TranspositionTable::updateLoop() {
         return;
       }
 
-      if (counts[Batch] >= 1) {
-        return;
-      }
-
       memcpy(&c[0], &table[i * Batch], sizeof(c));
       MPI_Allreduce(MPI_IN_PLACE, &c[0], Batch, mpi_cluster_t, cluster_op,
         MPI_COMM_WORLD);
