@@ -1,0 +1,3 @@
+Fatal error in MPI_Win_lock: Wrong synchronization of RMA calls , error stack:
+MPI_Win_lock(154)..: MPI_Win_lock(lock_type=235, rank=2, assert=0, win=0xa0000000) failed
+MPID_Win_lock(1168): Wrong synchronization of RMA calls 
