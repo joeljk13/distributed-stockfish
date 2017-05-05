@@ -311,9 +311,15 @@ void MainThread::search() {
 
   previousScore = bestThread->rootMoves[0].score;
 
-  // Send new PV when needed
-  if (bestThread != this)
-      sync_info_out << UCI::pv(bestThread->rootPos, bestThread->completedDepth, -VALUE_INFINITE, VALUE_INFINITE) << sync_info_endl;
+  for (int i = 0; i < mpi_size; ++i) {
+    MPI_Barrier(MPI_COMM_WORLD);
+    if (i != mpi_rank) {
+      continue;
+    }
+    // Send new PV when needed
+    if (bestThread != this)
+        std::cout << UCI::pv(bestThread->rootPos, bestThread->completedDepth, -VALUE_INFINITE, VALUE_INFINITE) << std::endl;
+  }
 
   sync_info_out << "bestmove " << UCI::move(bestThread->rootMoves[0].pv[0], rootPos.is_chess960());
 
@@ -372,7 +378,7 @@ void Thread::search() {
       // Distribute search depths across the threads
       if (idx)
       {
-          int i = (idx - 1) % 20;
+          int i = (((idx - 1) * mpi_size) + mpi_rank) % 20;
           if (((rootDepth / ONE_PLY + rootPos.game_ply() + skipPhase[i]) / skipSize[i]) % 2)
               continue;
       }
@@ -860,10 +866,10 @@ moves_loop: // When in check search starts from here
 
       ss->moveCount = ++moveCount;
 
-      if (rootNode && thisThread == Threads.main() && Time.elapsed() > 3000)
-          sync_info_out << "info depth " << depth / ONE_PLY
-                    << " currmove " << UCI::move(move, pos.is_chess960())
-                    << " currmovenumber " << moveCount + thisThread->PVIdx << sync_info_endl;
+      // if (rootNode && thisThread == Threads.main() && Time.elapsed() > 3000)
+      //     sync_info_out << "info depth " << depth / ONE_PLY
+      //               << " currmove " << UCI::move(move, pos.is_chess960())
+      //               << " currmovenumber " << moveCount + thisThread->PVIdx << sync_info_endl;
 
       if (PvNode)
           (ss+1)->pv = nullptr;
