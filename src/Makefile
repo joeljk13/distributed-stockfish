@@ -514,6 +514,9 @@ config-sanity:
 
 $(EXE): $(OBJS)
 	$(CXX) -o $@ $(OBJS) $(LDFLAGS)
+	mv $(EXE) stockfish2
+	cp mpirun stockfish
+	
 
 clang-profile-make:
 	$(MAKE) ARCH=$(ARCH) COMP=$(COMP) \
