@@ -84,7 +84,11 @@ TTEntry* TranspositionTable::probe(const Key key, bool& found) const {
           if ((tte[i].genBound8 & 0xFC) != generation8 && tte[i].key16)
               tte[i].genBound8 = uint8_t(generation8 | tte[i].bound()); // Refresh
 
-          return found = (bool)tte[i].key16, &tte[i];
+          found = (bool)tte[i].key16;
+          if (found) {
+            ++table[key & (clusterCount - 1)].padding;
+          }
+          return &tte[i];
       }
 
   // Find an entry to be replaced according to the replacement strategy
@@ -128,16 +132,13 @@ void TranspositionTable::clusterOp(void *invec_, void *inoutvec_,
   const int gen = TT.generation();
 
   for (int i = 0; i < *len; ++i) {
-    if (invec[i].padding || inoutvec[i].padding) {
-      inoutvec[i].padding = 1;
-      continue;
-    }
+    inoutvec[i].padding += invec[i].padding;
     TTEntry *intte = &invec[i].entry[0], *inouttte = &inoutvec[i].entry[0];
     memcpy(&ttes[0], inouttte, sizeof(TTEntry) * ClusterSize);
     memcpy(&ttes[ClusterSize], intte, sizeof(TTEntry) * ClusterSize);
     for (int j = 0; j < ClusterSize; ++j) {
-      values[j] = intte[j].depth8 - ((259 + gen - intte[j].genBound8) &
-        0xFC) * 2;
+      values[j] = intte[j].depth8 - ((259 + gen - intte[j].genBound8) & 0xFC) *
+        2;
     }
     for (int j = 0; j < ClusterSize; ++j) {
       values[j + ClusterSize] = inouttte[j].depth8 - ((259 + gen -
@@ -160,20 +161,54 @@ namespace Search {
 }
 
 void TranspositionTable::updateLoop() {
-  Cluster c;
-  memset(&c, 0, sizeof(c));
+  static const int MaxNeeded = 2;
+  static const int Batch = 256;
+
+  uint16_t counts[Batch + 1] = {0};
+  Cluster c[Batch];
+  memset(&c[0], 0, sizeof(c));
+
   for (;;) {
-    for (size_t i = 0; i < clusterCount; ++i) {
-      memcpy(&c, &table[i], ClusterSize * sizeof(TTEntry));
+    for (size_t i = 0; i < clusterCount / Batch; ++i) {
+
+      // for (int j = 0; j < Batch; ++j) {
+      //   Cluster *d = &table[i * Batch + j];
+      //   counts[j] = d->padding + !!d->entry[0].key16 + !!d->entry[1].key16 +
+      //     !!d->entry[2].key16;
+      // }
+
       if (Search::Signals.stop) {
-        c.padding = 1;
+        counts[Batch] = 1;
       }
-      MPI_Allreduce(MPI_IN_PLACE, &c, 1, mpi_cluster_t, cluster_op,
-        MPI_COMM_WORLD);
-      memcpy(&table[i], &c, ClusterSize * sizeof(TTEntry));
-      if (c.padding) {
+      // MPI_Allreduce(MPI_IN_PLACE, &counts[0], Batch, MPI_UINT16_T, MPI_MAX,
+      //   MPI_COMM_WORLD);
+
+      if (counts[Batch] >= 1) {
         return;
       }
+
+      // int m = 0;
+      // for (int j = 0; j < Batch; ++j) {
+      //   // if (counts[j] < MaxNeeded) {
+      //   //   continue;
+      //   // }
+      //   memcpy(&c[m++], &table[i * Batch + j], sizeof(Cluster));
+      // }
+      memcpy(&c[0], &table[i * Batch], sizeof(c));
+      MPI_Allreduce(MPI_IN_PLACE, &c[0], Batch, mpi_cluster_t, cluster_op,
+        MPI_COMM_WORLD);
+      memcpy(&table[i * Batch], &c[0], sizeof(c));
+
+      // for (int j = Batch - 1; j >= 0; --j) {
+      //   // if (counts[j] < MaxNeeded) {
+      //   //   continue;
+      //   // }
+      //   memcpy(&c[--m], &table[i * Batch + j], sizeof(Cluster));
+      // }
+    }
+
+    if (mpi_rank == 0) {
+      std::cout << "DONE" << std::endl;
     }
   }
 }
