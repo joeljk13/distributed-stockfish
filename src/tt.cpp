@@ -132,17 +132,16 @@ void TranspositionTable::clusterOp(void *invec_, void *inoutvec_,
   const int gen = TT.generation();
 
   for (int i = 0; i < *len; ++i) {
-    inoutvec[i].padding += invec[i].padding;
     TTEntry *intte = &invec[i].entry[0], *inouttte = &inoutvec[i].entry[0];
+    int inpadb = !!invec[i].padding;
+    int inoutpadb = !!inoutvec[i].padding;
     memcpy(&ttes[0], inouttte, sizeof(TTEntry) * ClusterSize);
     memcpy(&ttes[ClusterSize], intte, sizeof(TTEntry) * ClusterSize);
     for (int j = 0; j < ClusterSize; ++j) {
-      values[j] = intte[j].depth8 - ((259 + gen - intte[j].genBound8) & 0xFC) *
-        2;
+      values[j] = intte[j].depth8 + inpadb - ((259 + gen - intte[j].genBound8) & 0xFC) * 2;
     }
     for (int j = 0; j < ClusterSize; ++j) {
-      values[j + ClusterSize] = inouttte[j].depth8 - ((259 + gen -
-          inouttte[j].genBound8) & 0xFC) * 2;
+      values[j + ClusterSize] = inouttte[j].depth8 + inoutpadb - ((259 + gen - inouttte[j].genBound8) & 0xFC) * 2;
     }
     for (int j = 0; j < ClusterSize * 2; ++j) {
       a[j] = j;
@@ -153,6 +152,8 @@ void TranspositionTable::clusterOp(void *invec_, void *inoutvec_,
     for (int j = 0; j < ClusterSize; ++j) {
       memcpy(&inouttte[j], &ttes[a[j]], sizeof(TTEntry));
     }
+    inoutvec[i].padding += invec[i].padding;
+    inoutvec[i].padding /= 2;
   }
 }
 
@@ -164,51 +165,23 @@ void TranspositionTable::updateLoop() {
   static const int MaxNeeded = 2;
   static const int Batch = 256;
 
-  uint16_t counts[Batch + 1] = {0};
   Cluster c[Batch];
   memset(&c[0], 0, sizeof(c));
 
   for (;;) {
     for (size_t i = 0; i < clusterCount / Batch; ++i) {
-
-      // for (int j = 0; j < Batch; ++j) {
-      //   Cluster *d = &table[i * Batch + j];
-      //   counts[j] = d->padding + !!d->entry[0].key16 + !!d->entry[1].key16 +
-      //     !!d->entry[2].key16;
-      // }
-
       if (Search::Signals.stop) {
-        counts[Batch] = 1;
+        return;
       }
-      // MPI_Allreduce(MPI_IN_PLACE, &counts[0], Batch, MPI_UINT16_T, MPI_MAX,
-      //   MPI_COMM_WORLD);
 
       if (counts[Batch] >= 1) {
         return;
       }
 
-      // int m = 0;
-      // for (int j = 0; j < Batch; ++j) {
-      //   // if (counts[j] < MaxNeeded) {
-      //   //   continue;
-      //   // }
-      //   memcpy(&c[m++], &table[i * Batch + j], sizeof(Cluster));
-      // }
       memcpy(&c[0], &table[i * Batch], sizeof(c));
       MPI_Allreduce(MPI_IN_PLACE, &c[0], Batch, mpi_cluster_t, cluster_op,
         MPI_COMM_WORLD);
       memcpy(&table[i * Batch], &c[0], sizeof(c));
-
-      // for (int j = Batch - 1; j >= 0; --j) {
-      //   // if (counts[j] < MaxNeeded) {
-      //   //   continue;
-      //   // }
-      //   memcpy(&c[--m], &table[i * Batch + j], sizeof(Cluster));
-      // }
-    }
-
-    if (mpi_rank == 0) {
-      std::cout << "DONE" << std::endl;
     }
   }
 }
