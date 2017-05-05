@@ -137,11 +137,64 @@ slightly different times, which means that it is highly likely that subsequent
 threads can look up the value of that position in the transposition table. All
 of our distributed implementations of Stockfish employ a variant of Lazy SMP.
 
-\subsection{Distributed Chess Engines}
-- Jonny
-- look in bookmarks
+\subsection{Difficulties for Distributed Chess Engines}
+From our research, it seems as if distributed chess engines are much rarer than
+non-distributed engines. 
+As mentioned above, there may be a lot of duplicate work performed during
+game tree search, unless workers share information about the evaluation of
+particular board states. As we have seen above, on one node, Stockfish's
+solution is to share an unsynchronized transposition table among threads. On
+multiple nodes, we must now worry about distributing the transposition table
+intelligently among nodes, and communicating results about chess positions between
+nodes efficiently given the speed of the network. Alternatively, we may elect
+to keep transposition tables local among nodes, but then we run the risk that
+each node will be duplicating work of other nodes.
 
-\section{Algorithms} \label{Algorithms}
+Suppose each node can process up to $p$ unique positions per second. With $n$ nodes, we
+obtain a very liberal upper bound of $p\times n$ unique positions which can be processed per
+second. This is assuming that no two nodes will process the same position. In
+the absence of a well-designed transposition table, this upper bound becomes
+much smaller than $p \times n$. In fact, with the overhead of communication
+among nodes, the true number of positions processed per second may end up being
+much less than $p$. We believe the overhead involved in distributing a
+transposition table has led many developers to believe that the gain in
+implementing a distributed chess engine is far lower than the gain in
+optimizing another facet of a chess engine. For example, creating a slightly
+more accurate heuristic may reduce the average branching factor in alpha-beta
+search by a small amount, which means the engine may need to search far fewer
+positions.
+
+Nonetheless, Jonny~\cite{wiki:Jonny} was a successful distributed chess engine
+which won the 21st World Computer Chess Championships in 2015~\cite{WCCC15}.
+Jonny distributed the search tasks among more than 2400 cores, and was able to
+obtain a relatively small advantage over competitors in the 2015 championship.
+While this tells us that such a distributed implementation is possible,
+unfortunately Jonny is not open-source, and we have found no details about its
+implementation. As such, our goal was to modify the open-source Stockfish
+implementation to obtain results which, when scaled up to 2400 cores, may rival
+the benefits of a distributed system such as Jonny.
+
+\section{Methodology} \label{Algorithms}
+Using the Stockfish implementation as a base~\cite{stockfish:code}, we implemented and tested a number
+of different distributed algorithms for chess game tree search. To test each
+algorithm, we measured the number of milliseconds for the algorithm to finish
+searching the game tree at a given depth, starting from the root position.
+Stockfish has a built-in testing framework Fishtest~\cite{fishtest},
+which plays different versions of Stockfish against each other and evaluates
+different versions on a win-draw-loss ratio. Unfortunately, Fishtest proved
+difficult to install and set up correctly on the machines for which we had
+access, and back-of-the-envelope calculations revealed that the amount of time
+to evaluate the pairwise performance of each of our models and achieve
+statistically significant results could be very large. As such, we opted for the
+slightly less accurate heuristic, and look forward to using Fishtest to test our
+models in the future if the time permits.
+
+We tested each of our models on the Infiniband cluster of machines
+node01, node02, $\hdots$, node06, on the csug.rochester.edu network.
+Each machine has (TODO specs). We ran each of our implementations for 120
+seconds on the root position, recording the time it took for each iterative
+deepening loop to complete. The following is a description of each of our
+algorithms.
 
 \section{Results} \label{Results}
 asdf
