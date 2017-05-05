@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
   Threads.exit();
 
   for (int i = 0; i < THREADS; ++i) {
-    std::cout << update_counts[i * 128] << " / " << total_counts[i * 128]
+    std::cerr << update_counts[i * 128] << " / " << total_counts[i * 128]
       << " | " << ((double)update_counts[i * 128] / total_counts[i * 128])
       << std::endl;
   }
