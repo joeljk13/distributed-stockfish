@@ -18,11 +18,13 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <algorithm>
 #include <cstring>   // For std::memset
 #include <iostream>
 
 #include "bitboard.h"
 #include "tt.h"
+#include "search.h"
 
 TranspositionTable TT; // Our global transposition table
 
@@ -114,4 +116,64 @@ int TranspositionTable::hashfull() const {
               cnt++;
   }
   return cnt;
+}
+
+void TranspositionTable::clusterOp(void *invec_, void *inoutvec_,
+  int *len, MPI_Datatype *type) {
+  (void)type;
+  Cluster *invec = (Cluster *)invec_, *inoutvec = (Cluster *)inoutvec_;
+  int values[ClusterSize * 2];
+  TTEntry ttes[ClusterSize * 2];
+  int a[ClusterSize * 2];
+  const int gen = TT.generation();
+
+  for (int i = 0; i < *len; ++i) {
+    if (invec[i].padding || inoutvec[i].padding) {
+      inoutvec[i].padding = 1;
+      continue;
+    }
+    TTEntry *intte = &invec[i].entry[0], *inouttte = &inoutvec[i].entry[0];
+    memcpy(&ttes[0], inouttte, sizeof(TTEntry) * ClusterSize);
+    memcpy(&ttes[ClusterSize], intte, sizeof(TTEntry) * ClusterSize);
+    for (int j = 0; j < ClusterSize; ++j) {
+      values[j] = intte[j].depth8 - ((259 + gen - intte[j].genBound8) &
+        0xFC) * 2;
+    }
+    for (int j = 0; j < ClusterSize; ++j) {
+      values[j + ClusterSize] = inouttte[j].depth8 - ((259 + gen -
+          inouttte[j].genBound8) & 0xFC) * 2;
+    }
+    for (int j = 0; j < ClusterSize * 2; ++j) {
+      a[j] = j;
+    }
+    std::sort(&a[0], &a[ClusterSize * 2], [&] (int x, int y) {
+      return values[x] > values[y];
+    });
+    for (int j = 0; j < ClusterSize; ++j) {
+      memcpy(&inouttte[j], &ttes[a[j]], sizeof(TTEntry));
+    }
+  }
+}
+
+namespace Search {
+  extern SignalsType Signals;
+}
+
+void TranspositionTable::updateLoop() {
+  Cluster c;
+  memset(&c, 0, sizeof(c));
+  for (;;) {
+    for (size_t i = 0; i < clusterCount; ++i) {
+      memcpy(&c, &table[i], ClusterSize * sizeof(TTEntry));
+      if (Search::Signals.stop) {
+        c.padding = 1;
+      }
+      MPI_Allreduce(MPI_IN_PLACE, &c, 1, mpi_cluster_t, cluster_op,
+        MPI_COMM_WORLD);
+      memcpy(&table[i], &c, ClusterSize * sizeof(TTEntry));
+      if (c.padding) {
+        return;
+      }
+    }
+  }
 }

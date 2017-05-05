@@ -95,7 +95,8 @@ static const int ClusterPadding = 2;
 
 struct Cluster {
   TTEntry entry[ClusterSize];
-  char padding[ClusterPadding]; // Align to a divisor of the cache line size
+  uint16_t padding;
+  // char padding[ClusterPadding]; // Align to a divisor of the cache line size
 };
 
 /// A TranspositionTable consists of a power of 2 number of clusters and each
@@ -125,6 +126,9 @@ public:
   TTEntry* first_entry(const Key key) const {
     return &table[(size_t)key & (clusterCount - 1)].entry[0];
   }
+
+  static void clusterOp(void *, void *, int *, MPI_Datatype *);
+  void updateLoop();
 
 private:
   size_t clusterCount;

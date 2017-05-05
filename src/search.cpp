@@ -247,6 +247,10 @@ void MainThread::search() {
   DrawValue[ us] = VALUE_DRAW - Value(contempt);
   DrawValue[~us] = VALUE_DRAW + Value(contempt);
 
+  std::thread update_thread ([] () {
+    TT.updateLoop();
+  });
+
   if (rootMoves.empty())
   {
       rootMoves.push_back(RootMove(MOVE_NONE));
@@ -317,6 +321,8 @@ void MainThread::search() {
       info_out << " ponder " << UCI::move(bestThread->rootMoves[0].pv[1], rootPos.is_chess960());
 
   info_out << sync_info_endl;
+
+  update_thread.join();
 }
 
 
